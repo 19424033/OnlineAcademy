@@ -11,7 +11,7 @@
 | 19424052   | Hà Minh Bảo Toàn | 19424052@student.hcmus.edu.vn | 0327247666      |
 
 
-#### Link Project: https://github.com/group08s/cnpm-19hc-group08.git 
+#### Link Project: https://github.com/19424033/OnlineAcademy
 
 
 # Hướng dẫn chạy chương trình:
