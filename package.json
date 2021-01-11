@@ -1,0 +1,24 @@
+{
+  "name": "onlineacademy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "concurrently \"cd backend && npm install\" \"cd frontend && npm install \"",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend  && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/19424033/OnlineAcademy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/19424033/OnlineAcademy/issues"
+  },
+  "homepage": "https://github.com/19424033/OnlineAcademy#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
