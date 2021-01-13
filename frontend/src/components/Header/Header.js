@@ -1,4 +1,5 @@
-import {Layout, Row, Col, Button,Input } from "antd";
+import { Layout, Row, Col, Button, Input } from "antd";
+import { Link } from "react-router-dom";
 
 import {
   ShoppingCartOutlined,
@@ -37,13 +38,13 @@ const HeaderCustomize = () => {
         <Row>
           <Col span={6}>
             <div className="header_main_logo">
-              <a href="/">
+            <Link to="/">
                 <img
                   src={process.env.PUBLIC_URL + "/logo.png"}
                   className="logo"
                   alt=""
                 />
-              </a>
+              </Link>
             </div>
           </Col>
 
@@ -59,16 +60,19 @@ const HeaderCustomize = () => {
                 icon={<ShoppingCartOutlined />}
                 size={"large"}
               />
+
               <Button type="primary" icon={<HeartOutlined />} size={"large"} />
               <Button type="primary" icon={<BellOutlined />} size={"large"} />
             </div>
           </Col>
           <Col span={5}>
             <div className="header_main_user">
-              <Button className="btn_academy btn_dangnhap">Đăng Nhập</Button>
-              <Button danger className="btn_academy btn_dangky">
-                Đăng Ký
-              </Button>
+              <Link to="/login">
+                <Button className="btn_academy btn_dangnhap">Đăng Nhập</Button>
+              </Link>
+              <Link to="/register">
+                <Button danger className="btn_academy btn_dangky">Đăng Ký</Button>
+              </Link>
             </div>
           </Col>
         </Row>
