@@ -130,7 +130,7 @@ body {
           border-radius: 10px;
         }
         .btn_dangnhap {
-          margin-right: 30px;
+          margin-right: 20px;
         }
         .btn_dangky {
           &:hover {
@@ -143,26 +143,15 @@ body {
   }
 }
 
-// Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-}
 
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-}
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-  .ant-layout-header {
-    // color: rgba(255, 0, 0, 0.85) !important;
-    // background: rgb(255, 0, 0) !important;
-  }
+@media only screen and (min-width: 992px) {
+ 
+ 
 }
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-  .ant-layout-header {
-    color: rgba(255, 0, 0, 0.85) !important;
-    background: #fff !important;
-  }
+@media only screen and (min-width: 1200px) {
+  
 }

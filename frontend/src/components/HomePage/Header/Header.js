@@ -48,12 +48,12 @@ const HeaderCustomize = () => {
             </div>
           </Col>
 
-          <Col span={9}>
+          <Col span={8}>
             <div className="header_main_search">
               <Search placeholder="tìm kiếm...." onSearch={onSearch} />
             </div>
           </Col>
-          <Col span={4}>
+          <Col span={3}>
             <div className="header_main_button">
               <Button
                 type="primary"
@@ -65,7 +65,7 @@ const HeaderCustomize = () => {
               <Button type="primary" icon={<BellOutlined />} size={"large"} />
             </div>
           </Col>
-          <Col span={5}>
+          <Col span={7}>
             <div className="header_main_user">
               <Link to="/login">
                 <Button className="btn_academy btn_dangnhap">Đăng Nhập</Button>
