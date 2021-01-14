@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 
+const USERS = require('./server/router/users.route');
 
 
 const PORT = process.env.PORT || 4000;
@@ -23,6 +24,7 @@ app.get("/", (request, respond) => {
     message: "Welcome to Project Support",
   });
 });
+app.use('/api/users', USERS );
 
 
 app.get('/err', function (req, res) {

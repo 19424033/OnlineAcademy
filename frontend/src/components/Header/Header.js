@@ -15,7 +15,7 @@ const HeaderCustomize = () => {
   return (
     <Header className="header">
       <div className="header_top">
-        <ul class="menu_top">
+        <ul className="menu_top">
           <li>
             <a href="/">Kích hoạt khóa học</a>
           </li>
