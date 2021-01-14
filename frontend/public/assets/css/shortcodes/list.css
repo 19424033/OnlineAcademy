@@ -50,7 +50,9 @@
     color: #777;
 }
 ul[class*="list-"]{
-	font-family: "rubik",sans-serif;
+	/* font-family: "rubik",sans-serif; */
+font-family: 'Roboto', sans-serif;
+
 	font-size:15px;
 }
 .list-circle li:before {

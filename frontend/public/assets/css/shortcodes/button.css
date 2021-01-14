@@ -141,7 +141,9 @@
 	border-radius: 3px;
 	font-weight: 400;
 	text-align:center;
-	font-family: rubik;
+	/* font-family: rubik; */
+font-family: 'Roboto', sans-serif;
+
 }
 .btn {
     background-color: #EFBB20;
@@ -854,7 +856,7 @@
 .btn-link.yellow:hover,
 .btn-link.yellow:active,
 .btn-link.yellow:focus {
-    color: ##d4af19;
+    color: #d4af19;
 }
 /* purple */
 
@@ -1320,7 +1322,9 @@
 }
 .feature-filters.style1 li a {
     color: #A0A0A0;
-	font-family: rubik;
+	/* font-family: rubik; */
+font-family: 'Roboto', sans-serif;
+
 	font-weight: 500;
     margin: 0;
 	padding: 0 15px;
