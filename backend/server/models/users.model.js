@@ -13,8 +13,9 @@ module.exports = {
     return user[0];
   },
 
-  add(user) {
-    return db("users").insert(user);
+  async add(user) {
+    const ids = await db("users").insert(user);
+    return ids[0];
   },
 
   del(id) {
@@ -23,5 +24,29 @@ module.exports = {
 
   update(id, product) {
     return db("usersid").where("usersid", id).update(product);
+  },
+
+  async singleByEmail(email) {
+    const users = await db("users").where("Email", email);
+
+    if (users.length === 0) {
+      return null;
+    }
+    return {...users[0]};
+  },
+
+  updateRefreshToken(id, refreshToken) {
+    return db("users").where("usersid", id).update("rfToken", refreshToken);
+  },
+
+  async isValidRefreshToken(id, refreshToken) {
+    const list = await db("users")
+      .where("usersid", id)
+      .andWhere("rfToken", refreshToken);
+    if (list.length > 0) {
+      return true;
+    }
+
+    return false;
   },
 };

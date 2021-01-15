@@ -5,7 +5,8 @@ const morgan = require("morgan");
 const app = express();
 
 const USERS = require('./server/router/users.route');
-
+const AUTH = require('./server/router/auth.route');
+const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
 
 const PORT = process.env.PORT || 4000;
 
@@ -24,7 +25,8 @@ app.get("/", (request, respond) => {
     message: "Welcome to Project Support",
   });
 });
-app.use('/api/users', USERS );
+app.use('/api/users',decentralization, USERS );
+app.use('/api/auth', AUTH );
 
 
 app.get('/err', function (req, res) {
