@@ -1,0 +1,54 @@
+import moment from "moment";
+import _ from "lodash";
+
+const formatDate = (date) => {
+  return moment(date).toISOString();
+};
+
+const formatNumber = (number = 0) => {
+  return parseInt(number)?.toLocaleString();
+};
+
+const parseJwt = (token) => {
+  var base64Url = _.split(token, ".")[1];
+  // var base64Url = token.split(".")[1];
+  var base64 = _.replace(base64Url, /-/g, "+");
+  var base64_1 = _.replace(base64, /_/g, "/");
+  // var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64_1)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  return JSON.parse(jsonPayload);
+};
+
+// lay giá trị parse thành object
+const localparseJson = (localString) => {
+  return JSON.parse(localString);
+};
+
+const getAccessToken = (localString) => {
+  return localparseJson(localString).accessToken;
+};
+
+const parseAccessToken = (localString) => {
+  return parseJwt(getAccessToken(localString));
+};
+
+const parseAccessToken_res = (data) => {
+  return parseJwt(data.accessToken);
+};
+
+export {
+  formatDate,
+  formatNumber,
+  parseJwt,
+  localparseJson,
+  getAccessToken,
+  parseAccessToken,
+  parseAccessToken_res,
+};

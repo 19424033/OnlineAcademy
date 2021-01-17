@@ -32,7 +32,7 @@
 }
 .header {
     position: relative;
-    z-index: 99999;
+    z-index: 999;
 }
 .header ul,
 .header ol {
@@ -83,10 +83,10 @@
 	transition:all 0.5s;
 	transition:all 0.5s;
 	-webkit-transition:all 0.5s;
-    -moz-transform: translate(0px, -50%);
+    /* -moz-transform: translate(0px, -50%);
     -moz-transform: translate(0px, -50%);
     -o-transform: translate(0px, -50%);
-    -webkit-transform: translate(0px, -50%);
+    -webkit-transform: translate(0px, -50%); */
 	opacity:0;
 }
 .nav-search-bar .form-control {
@@ -176,6 +176,9 @@
 }
 .topbar-left {
     float: left;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;	
 }
 .topbar-right {
     float: right;
@@ -1018,7 +1021,7 @@ font-family: 'Roboto', sans-serif;
 	width:100%;
 }
 .header-transparent .menu-bar{
-	background-color:rgba(0,0,0,0);
+	background-color:rgb(255, 255, 255);
 	border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .header-transparent .menu-links .nav > li > a{
@@ -1027,20 +1030,20 @@ font-family: 'Roboto', sans-serif;
 .header-transparent .menu-links .nav > li > a,
 .header-transparent .secondary-menu .btn-link,
 .header-transparent .navbar-toggler{
-    color: #fff;
+    color: rgb(0, 0, 0);
 }
 .header-transparent .secondary-menu .btn-link:hover{
 	color:var(--primary);
 }
 .header-transparent .navbar-toggler span{
-    background-color: #fff;
+    background-color: rgb(5, 0, 0);
 }
 .header-transparent .is-fixed .menu-bar{
 	position:fixed;
 	background-color:rgba(0,0,0,0.9);
 }
 .header-transparent .top-bar{
-	background-color: rgba(0,0,0,0);
+	background-color: rgb(0, 0, 0);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     color: #dfdfdf;
 }
@@ -1063,10 +1066,16 @@ font-family: 'Roboto', sans-serif;
 } 
 .header-transparent .topbar-right .header-lang-bx ul li a{
 	color:#000;	
+
 }
 .header-transparent .topbar-left ul li a, 
 .header-transparent .topbar-right ul li a{
 	color:#fff;	
+	
+}
+.header-transparent .topbar-right ul li a:hover{
+	color:#f7b205;	
+		
 }
 @media only screen and (max-width: 991px) {
 	.header-transparent .menu-links .nav > li > a{
@@ -1298,7 +1307,7 @@ font-family: 'Roboto', sans-serif;
 .share-btn ul li{
 	display:inline-block;
 	margin-left: -40px;
-	float: left;
+	/* float: left; */
 	transition:all 0.5s;
 	-moz-transition:all 0.5s;
 	-o-transition:all 0.5s;
@@ -1984,7 +1993,7 @@ button.back-to-top {
 	display: inline-block;
 	font-size: 13px;
 	text-transform: capitalize;
-	font-family: ;
+	/* font-family: ; */
 	margin-right: 5px;
 }
 .media-post li a{

@@ -98,10 +98,10 @@ table {
   background: #3396d1;
   color: #fff;
 }
-p {
+/* p {
   line-height: 28px;
   margin-bottom: 24px;
-}
+} */
 iframe {
   border: 0;
 }
@@ -1090,7 +1090,7 @@ dl dd {
   background-color: transparent;
 }
 .bg-primary {
-  background-color: ;
+  /* background-color: ; */
 }
 .bg-white {
   background-color: #fff;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./register.scss";
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { Form, Input, Button, Select } from "antd";
 import { Link } from "react-router-dom";
@@ -28,6 +29,13 @@ const tailFormItemLayout = {
 };
 const Register = () => {
   const [form] = Form.useForm();
+  const history = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: '/' } };
+
+  // console.log("history",history)
+  // console.log("location",location)
+  // console.log("from",from)
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);

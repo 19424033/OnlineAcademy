@@ -27,6 +27,7 @@ module.exports = {
   },
 
   async singleByEmail(email) {
+    console.log(email);
     const users = await db("users").where("Email", email);
 
     if (users.length === 0) {

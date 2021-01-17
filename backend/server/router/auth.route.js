@@ -25,11 +25,12 @@ router.post("/", async function (req, res) {
     {
       Usersid: user.Usersid,
       Jobid: user.Jobid,
+      Dislayname: user.Dislayname,
 
     },
     "SECRET_KEY",
     {
-      expiresIn: 10 * 60, // seconds
+      expiresIn: 60 * 10, // seconds
     }
   );
 
