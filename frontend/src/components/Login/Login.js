@@ -15,7 +15,7 @@ import { parseAccessToken_res} from "../../utils/utils";
 // import useToken from "../../utils/useToken";
 
 const Login = () => {
-  const { nameUser,setnameUser,saveToken } = useContext(AppContext);
+  const { setnameUser,saveToken,setCheckLocalStorage } = useContext(AppContext);
 
   const history = useHistory();
   const location = useLocation();
@@ -32,6 +32,7 @@ const Login = () => {
         if (authenticated) {
           setnameUser( parseAccessToken_res(res.data).Dislayname)
           saveToken(res.data);
+          setCheckLocalStorage(true);
           // localStorage.AcademyOnline_Token = JSON.stringify(res.data);
           // setnameUser(res.data.refreshToken)
           setLabelText(<Alert message="ok !!" type="success" />);

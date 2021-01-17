@@ -12,15 +12,13 @@ import { parseJwt,localparseJson,getAccessToken,parseAccessToken} from "./utils/
 import UserService from './services/user.service';
 const App = () => {
   // const { token,setToken } = useToken();
-  // const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [nameUser, setnameUser] = useState(undefined);
-  // const [tokenAccessToken, setTokenAccessToken] = useState(undefined); // set khi login và load F5
-
+  const [checkLocalStorage, setCheckLocalStorage] = useState(false);
+console.log(checkLocalStorage)
   const saveToken = (userToken) => {
     // dùng để lưu token khi đăng nhập
     localStorage.setItem("AcademyOnline_Token", JSON.stringify(userToken));
-    // setTokenAccessToken(parseJwt(userToken.accessToken));
-    // console.log("dang nhap", tokenAccessToken);
   };
  
   useEffect(() => {
@@ -30,6 +28,8 @@ const App = () => {
       const userID = parseAccessToken(tokenString);  // lấy trường accessToken đi mã hoá và lấy ID
      console.log(userID)
      setnameUser(userID.Dislayname)
+     setCheckLocalStorage(true);
+
       // UserService(userID,useraccessToken).getUserBoard().then((result) => {
       //   console.log(result.data.Dislayname)
       //   setnameUser(result.data.Dislayname)
@@ -42,13 +42,14 @@ const App = () => {
 
   return (
     <AppContext.Provider
-      value={{ nameUser, setnameUser, saveToken }}
+      value={{ nameUser, setnameUser, saveToken,setCurrentUser,checkLocalStorage,setCheckLocalStorage }}
     >
       <Router>
         <Switch>
           <Route path="/" component={HomePage} exact></Route>
-          <Route path="/login" component={Login} exact></Route>
-          <Route path="/register" component={Register} exact></Route>
+          {checkLocalStorage?"":  <Route path="/login" component={Login} exact></Route>}
+         
+          {checkLocalStorage?"":  <Route path="/register" component={Register} exact></Route>}
           <Route path="*" component={HomePage}></Route>
         </Switch>
       </Router>

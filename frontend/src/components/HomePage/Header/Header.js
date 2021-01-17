@@ -1,8 +1,8 @@
 import { Input, Avatar, Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
-import { useState ,useContext} from "react";
-import AppContext from '../../../utils/AppContext';
+import { useState, useContext } from "react";
+import AppContext from "../../../utils/AppContext";
 
 // import { HeartOutlined, BellOutlined} from "@ant-design/icons";
 const { Search } = Input;
@@ -44,14 +44,60 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
+
 const HeaderCustomize = () => {
-  const { nameUser,setnameUser } = useContext(AppContext);
+  const {
+    nameUser,
+    setnameUser,
+    saveToken,
+    checkLocalStorage,
+    setCheckLocalStorage,
+  } = useContext(AppContext);
   // console.log(nameUser)
   const logOut = () => {
-    setnameUser("");
+    setnameUser(undefined);
+    saveToken(undefined);
+    setCheckLocalStorage(false);
     AuthService().logout();
   };
   const onSearch = (value) => console.log(value);
+  const firstCharacter = (x) => {
+    if (x) return x[0].toUpperCase();
+    return x;
+  };
+
+  const login_register = () => {
+    return (
+      <ul>
+        <li>
+          <Link to="/login">Đăng Nhập</Link>
+        </li>
+        <li>
+          <Link to="/register">Đăng Ký</Link>
+        </li>
+      </ul>
+    );
+  };
+
+  const islogin = () => {
+    return (
+      <ul>
+        <li>
+          <Dropdown overlay={menu}>
+            <div>
+              <Avatar>{firstCharacter(nameUser)}</Avatar>
+              <span> {nameUser}</span>
+            </div>
+          </Dropdown>
+        </li>
+        <li>
+          <Link to="/" onClick={logOut}>
+            Đăng Xuất
+          </Link>
+        </li>
+      </ul>
+    );
+  };
 
   return (
     // <Header className="header">
@@ -144,27 +190,7 @@ const HeaderCustomize = () => {
               </ul>
             </div>
             <div className="topbar-right">
-              <ul>
-                <li>
-                  <Link to="/login">Đăng Nhập</Link>
-                </li>
-                <li>
-                  <Link to="/register">Đăng Ký</Link>
-                </li>
-                <li>
-                  <Dropdown overlay={menu}>
-                    <div>
-                      <Avatar>U</Avatar>
-                      <span> {nameUser}</span>
-                    </div>
-                  </Dropdown>
-                </li>
-                <li>
-                  <Link to="/" onClick={logOut}>
-                    Đăng Xuất
-                  </Link>
-                </li>
-              </ul>
+              {checkLocalStorage ? islogin() : login_register()}
             </div>
           </div>
         </div>
