@@ -4,18 +4,23 @@ import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import AppContext from "../../utils/AppContext";
-import { parseAccessToken_res} from "../../utils/utils";
+import { parseAccessToken_res } from "../../utils/utils";
 
 // import HomePage from "../HomePage/Homepage";
 // import Register from "../Register/Register";
 // import useToken from "../../utils/useToken";
 
 const Login = () => {
-  const { setnameUser,saveToken,setCheckLocalStorage } = useContext(AppContext);
+  const {
+    setnameUser,
+    saveToken,
+    setCheckLocalStorage,
+    setCheckOTPConfim,
+  } = useContext(AppContext);
 
   const history = useHistory();
   const location = useLocation();
@@ -23,20 +28,25 @@ const Login = () => {
 
   const [labelText, setLabelText] = useState("");
   const onFinish = (values) => {
-   
     AuthService()
       .login(values)
       .then((res) => {
         const { authenticated } = res.data;
-
+        // console.log(res.data);
         if (authenticated) {
-          setnameUser( parseAccessToken_res(res.data).Dislayname)
+          setnameUser(parseAccessToken_res(res.data).Dislayname);
           saveToken(res.data);
+          if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
+            setCheckOTPConfim(true);
+          } else {
+            setCheckOTPConfim(false);
+          }
           setCheckLocalStorage(true);
           // localStorage.AcademyOnline_Token = JSON.stringify(res.data);
           // setnameUser(res.data.refreshToken)
           setLabelText(<Alert message="ok !!" type="success" />);
           history.replace(from);
+
         } else {
           setLabelText(
             <Alert message="Email or Password is incorrect !!" type="error" />
@@ -50,7 +60,6 @@ const Login = () => {
   };
 
   return (
-
     <div className="page-wraper">
       <div className="account-form">
         <div className="account-head">

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./register.scss";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 import { Form, Input, Button, Select } from "antd";
 import { Link } from "react-router-dom";
 const { Option } = Select;
+var dateFormat = require("dateformat");
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -15,41 +18,31 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
+
 const Register = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' } };
+  const { from } = location.state || { from: { pathname: "/" } };
 
   // console.log("history",history)
   // console.log("location",location)
   // console.log("from",from)
 
   const onFinish = (values) => {
+    delete values.confirm;
+     values.Created_at= dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
     console.log("Received values of form: ", values);
+    AuthService()
+      .register(values)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select>
-        <Option value="84">+84</Option>
-        <Option value="85">+85</Option>
-      </Select>
-    </Form.Item>
-  );
-
   return (
     <div className="page-wraper">
       <div className="account-form">
@@ -84,7 +77,7 @@ const Register = () => {
               scrollToFirstError
             >
               <Form.Item
-                name="nickname"
+                name="Dislayname"
                 label={<span>Nickname&nbsp;</span>}
                 rules={[
                   {
@@ -97,7 +90,7 @@ const Register = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                name="email"
+                name="Email"
                 label="E-mail"
                 rules={[
                   {
@@ -114,7 +107,7 @@ const Register = () => {
               </Form.Item>
 
               <Form.Item
-                name="password"
+                name="Password"
                 label="Password"
                 rules={[
                   {
@@ -130,7 +123,7 @@ const Register = () => {
               <Form.Item
                 name="confirm"
                 label="Confirm Password"
-                dependencies={["password"]}
+                dependencies={["Password"]}
                 hasFeedback
                 rules={[
                   {
@@ -139,7 +132,7 @@ const Register = () => {
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
+                      if (!value || getFieldValue("Password") === value) {
                         return Promise.resolve();
                       }
 
@@ -153,25 +146,7 @@ const Register = () => {
                 <Input.Password />
               </Form.Item>
 
-              <Form.Item
-                name="phone"
-                label="Phone Number"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your phone number!",
-                  },
-                ]}
-              >
-                <Input
-                  addonBefore={prefixSelector}
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              </Form.Item>
-
-              <Form.Item {...tailFormItemLayout}>
+              <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"

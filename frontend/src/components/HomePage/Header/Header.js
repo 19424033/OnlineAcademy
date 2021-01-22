@@ -52,12 +52,15 @@ const HeaderCustomize = () => {
     saveToken,
     checkLocalStorage,
     setCheckLocalStorage,
+    setCheckOTPConfim
   } = useContext(AppContext);
   // console.log(nameUser)
   const logOut = () => {
     setnameUser(undefined);
     saveToken(undefined);
     setCheckLocalStorage(false);
+    setCheckOTPConfim(undefined);
+
     AuthService().logout();
   };
   const onSearch = (value) => console.log(value);

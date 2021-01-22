@@ -3,34 +3,11 @@ import axios from "axios";
 export default function AuthService() {
   const API_URL = "http://localhost:4000/api";
 
-  // const axiosInstance = axios.create({
-  //   baseURL: "http://localhost:4000/api",
-  //   timeout: 5000,
-  //   // headers: { 'X-Custom-Header': 'foobar' }
-  // });
-
-  // const register = (username, email, password) => {
-  //   return axios.post(API_URL + "signup", {
-  //     username,
-  //     email,
-  //     password,
-  //   });
-  // };
+  const register = (velues) => {
+    return axios.post(`${API_URL}/register`,velues);
+  };
 
   const login = (values) => {
-    // try {
-    //   const res =  axiosInstance.post("/auth", values);
-    //   const { authenticated } = res.data;
-
-    //   if (authenticated) {
-    //     localStorage.AcademyOnline_Token = JSON.stringify(res.data);
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
     return axios.post(`${API_URL}/auth`, values);
   };
 
@@ -40,35 +17,17 @@ export default function AuthService() {
       localStorage.removeItem("AcademyOnline_Token");
     }
   };
-
-  // const getCurrentUser = async (id, accessToken) => {
-  //   console.log(id, accessToken);
-  //   try {
-  //     const res = await axiosInstance.get("/users/" + id, {
-  //       headers: {
-  //         "x-access-token": accessToken,
-  //       },
-  //     });
-  //     // console.log(res.data);
-  //     // const { authenticated } = res.data;
-
-  //     //   if (authenticated) {
-  //     //     localStorage.AcademyOnline_Token = JSON.stringify(res.data);
-  //     //     return true;
-  //     //   } else {
-  //     //     return false;
-  //     //   }
-  //     return res.data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
+  const updateOTP = (id) => {
+    return axios.put(`${API_URL}/register/${id}`);
+  };
+  const  checkOTPDB = async (id,otp) => {
+    return await axios.get(`${API_URL}/register/${id}/${otp}`);
+  };
   return {
-    // register,
+    register,
     login,
     logout,
-    // getCurrentUser,
-    // axiosInstance,
+    updateOTP,
+    checkOTPDB
   };
 }

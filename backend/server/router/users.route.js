@@ -1,16 +1,15 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
-router.post("/", async function (req, res) {  //  tao tai khoan
-  const user = req.body;
-  user.Password = bcrypt.hashSync(user.Password, 3);
-  user.id = await usersModel.add(user);
-  delete user.password;
-  res.status(201).json(user); 
-});
+// router.post("/", async function (req, res) {  //  tao tai khoan
+//   const user = req.body;
+//   user.Password = bcrypt.hashSync(user.Password, 3);
+//   user.id = await usersModel.add(user);
+//   delete user.password;
+//   res.status(201).json(user); 
+// });
 
 router.get("/", async function (req, res) {  // dua vao token lấy user
 

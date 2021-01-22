@@ -26,7 +26,7 @@ router.post("/", async function (req, res) {
       Usersid: user.Usersid,
       Jobid: user.Jobid,
       Dislayname: user.Dislayname,
-
+      OTP_Confim: user.OTP_Confim,
     },
     "SECRET_KEY",
     {
@@ -51,13 +51,13 @@ router.post("/refresh", async function (req, res) {
   // }
 
   const { accessToken, refreshToken } = req.body;
-  const { Usersid,Jobid } = jwt.verify(accessToken, "SECRET_KEY", {
+  const { Usersid, Jobid } = jwt.verify(accessToken, "SECRET_KEY", {
     ignoreExpiration: true,
   });
 
   const ret = await userModel.isValidRefreshToken(Usersid, refreshToken);
   if (ret === true) {
-    const newAccessToken = jwt.sign({ Usersid,Jobid }, "SECRET_KEY", {
+    const newAccessToken = jwt.sign({ Usersid, Jobid }, "SECRET_KEY", {
       expiresIn: 60 * 10,
     });
     return res.json({
