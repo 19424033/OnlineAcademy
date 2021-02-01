@@ -1,13 +1,13 @@
-# Nhóm ....
+# Nhóm Cú Đêm
 
 ## Thông tin Thành Viên Nhóm:
 ---
 
 | MSSV       | Họ Tên           | Email                         | Số Điện Thoại   |
 | :---------:|:----------------:| :----------------------------:|:---------------:|
-| 19424052   | Hà Minh Bảo Toàn | 19424052@student.hcmus.edu.vn | 0327247666      |
-| 19424052   | Hà Minh Bảo Toàn | 19424052@student.hcmus.edu.vn | 0327247666      |
-| 19424052   | Hà Minh Bảo Toàn | 19424052@student.hcmus.edu.vn | 0327247666      |
+| 19424031   | Nguyễn Thị Oanh  | 19424031@student.hcmus.edu.vn | 0388256797      |
+| 19424033   | Huỳnh Đức Phong  | 19424033@student.hcmus.edu.vn | 0777178681      |
+| 19424044   | Nguyễn Mai Thi   | 19424044@student.hcmus.edu.vn | 0327247666      |
 | 19424052   | Hà Minh Bảo Toàn | 19424052@student.hcmus.edu.vn | 0327247666      |
 
 
