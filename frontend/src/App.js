@@ -15,7 +15,6 @@ import Register from "./modules/page/Register/Register";
 import AppContext from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
 import UserService from "./services/user.service";
-import OTP from "./modules/page/OTPComfirm";
 const App = () => {
   // const { token,setToken } = useToken();
   const [currentUser, setCurrentUser] = useState(undefined);

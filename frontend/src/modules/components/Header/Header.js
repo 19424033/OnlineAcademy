@@ -24,7 +24,7 @@ const HeaderCustomize = () => {
     setCheckLocalStorage(false);
     setCheckOTPConfim(undefined);
 
-    AuthService().logout();
+    AuthService().logout();  
   };
   const onSearch = (value) => console.log(value);
   const firstCharacter = (x) => {
@@ -42,9 +42,12 @@ const HeaderCustomize = () => {
         </Link>
       </Menu.Item>
       <Menu.Item>
+      <Link to="/" onClick={logOut}>
         <h6>
           <i className="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"/>   Đăng Xuất
         </h6>
+        </Link>
+
       </Menu.Item>
     </Menu>
   );

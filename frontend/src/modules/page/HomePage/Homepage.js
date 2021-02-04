@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 
 import { Layout, Menu } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import OTP from "../OTPComfirm";
+import OTP from "../OTPComfirm/OTP";
 import AppContext from "../../../utils/AppContext";
 
 const { Content, Sider } = Layout;

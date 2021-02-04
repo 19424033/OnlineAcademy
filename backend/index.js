@@ -5,7 +5,6 @@ const morgan = require("morgan");
 const app = express();
 
 const USERS = require('./server/router/users.route');
-const REGISTER = require('./server/router/register.route');
 
 const AUTH = require('./server/router/auth.route');
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
@@ -28,8 +27,6 @@ app.get("/", (request, respond) => {
   });
 });
 app.use('/api/users',decentralization, USERS );
-app.use('/api/register', REGISTER );
-
 app.use('/api/auth', AUTH );
 
 

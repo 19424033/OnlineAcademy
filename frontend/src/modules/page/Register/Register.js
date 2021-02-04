@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import "./register.scss";
+import React, { useState, useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import AuthService from "../../../services/auth.service";
-
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Alert } from "antd";
 import { Link } from "react-router-dom";
-const { Option } = Select;
+
+import "./register.scss";
+import AuthService from "../../../services/auth.service";
+import AppContext from "../../../utils/AppContext";
+import { parseAccessToken_res } from "../../../utils/utils";
+
 var dateFormat = require("dateformat");
 
 const formItemLayout = {
@@ -23,21 +25,53 @@ const Register = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   const location = useLocation();
+  const [labelText, setLabelText] = useState("");
   const { from } = location.state || { from: { pathname: "/" } };
 
-  // console.log("history",history)
-  // console.log("location",location)
-  // console.log("from",from)
+  const {
+    setnameUser,
+    saveToken,
+    setCheckLocalStorage,
+    setCheckOTPConfim,
+  } = useContext(AppContext);
 
   const onFinish = (values) => {
     delete values.confirm;
-     values.Created_at= dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
     console.log("Received values of form: ", values);
     AuthService()
       .register(values)
       .then((res) => {
-        console.log(res);
+        var confirm = res.status;
+        console.log(confirm);
+        if (confirm === 204) {
+          setLabelText(
+            <Alert
+              message="Email đã được sử dụng!! Vui lòng chọn một Email khác"
+              type="error"
+            />
+          );
+          setTimeout(() => setLabelText(undefined), 3000);
+        } else {
+          console.log(values)
+          AuthService()
+            .login(values)
+            .then((res) => {
+                setnameUser(parseAccessToken_res(res.data).Dislayname);
+                saveToken(res.data);
+                if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
+                  setCheckOTPConfim(true);
+                } else {
+                  setCheckOTPConfim(false);
+                }
+                setCheckLocalStorage(true);
+                history.replace(from);
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -156,6 +190,7 @@ const Register = () => {
                 </Button>
               </Form.Item>
             </Form>
+            <div className="errorText ">{labelText}</div>
           </div>
         </div>
       </div>

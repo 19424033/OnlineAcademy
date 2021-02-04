@@ -27,13 +27,36 @@ module.exports = {
   },
 
   async singleByEmail(email) {
-    console.log(email);
     const users = await db("users").where("Email", email);
 
     if (users.length === 0) {
       return null;
     }
-    return {...users[0]};
+    return { ...users[0] };
+  },
+
+  async checkOTP(id, OTP) {
+    var user = await db("users").where({ usersid: id, OTP: OTP });
+    if (user.length === 0) {
+      return null;
+    }
+    else{
+       await db("users").where("usersid", id).update("OTP_Confim", 1);
+       user=await db("users").where({ usersid: id, OTP: OTP });
+      return user[0];
+
+    }
+  },
+  async updateOTP(id, OTP) {
+    await db("users").where("usersid", id).update("OTP", OTP);
+    const user = await db("users").where("usersid", id);
+    if (user.length === 0) {
+      return null;
+    }
+    else{
+      return user[0];
+
+    }
   },
 
   updateRefreshToken(id, refreshToken) {

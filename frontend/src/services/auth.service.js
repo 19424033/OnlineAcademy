@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export default function AuthService() {
-  const API_URL = "http://localhost:4000/api";
+  const API_auth = "http://localhost:4000/api/auth";
 
   const register = (velues) => {
-    return axios.post(`${API_URL}/register`,velues);
+    return axios.post(`${API_auth}/register`, velues);
   };
 
   const login = (values) => {
-    return axios.post(`${API_URL}/auth`, values);
+    return axios.post(`${API_auth}/log-in`, values);
   };
 
   const logout = () => {
@@ -18,16 +18,16 @@ export default function AuthService() {
     }
   };
   const updateOTP = (id) => {
-    return axios.put(`${API_URL}/register/${id}`);
+    return axios.put(`${API_auth}/register/${id}`);
   };
-  const  checkOTPDB = async (id,otp) => {
-    return await axios.get(`${API_URL}/register/${id}/${otp}`);
+  const checkOTPDB = async (id, otp) => {
+    return await axios.get(`${API_auth}/register/${id}/${otp}`);
   };
   return {
     register,
     login,
     logout,
     updateOTP,
-    checkOTPDB
+    checkOTPDB,
   };
 }
