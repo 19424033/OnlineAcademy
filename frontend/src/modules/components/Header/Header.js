@@ -52,6 +52,8 @@ const HeaderCustomize = () => {
 
   const login_register = () => {
     return (
+      <>
+      <li>
       <div className="d-flex align-items-stretch ">
         <div className="pt-btn-join ">
           <Link to="/login" className="btn-nocolor radius-xl">
@@ -64,28 +66,41 @@ const HeaderCustomize = () => {
           </Link>
         </div>
       </div>
+      </li>
+      </>
     );
   };
 
   const islogin = () => {
     return (
-      <div>
-        <Link to="/" className="text-white">
-          <h6>
-            <i className="fa fa-heart-o" /> Yêu thích
-          </h6>
-        </Link>
-        <Link to="/" className="text-white">
-          <h6>
-            <i className="typcn typcn-chevron-right-outline" /> Khóa học của tôi
-          </h6>
-        </Link>
-        <Dropdown overlay={menu}>
-          <Link className="ant-dropdown-link text-white" to="/profile">
-            <Avatar size="large" src="assets/images/testimonials/pic3.jpg" />
+      <>
+        <li>
+          <Link to="/" className="text-white">
+            <span class="h6">
+              <i style={{ marginLeft: "20px" }} className="fa fa-heart-o" /> Yêu
+              thích
+            </span>
           </Link>
-        </Dropdown>
-      </div>
+        </li>
+        <li>
+          <Link to="/" className="text-white">
+            <span class="h6">
+              <i
+                style={{ marginLeft: "20px" }}
+                className="typcn typcn-chevron-right-outline"
+              />{" "}
+              Khóa học của tôi
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Dropdown overlay={menu}>
+            <Link className="ant-dropdown-link text-white" to="/profile">
+              <Avatar size="large" src="assets/images/testimonials/pic3.jpg" />
+            </Link>
+          </Dropdown>
+        </li>
+      </>
     );
   };
 
@@ -105,17 +120,36 @@ const HeaderCustomize = () => {
                 </Link>
               </div>
               <div className="ttr-search-input-wrapper">
-                  <input type="text" name="qq" placeholder="Tìm kiếm khóa học..." className="ttr-search-input" />
-                  <button type="submit" name="search" className="ttr-search-submit"><i className="fa fa-search" /></button>
-                </div>
-              <Link to="/" className="text-white">
-                <h6 style={{marginLeft:'20px'}}>
-                  <i className="typcn typcn-point-of-interest-outline" />   Danh Mục
-                </h6>
-              </Link>
+                <input
+                  type="text"
+                  name="qq"
+                  placeholder="Tìm kiếm khóa học..."
+                  className="ttr-search-input"
+                />
+                <button
+                  type="submit"
+                  name="search"
+                  className="ttr-search-submit"
+                >
+                  <i className="fa fa-search" />
+                </button>
+              </div>
             </div>
             <div className="topbar-right">
-              {checkLocalStorage ? islogin()  :  login_register()  }
+              <ul>
+                <li>
+                  <Link to="/" className="text-white ">
+                    <span class="h6">
+                      <i
+                        style={{ marginLeft: "20px" }}
+                        className="typcn typcn-point-of-interest-outline"
+                      />{" "}
+                      Danh Mục
+                    </span>
+                  </Link>
+                </li>
+                {checkLocalStorage ? islogin() : login_register()}
+              </ul>
             </div>
           </div>
         </div>

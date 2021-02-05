@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
   useHistory,
+  Redirect
 } from "react-router-dom";
 import HomePage from "./modules/page/HomePage/Homepage";
 
@@ -15,7 +16,23 @@ import Register from "./modules/page/Register/Register";
 import AppContext from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
 import UserService from "./services/user.service";
-import HeaderCustomize from "./modules/components/Header/Header";
+import Default from "./modules/components/Layout/Default";
+import Auth from "./modules/components/Layout/Auth";
+import Error from "./modules/components/Error/Error";
+
+const AppRoute = ({ component: Component, layout: Layout, ...rest }) => {
+  console.log(Layout);
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <Layout>
+          <Component {...props}></Component>
+        </Layout>
+      )}
+    ></Route>
+  );
+};
 
 const App = () => {
   // const { token,setToken } = useToken();
@@ -71,19 +88,21 @@ const App = () => {
     >
       <Router>
         <Switch>
-          <Route path="/" component={HomePage} exact></Route>
-          <Route path="/profile" exact></Route>
+          <AppRoute path="/" exact layout={Default} component={HomePage} />
+          {/* <Route    layout={Default} component={HomePage}></Route> */}
+          {/* <AppRoute path="/profile"  layout={Default} component={""} /> */}
+          <AppRoute path="/error"  layout={Auth} component={Error} />
 
           {checkLocalStorage ? (
             <></>
           ) : (
             <>
-              <Route path="/login"exact component={Login}></Route>
-              <Route path="/register" exact component={Register} ></Route>
+              <AppRoute path="/login" layout={Auth} component={Login} />
+              <AppRoute path="/register" layout={Auth} component={Register} />
             </>
           )}
 
-          <Route path="*" exact component={HomePage}></Route>
+          <Redirect to="/404" />
         </Switch>
       </Router>
     </AppContext.Provider>
@@ -91,6 +110,3 @@ const App = () => {
 };
 
 export default App;
-
-// {token ?"": <Route path="/login" component={Login} ></Route>}
-//         {token ?"":  <Route path="/register" component={Login}></Route>}

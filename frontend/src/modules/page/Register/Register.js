@@ -78,17 +78,6 @@ const Register = () => {
       });
   };
   return (
-    <div className="page-wraper">
-      <div className="account-form">
-        <div className="account-head">
-          <Link to="/">
-            <img
-              src={process.env.PUBLIC_URL + "/logo.png"}
-              alt=""
-              width={320}
-            />
-          </Link>
-        </div>
         <div className="account-form-inner">
           <div className="account-container">
             <div className="heading-bx left">
@@ -193,8 +182,6 @@ const Register = () => {
             <div className="errorText ">{labelText}</div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

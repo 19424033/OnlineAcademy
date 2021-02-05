@@ -13,9 +13,9 @@ const Homepage = () => {
 
   return (
     <div>
-    	<HeaderCustomize/>
+    	{/* <HeaderCustomize/>
       <ProductsCustomize/>
-    	<FooterCustomize/>
+    	<FooterCustomize/> */}
 
       <Content style={{ padding: "150px 200px 0px 200px" }}>
         <Layout
