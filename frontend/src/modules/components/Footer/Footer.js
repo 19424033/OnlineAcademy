@@ -20,21 +20,21 @@ const FooterCustomize = () => {
                   <h5 className="footer-title">Liên hệ</h5>
                   <div className="m-t20">
                     <i className="fa fa-home m-r5"></i>{": "}
-                    <a href="https://goo.gl/maps/m7yhgxR3N8cn2koX9" target="_blank">
+                    <Link to="https://goo.gl/maps/m7yhgxR3N8cn2koX9" target="_blank">
                       227 Nguyễn Văn Cừ, Phường 4, Quận 5, TP.Hồ Chí Minh
-                    </a>
+                    </Link>
                   </div>
                   <div className="m-t20 email">
                   <i className="fa fa-envelope m-r5"></i>{": "}
-                    <a href="mailto:suport@trumsosanh.vn?subject=Help Need">
+                    <Link to="mailto:suport@trumsosanh.vn?subject=Help Need">
                       suport@onlineacademy.vn
-                    </a>
+                    </Link>
                   </div>
                   <div className="m-t20">
                   <i className="fa fa-phone m-r5"></i>{": "}
-                    <a href="tel:0868681051" className="text-90">
+                    <Link to="tel:0868681051" className="text-90">
                       (+84) 86 861 051
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

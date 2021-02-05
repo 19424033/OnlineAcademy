@@ -140,12 +140,12 @@ const Login = () => {
               <div className="col-lg-12">
                 <h6>Login with Social media</h6>
                 <div className="d-flex">
-                  <a className="btn flex-fill m-r5 facebook" href="/">
+                  <Link className="btn flex-fill m-r5 facebook" to="/">
                     <i className="fa fa-facebook"></i>Facebook
-                  </a>
-                  <a className="btn flex-fill m-l5 google-plus" href="/">
+                  </Link>
+                  <Link className="btn flex-fill m-l5 google-plus" to="/">
                     <i className="fa fa-google-plus"></i>Google Plus
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

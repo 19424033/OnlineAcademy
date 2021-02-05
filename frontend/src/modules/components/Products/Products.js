@@ -19,11 +19,11 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="cours-bx">
                   <div className="action-box">
-                    <img src="assets/images/courses/pic1.jpg" alt />
-                    <a href="#" className="btn">Read More</a>
+                    <img src="assets/images/courses/pic1.jpg" alt="" />
+                    <Link to="/" className="btn">Read More</Link>
                   </div>
                   <div className="info-bx text-center">
-                    <h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
+                    <h5><Link to="/">Introduction EduChamp – LMS plugin</Link></h5>
                     <span>Programming</span>
                   </div>
                   <div className="cours-more-info">
@@ -47,11 +47,11 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="cours-bx">
                   <div className="action-box">
-                    <img src="assets/images/courses/pic2.jpg" alt />
-                    <a href="#" className="btn">Read More</a>
+                    <img src="assets/images/courses/pic2.jpg" alt="" />
+                    <Link to="/" className="btn">Read More</Link>
                   </div>
                   <div className="info-bx text-center">
-                    <h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
+                    <h5><Link to="/">Introduction EduChamp – LMS plugin</Link></h5>
                     <span>Programming</span>
                   </div>
                   <div className="cours-more-info">
@@ -75,11 +75,11 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="cours-bx">
                   <div className="action-box">
-                    <img src="assets/images/courses/pic3.jpg" alt />
-                    <a href="#" className="btn">Read More</a>
+                    <img src="assets/images/courses/pic3.jpg" alt="" />
+                    <Link to="/" className="btn">Read More</Link>
                   </div>
                   <div className="info-bx text-center">
-                    <h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
+                    <h5><Link to="/">Introduction EduChamp – LMS plugin</Link></h5>
                     <span>Programming</span>
                   </div>
                   <div className="cours-more-info">
@@ -103,11 +103,11 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="cours-bx">
                   <div className="action-box">
-                    <img src="assets/images/courses/pic4.jpg" alt />
-                    <a href="#" className="btn">Read More</a>
+                    <img src="assets/images/courses/pic4.jpg" alt="" />
+                    <Link to="/" className="btn">Read More</Link>
                   </div>
                   <div className="info-bx text-center">
-                    <h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
+                    <h5><Link to="/">Introduction EduChamp – LMS plugin</Link></h5>
                     <span>Programming</span>
                   </div>
                   <div className="cours-more-info">
@@ -194,7 +194,7 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="event-bx">
                   <div className="action-box">
-                    <img src="assets/images/event/pic4.jpg" alt />
+                    <img src="assets/images/event/pic4.jpg" alt="" />
                   </div>
                   <div className="info-bx d-flex">
                     <div>
@@ -204,10 +204,10 @@ const ProductsCustomize = () => {
                       </div>
                     </div>
                     <div className="event-info">
-                      <h4 className="event-title"><a href="#">Education Autumn Tour 2019</a></h4>
+                      <h4 className="event-title"><Link to="/">Education Autumn Tour 2019</Link></h4>
                       <ul className="media-post">
-                        <li><a href="#"><i className="fa fa-clock-o" /> 7:00am 8:00am</a></li>
-                        <li><a href="#"><i className="fa fa-map-marker" /> Berlin, Germany</a></li>
+                        <li><Link to="/"><i className="fa fa-clock-o" /> 7:00am 8:00am</Link></li>
+                        <li><Link to="/"><i className="fa fa-map-marker" /> Berlin, Germany</Link></li>
                       </ul>
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the..</p>
                     </div>
@@ -217,7 +217,7 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="event-bx">
                   <div className="action-box">
-                    <img src="assets/images/event/pic3.jpg" alt />
+                    <img src="assets/images/event/pic3.jpg" alt="" />
                   </div>
                   <div className="info-bx d-flex">
                     <div>
@@ -227,10 +227,10 @@ const ProductsCustomize = () => {
                       </div>
                     </div>
                     <div className="event-info">
-                      <h4 className="event-title"><a href="#">Education Autumn Tour 2019</a></h4>
+                      <h4 className="event-title"><Link to="/">Education Autumn Tour 2019</Link></h4>
                       <ul className="media-post">
-                        <li><a href="#"><i className="fa fa-clock-o" /> 7:00am 8:00am</a></li>
-                        <li><a href="#"><i className="fa fa-map-marker" /> Berlin, Germany</a></li>
+                        <li><Link to="/"><i className="fa fa-clock-o" /> 7:00am 8:00am</Link></li>
+                        <li><Link to="/"><i className="fa fa-map-marker" /> Berlin, Germany</Link></li>
                       </ul>
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the..</p>
                     </div>
@@ -240,7 +240,7 @@ const ProductsCustomize = () => {
               <div className="item">
                 <div className="event-bx">
                   <div className="action-box">
-                    <img src="assets/images/event/pic2.jpg" alt />
+                    <img src="assets/images/event/pic2.jpg" alt="" />
                   </div>
                   <div className="info-bx d-flex">
                     <div>
@@ -250,10 +250,10 @@ const ProductsCustomize = () => {
                       </div>
                     </div>
                     <div className="event-info">
-                      <h4 className="event-title"><a href="#">Education Autumn Tour 2019</a></h4>
+                      <h4 className="event-title"><Link to="/">Education Autumn Tour 2019</Link></h4>
                       <ul className="media-post">
-                        <li><a href="#"><i className="fa fa-clock-o" /> 7:00am 8:00am</a></li>
-                        <li><a href="#"><i className="fa fa-map-marker" /> Berlin, Germany</a></li>
+                        <li><Link to="/"><i className="fa fa-clock-o" /> 7:00am 8:00am</Link></li>
+                        <li><Link to="/"><i className="fa fa-map-marker" /> Berlin, Germany</Link></li>
                       </ul>
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the..</p>
                     </div>
@@ -263,7 +263,7 @@ const ProductsCustomize = () => {
             </div>
           </div>
           <div className="text-center">
-            <a href="#" className="btn">View All Event</a>
+            <Link to="/" className="btn">View All Event</Link>
           </div>
         </div>
       </div>
@@ -280,7 +280,7 @@ const ProductsCustomize = () => {
             <div className="item">
               <div className="testimonial-bx">
                 <div className="testimonial-thumb">
-                  <img src="assets/images/testimonials/pic1.jpg" alt />
+                  <img src="assets/images/testimonials/pic1.jpg" alt="" />
                 </div>
                 <div className="testimonial-info">
                   <h5 className="name">Peter Packer</h5>
@@ -294,7 +294,7 @@ const ProductsCustomize = () => {
             <div className="item">
               <div className="testimonial-bx">
                 <div className="testimonial-thumb">
-                  <img src="assets/images/testimonials/pic2.jpg" alt />
+                  <img src="assets/images/testimonials/pic2.jpg" alt="" />
                 </div>
                 <div className="testimonial-info">
                   <h5 className="name">Peter Packer</h5>
@@ -322,18 +322,18 @@ const ProductsCustomize = () => {
             <div className="item">
               <div className="recent-news">
                 <div className="action-box">
-                  <img src="assets/images/blog/latest-blog/pic1.jpg" alt />
+                  <img src="assets/images/blog/latest-blog/pic1.jpg" alt="" />
                 </div>
                 <div className="info-bx">
                   <ul className="media-post">
-                    <li><a href="#"><i className="fa fa-calendar" />Jan 02 2019</a></li>
-                    <li><a href="#"><i className="fa fa-user" />By William</a></li>
+                    <li><Link to="/"><i className="fa fa-calendar" />Jan 02 2019</Link></li>
+                    <li><Link to="/"><i className="fa fa-user" />By William</Link></li>
                   </ul>
-                  <h5 className="post-title"><a href="blog-details.html">This Story Behind Education Will Haunt You Forever.</a></h5>
+                  <h5 className="post-title"><Link to="/log-details.html">This Story Behind Education Will Haunt You Forever.</Link></h5>
                   <p>Knowing that, you’ve optimised your pages countless amount of times, written tons.</p>
                   <div className="post-extra">
-                    <a href="#" className="btn-link">READ MORE</a>
-                    <a href="#" className="comments-bx"><i className="fa fa-comments-o" />20 Comment</a>
+                    <Link to="/" className="btn-link">READ MORE</Link>
+                    <Link to="/" className="comments-bx"><i className="fa fa-comments-o" />20 Comment</Link>
                   </div>
                 </div>
               </div>
@@ -341,18 +341,18 @@ const ProductsCustomize = () => {
             <div className="item">
               <div className="recent-news">
                 <div className="action-box">
-                  <img src="assets/images/blog/latest-blog/pic2.jpg" alt />
+                  <img src="assets/images/blog/latest-blog/pic2.jpg" alt="" />
                 </div>
                 <div className="info-bx">
                   <ul className="media-post">
-                    <li><a href="#"><i className="fa fa-calendar" />Feb 05 2019</a></li>
-                    <li><a href="#"><i className="fa fa-user" />By John</a></li>
+                    <li><Link to="/"><i className="fa fa-calendar" />Feb 05 2019</Link></li>
+                    <li><Link to="/"><i className="fa fa-user" />By John</Link></li>
                   </ul>
-                  <h5 className="post-title"><a href="blog-details.html">What Will Education Be Like In The Next 50 Years?</a></h5>
+                  <h5 className="post-title"><Link to="/log-details.html">What Will Education Be Like In The Next 50 Years?</Link></h5>
                   <p>As desperate as you are right now, you have done everything you can on your.</p>
                   <div className="post-extra">
-                    <a href="#" className="btn-link">READ MORE</a>
-                    <a href="#" className="comments-bx"><i className="fa fa-comments-o" />14 Comment</a>
+                    <Link to="/" className="btn-link">READ MORE</Link>
+                    <Link to="/" className="comments-bx"><i className="fa fa-comments-o" />14 Comment</Link>
                   </div>
                 </div>
               </div>
@@ -360,18 +360,18 @@ const ProductsCustomize = () => {
             <div className="item">
               <div className="recent-news">
                 <div className="action-box">
-                  <img src="assets/images/blog/latest-blog/pic3.jpg" alt />
+                  <img src="assets/images/blog/latest-blog/pic3.jpg" alt="" />
                 </div>
                 <div className="info-bx">
                   <ul className="media-post">
-                    <li><a href="#"><i className="fa fa-calendar" />April 14 2019</a></li>
-                    <li><a href="#"><i className="fa fa-user" />By George</a></li>
+                    <li><Link to="/"><i className="fa fa-calendar" />April 14 2019</Link></li>
+                    <li><Link to="/"><i className="fa fa-user" />By George</Link></li>
                   </ul>
-                  <h5 className="post-title"><a href="blog-details.html">Master The Skills Of Education And Be.</a></h5>
+                  <h5 className="post-title"><Link to="/log-details.html">Master The Skills Of Education And Be.</Link></h5>
                   <p>You will see in the guide all my years of valuable experience together with.</p>
                   <div className="post-extra">
-                    <a href="#" className="btn-link">READ MORE</a>
-                    <a href="#" className="comments-bx"><i className="fa fa-comments-o" />23 Comment</a>
+                    <Link to="/" className="btn-link">READ MORE</Link>
+                    <Link to="/" className="comments-bx"><i className="fa fa-comments-o" />23 Comment</Link>
                   </div>
                 </div>
               </div>

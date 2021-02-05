@@ -40,15 +40,15 @@
       <Checkbox>Remember me</Checkbox>
     </Form.Item>
 
-    <a className="login-form-forgot" href="/">
+    <Link className="login-form-forgot" to="/">
       Forgot password
-    </a>
+    </Link>
   </Form.Item>
 
   <Form.Item>
     <Button type="primary" htmlType="submit" className="login-form-button">
       Log in
     </Button>
-    Or <a href="/">register now!</a>
+    Or <Link to="/">register now!</Link>
   </Form.Item>
 </Form>;
