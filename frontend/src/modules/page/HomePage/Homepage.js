@@ -1,5 +1,7 @@
 import HeaderCustomize from "../../components/Header/Header";
-import React, { useContext } from "react";
+import FooterCustomize from "../../components/Footer/Footer";
+import ProductsCustomize from "../../components/Products/Products";
+import React, { useContext, useState } from "react";
 
 import { Layout } from "antd";
 import OTP from "../OTPComfirm/OTP";
@@ -10,8 +12,10 @@ const Homepage = () => {
   const { checkOTPConfim } = useContext(AppContext);
 
   return (
-    <>
-      <HeaderCustomize />
+    <div>
+    	<HeaderCustomize/>
+      <ProductsCustomize/>
+    	<FooterCustomize/>
 
       <Content style={{ padding: "150px 200px 0px 200px" }}>
         <Layout
@@ -25,7 +29,7 @@ const Homepage = () => {
           </Content>
         </Layout>
       </Content>
-    </>
+    </div>
   );
 };
 

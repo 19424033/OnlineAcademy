@@ -21,7 +21,6 @@ const HeaderCustomize = () => {
     saveToken(undefined);
     setCheckLocalStorage(false);
     setCheckOTPConfim(undefined);
-
     AuthService().logout();
   };
   const onSearch = (value) => console.log(value);
@@ -91,7 +90,7 @@ const HeaderCustomize = () => {
   };
 
   return (
-    <div className="header rs-nav header-transparent">
+    <header className="header rs-nav header-transparent">
       <div className="top-bar">
         <div className="container">
           <div className="row d-flex justify-content-between">
@@ -105,37 +104,23 @@ const HeaderCustomize = () => {
                   />
                 </Link>
               </div>
-
               <div className="ttr-search-input-wrapper">
-                <input
-                  type="text"
-                  name="qq"
-                  placeholder="Tìm kiếm khóa học..."
-                  className="ttr-search-input"
-                />
-                <button
-                  type="submit"
-                  name="search"
-                  className="ttr-search-submit"
-                >
-                  <i className="fa fa-search" />
-                </button>
-              </div>
-             
-            </div>
-            <div className="topbar-right">
-            <Link to="/" className="text-white ml-3">
-                <h6>
-                  <i className="typcn typcn-point-of-interest-outline" /> Danh
-                  Mục
+                  <input type="text" name="qq" placeholder="Tìm kiếm khóa học..." className="ttr-search-input" />
+                  <button type="submit" name="search" className="ttr-search-submit"><i className="fa fa-search" /></button>
+                </div>
+              <Link to="/" className="text-white">
+                <h6 style={{marginLeft:'20px'}}>
+                  <i className="typcn typcn-point-of-interest-outline" />   Danh Mục
                 </h6>
               </Link>
-              {checkLocalStorage ? islogin() : login_register()}
+            </div>
+            <div className="topbar-right">
+              {checkLocalStorage ? islogin()  :  login_register()  }
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
