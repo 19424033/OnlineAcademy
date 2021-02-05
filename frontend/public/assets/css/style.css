@@ -1022,7 +1022,7 @@ font-family: 'Roboto', sans-serif;
 	6. HEADER TRANSPARENT
 =================================*/
 .header-transparent{
-	position:absolute;
+	position:fixed;
 	width:100%;
 }
 .header-transparent .menu-bar{
