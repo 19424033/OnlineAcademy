@@ -7,7 +7,7 @@ import {
   Switch,
   Route,
   useHistory,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import HomePage from "./modules/page/HomePage/Homepage";
 
@@ -91,8 +91,13 @@ const App = () => {
           <AppRoute path="/" exact layout={Default} component={HomePage} />
           {/* <Route    layout={Default} component={HomePage}></Route> */}
           {/* <AppRoute path="/profile"  layout={Default} component={""} /> */}
-          <AppRoute path="/error"  layout={Auth} component={Error} />
+          {/* <Route  component={Error} /> */}
 
+          {/* <Route path="*">
+            <Redirect to="/" />
+          </Route> */}
+          <Route path="/not-found"><Error/></Route>
+          <Redirect to="not-found" />
           {checkLocalStorage ? (
             <></>
           ) : (
@@ -101,8 +106,8 @@ const App = () => {
               <AppRoute path="/register" layout={Auth} component={Register} />
             </>
           )}
-
-          <Redirect to="/404" />
+          {/* <Route path="*" component={Error} /> */}
+          {/* <Redirect from='*' to="/404" /> */}
         </Switch>
       </Router>
     </AppContext.Provider>
