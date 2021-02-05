@@ -1,4 +1,6 @@
 import HeaderCustomize from "../../components/Header/Header";
+import FooterCustomize from "../../components/Footer/Footer";
+import ProductsCustomize from "../../components/Products/Products";
 import React, { useContext, useState } from "react";
 
 import { Layout, Menu } from "antd";
@@ -13,9 +15,11 @@ const Homepage = () => {
 
   return (
     <div>
-      <HeaderCustomize />
+    	<HeaderCustomize/>
+      <ProductsCustomize/>
+    	<FooterCustomize/>
 
-      <Content style={{ padding: "150px 200px 0px 200px" }}>
+      {/* <Content style={{ padding: "150px 200px 0px 200px" }}>
         <Layout
           className="site-layout-background"
           style={{ padding: "24px 0" }}
@@ -26,7 +30,7 @@ const Homepage = () => {
             {checkOTPConfim === false ? <OTP /> : ""}
           </Content>
         </Layout>
-      </Content>
+      </Content> */}
     </div>
   );
 };

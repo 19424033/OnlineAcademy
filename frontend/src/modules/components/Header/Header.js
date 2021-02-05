@@ -23,8 +23,7 @@ const HeaderCustomize = () => {
     saveToken(undefined);
     setCheckLocalStorage(false);
     setCheckOTPConfim(undefined);
-
-    AuthService().logout();  
+    AuthService().logout();
   };
   const onSearch = (value) => console.log(value);
   const firstCharacter = (x) => {
@@ -37,17 +36,16 @@ const HeaderCustomize = () => {
       <Menu.Item>
         <Link to="/">
           <h6>
-            <i className="fa fa-user "/> Hồ Sơ
+            <i className="fa fa-user " /> Hồ Sơ
           </h6>
         </Link>
       </Menu.Item>
       <Menu.Item>
-      <Link to="/" onClick={logOut}>
-        <h6>
-          <i className="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"/>   Đăng Xuất
-        </h6>
+        <Link to="/" onClick={logOut}>
+          <h6>
+            <i className="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight" />   Đăng Xuất
+          </h6>
         </Link>
-
       </Menu.Item>
     </Menu>
   );
@@ -70,11 +68,6 @@ const HeaderCustomize = () => {
       <div>
         <Link to="/" className="text-white">
           <h6>
-            <i className="fa fa-heart-o" />  Yêu thích
-          </h6>
-        </Link>
-        <Link to="/" className="text-white">
-          <h6>
             <i className="typcn typcn-chevron-right-outline" />  Khóa học của tôi
           </h6>
         </Link>
@@ -86,82 +79,7 @@ const HeaderCustomize = () => {
   };
 
   return (
-    // <Header className="header">
-
-    //   <div className="header_top">
-    //     <ul className="menu_top">
-    //       <li>
-    //         <a href="/">Kích hoạt khóa học</a>
-    //       </li>
-    //       <li>
-    //         <a href="/">Kiểm tra đơn hàng</a>
-    //       </li>
-    //       <li>
-    //         <a href="/">Chăm sóc khách hàng</a>
-    //       </li>
-    //       <li>
-    //         <a href="/">Trở thành giảng viên</a>
-    //       </li>
-    //       <li>
-    //         <a href="/">Khóa học của tôi</a>
-    //       </li>
-    //     </ul>
-    //   </div>
-
-    //   <div className="header_main">
-    //     <Row>
-    //       <Col span={6}>
-    //         <div className="header_main_logo">
-    //           <Link to="/">
-    //             <img
-    //               src={process.env.PUBLIC_URL + "/logo.png"}
-    //               className="logo"
-    //               alt=""
-    //             />
-    //           </Link>
-    //         </div>
-    //       </Col>
-
-    //       <Col span={8}>
-    //         <div className="header_main_search">
-    //           <Search placeholder="tìm kiếm...." onSearch={onSearch} />
-    //         </div>
-    //       </Col>
-    //       <Col span={3}>
-    //         <div className="header_main_button">
-    //           <Button
-    //             type="primary"
-    //             icon={<ShoppingCartOutlined />}
-    //             size={"large"}
-    //           />
-
-    //           <Button type="primary" icon={<HeartOutlined />} size={"large"} />
-    //           <Button type="primary" icon={<BellOutlined />} size={"large"} />
-    //         </div>
-    //       </Col>
-    //       <Col span={7}>
-    //         <div className="header_main_user">
-    //           <Link to="/login">
-    //             <Button className="btn_academy btn_dangnhap">Đăng Nhập</Button>
-    //           </Link>
-    //           <Link to="/register">
-    //             <Button danger className="btn_academy btn_dangky ml-3">
-    //               Đăng Ký
-    //             </Button>
-    //           </Link>
-    //           <div className="topZindex">
-    //             <Dropdown overlay={menu}>
-    //               <Button className="btn_academy ml-3" icon={<UserOutlined />}>
-    //                 haminhbaotoan
-    //               </Button>
-    //             </Dropdown>
-    //           </div>
-    //         </div>
-    //       </Col>
-    //     </Row>
-    //   </div>
-    // </Header>
-    <div className="header rs-nav header-transparent">
+    <header className="header rs-nav header-transparent">
       <div className="top-bar">
         <div className="container">
           <div className="row d-flex justify-content-between">
@@ -174,24 +92,24 @@ const HeaderCustomize = () => {
                     alt=""
                   />
                 </Link>
-                <div className="ttr-search-input-wrapper">
+              </div>
+              <div className="ttr-search-input-wrapper">
                   <input type="text" name="qq" placeholder="Tìm kiếm khóa học..." className="ttr-search-input" />
                   <button type="submit" name="search" className="ttr-search-submit"><i className="fa fa-search" /></button>
                 </div>
-              </div>
               <Link to="/" className="text-white">
-                <h6>
+                <h6 style={{marginLeft:'20px'}}>
                   <i className="typcn typcn-point-of-interest-outline" />   Danh Mục
                 </h6>
               </Link>
             </div>
             <div className="topbar-right">
-              {checkLocalStorage ?  islogin() : login_register() }
+              {checkLocalStorage ? islogin()  :  login_register()  }
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

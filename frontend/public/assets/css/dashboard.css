@@ -299,13 +299,8 @@
 	position: relative;
 }
 .ttr-search-input-wrapper{
-	left: 10px;
-	top: 5px;
-	right: 0px;
-	bottom: 0;
-	height: 40px;
-	width: 400px;	
-	position: relative;
+	width: 300px;	
+	position:relative ;
 }
 .ttr-search-input{
 	width: 100%;

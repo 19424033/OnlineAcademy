@@ -1784,9 +1784,8 @@ footer .widget_services ul li:hover {
 }
 .footer-top {
     background: #303030;
-    background-size: cover;
-    background-position: center;
-    padding: 0 0 20px;
+	padding: 25px 0;
+	height: 200px;
 	/* font-family:rubik; */
 font-family: 'Roboto', sans-serif;
 
