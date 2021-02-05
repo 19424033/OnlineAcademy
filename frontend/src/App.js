@@ -15,6 +15,8 @@ import Register from "./modules/page/Register/Register";
 import AppContext from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
 import UserService from "./services/user.service";
+import HeaderCustomize from "./modules/components/Header/Header";
+
 const App = () => {
   // const { token,setToken } = useToken();
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -70,19 +72,18 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/" component={HomePage} exact></Route>
+          <Route path="/profile" exact></Route>
 
           {checkLocalStorage ? (
-            ""
+            <></>
           ) : (
-            <Route path="/login" component={Login} exact></Route>
-          )}
-          {checkLocalStorage ? (
-            ""
-          ) : (
-            <Route path="/register" component={Register} exact></Route>
+            <>
+              <Route path="/login"exact component={Login}></Route>
+              <Route path="/register" exact component={Register} ></Route>
+            </>
           )}
 
-          <Route path="*" component={HomePage}></Route>
+          <Route path="*" exact component={HomePage}></Route>
         </Switch>
       </Router>
     </AppContext.Provider>

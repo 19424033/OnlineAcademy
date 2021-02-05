@@ -1,18 +1,16 @@
 import HeaderCustomize from "../../components/Header/Header";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
-import { Layout, Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Layout } from "antd";
 import OTP from "../OTPComfirm/OTP";
 import AppContext from "../../../utils/AppContext";
 
-const { Content, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Content } = Layout;
 const Homepage = () => {
   const { checkOTPConfim } = useContext(AppContext);
 
   return (
-    <div>
+    <>
       <HeaderCustomize />
 
       <Content style={{ padding: "150px 200px 0px 200px" }}>
@@ -27,7 +25,7 @@ const Homepage = () => {
           </Content>
         </Layout>
       </Content>
-    </div>
+    </>
   );
 };
 
