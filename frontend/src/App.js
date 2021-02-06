@@ -89,15 +89,10 @@ const App = () => {
       <Router>
         <Switch>
           <AppRoute path="/" exact layout={Default} component={HomePage} />
-          {/* <Route    layout={Default} component={HomePage}></Route> */}
-          {/* <AppRoute path="/profile"  layout={Default} component={""} /> */}
-          {/* <Route  component={Error} /> */}
+           <AppRoute path="/profile"  layout={Default} component={""} />
 
-          {/* <Route path="*">
-            <Redirect to="/" />
-          </Route> */}
-          <Route path="/not-found"><Error/></Route>
-          <Redirect to="not-found" />
+       
+         
           {checkLocalStorage ? (
             <></>
           ) : (
@@ -106,8 +101,8 @@ const App = () => {
               <AppRoute path="/register" layout={Auth} component={Register} />
             </>
           )}
-          {/* <Route path="*" component={Error} /> */}
-          {/* <Redirect from='*' to="/404" /> */}
+          <Route path="/not-found"><Error/></Route>
+          <Redirect to="not-found" />
         </Switch>
       </Router>
     </AppContext.Provider>
