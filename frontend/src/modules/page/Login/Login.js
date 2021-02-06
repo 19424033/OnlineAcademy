@@ -1,18 +1,16 @@
-import "antd/dist/antd.css";
-import "./login.scss";
+
+import React, { useState, useContext } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import React, { useState, useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link , useHistory, useLocation } from "react-router-dom";
+
 import AuthService from "../../../services/auth.service";
 import AppContext from "../../../utils/AppContext";
 import { parseAccessToken_res } from "../../../utils/utils";
 
-// import HomePage from "../HomePage/Homepage";
-// import Register from "../Register/Register";
-// import useToken from "../../utils/useToken";
+import "antd/dist/antd.css";
+import "./login.scss";
+
 
 const Login = () => {
   const {
@@ -32,7 +30,6 @@ const Login = () => {
       .login(values)
       .then((res) => {
         const { authenticated } = res.data;
-        // console.log(res.data);
         if (authenticated) {
           setnameUser(parseAccessToken_res(res.data).Dislayname);
           saveToken(res.data);
@@ -42,15 +39,13 @@ const Login = () => {
             setCheckOTPConfim(false);
           }
           setCheckLocalStorage(true);
-          // localStorage.AcademyOnline_Token = JSON.stringify(res.data);
-          // setnameUser(res.data.refreshToken)
           setLabelText(<Alert message="ok !!" type="success" />);
           history.replace(from);
         } else {
           setLabelText(
             <Alert message="Email or Password is incorrect !!" type="error" />
           );
-          setTimeout(() => setLabelText(undefined), 3000);
+          setTimeout(() => setLabelText(), 3000);
         }
       })
       .catch((err) => {

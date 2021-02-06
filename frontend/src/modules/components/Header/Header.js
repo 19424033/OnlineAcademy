@@ -1,10 +1,10 @@
+import { useContext } from "react";
 import { Input, Avatar, Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
+
 import AuthService from "../../../services/auth.service";
-import { useContext } from "react";
 import AppContext from "../../../utils/AppContext";
 
-// import { HeartOutlined, BellOutlined} from "@ant-design/icons";
 const { Search } = Input;
 
 const HeaderCustomize = () => {
@@ -17,10 +17,10 @@ const HeaderCustomize = () => {
     setCheckOTPConfim,
   } = useContext(AppContext);
   const logOut = () => {
-    setnameUser(undefined);
-    saveToken(undefined);
+    setnameUser();
+    saveToken();
     setCheckLocalStorage(false);
-    setCheckOTPConfim(undefined);
+    setCheckOTPConfim();
     AuthService().logout();
   };
   const onSearch = (value) => console.log(value);

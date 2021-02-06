@@ -40,7 +40,7 @@ const FooterCustomize = () => {
               </div>
               <div className="col-lg-2 col-md-12 col-sm-12 footer-col-4">
                 <div className="m-t20">
-                  <img src={process.env.PUBLIC_URL + "/hitop.png"}></img>
+                  <img src={process.env.PUBLIC_URL + "/hitop.png"} alt=""/>
                 </div>
               </div>
              </div>

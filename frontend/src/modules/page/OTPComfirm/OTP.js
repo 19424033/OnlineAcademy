@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Form, InputNumber, Button, message } from "antd";
-import { useHistory, useLocation } from "react-router-dom";
 
 import AuthService from "../../../services/auth.service";
-import { parseAccessToken } from "../../../utils/utils";
 import AppContext from "../../../utils/AppContext";
+
+import { parseAccessToken } from "../../../utils/utils";
 import { parseAccessToken_res } from "../../../utils/utils";
 
 const OTP = () => {
   const [form] = Form.useForm();
-  const history = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
 
   const {
     setnameUser,

@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation ,Link} from "react-router-dom";
 import { Form, Input, Button, Alert } from "antd";
-import { Link } from "react-router-dom";
 
-import "./register.scss";
 import AuthService from "../../../services/auth.service";
 import AppContext from "../../../utils/AppContext";
 import { parseAccessToken_res } from "../../../utils/utils";
 
+import "./register.scss";
 var dateFormat = require("dateformat");
 
 const formItemLayout = {
@@ -53,7 +52,7 @@ const Register = () => {
               type="error"
             />
           );
-          setTimeout(() => setLabelText(undefined), 3000);
+          setTimeout(() => setLabelText(), 3000);
         } else {
           console.log(values)
           AuthService()
