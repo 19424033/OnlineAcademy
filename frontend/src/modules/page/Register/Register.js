@@ -27,6 +27,7 @@ const Register = () => {
   const location = useLocation();
   const [labelText, setLabelText] = useState("");
   const { from } = location.state || { from: { pathname: "/" } };
+  console.log(from)
 
   const {
     setnameUser,

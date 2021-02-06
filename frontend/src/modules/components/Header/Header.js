@@ -76,7 +76,7 @@ const HeaderCustomize = () => {
       <>
         <li>
           <Link to="/" className="text-white">
-            <span class="h6">
+            <span className="h6">
               <i style={{ marginLeft: "20px" }} className="fa fa-heart-o" /> Yêu
               thích
             </span>
@@ -84,7 +84,7 @@ const HeaderCustomize = () => {
         </li>
         <li>
           <Link to="/" className="text-white">
-            <span class="h6">
+            <span className="h6">
               <i
                 style={{ marginLeft: "20px" }}
                 className="typcn typcn-chevron-right-outline"
@@ -138,8 +138,8 @@ const HeaderCustomize = () => {
             <div className="topbar-right">
               <ul>
                 <li>
-                  <Link to="/" className="text-white ">
-                    <span class="h6">
+                  <Link to="/category" className="text-white ">
+                    <span className="h6">
                       <i
                         style={{ marginLeft: "20px" }}
                         className="typcn typcn-point-of-interest-outline"

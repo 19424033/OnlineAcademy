@@ -35,15 +35,17 @@ const OTP = () => {
       const OTP = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
       const tokenString = localStorage.getItem("AcademyOnline_Token");
       const userID = parseAccessToken(tokenString);
-      console.log(userID)
+      console.log(userID);
       AuthService()
         .checkOTPDB(userID.Usersid, OTP)
         .then((result) => {
-
           if (result.data) {
-          console.log(result)
             setConfirmLoading(true);
-            setnameUser(parseAccessToken_res(result.data).Dislayname);
+            setTimeout(() => {
+              setIsModalVisible(false);
+              setConfirmLoading(false);
+              message.success("Xác nhận OPT thành công");
+              setnameUser(parseAccessToken_res(result.data).Dislayname);
               saveToken(result.data);
               if (parseAccessToken_res(result.data).OTP_Confim.data[0] === 1) {
                 setCheckOTPConfim(true);
@@ -51,13 +53,7 @@ const OTP = () => {
                 setCheckOTPConfim(false);
               }
               setCheckLocalStorage(true);
-            setTimeout(() => {
-              setIsModalVisible(false);
-              setConfirmLoading(false);
-              message.success("Xác nhận OPT thành công");
-              
             }, 2000);
-
           } else {
             message.error("Mã OTP Không khớp");
           }
@@ -203,8 +199,8 @@ const OTP = () => {
         <Button type="primary" className="mb-3" onClick={() => resetOTP()}>
           Lấy lại mã OTP
         </Button>
-        <br/>
-        <h5 >
+        <br />
+        <h5>
           {timeLeft
             ? `Đã gửi mã đến email ${email} - vui lòng xác thực trong ${timeLeft}s`
             : ""}

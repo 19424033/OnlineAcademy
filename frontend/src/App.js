@@ -1,7 +1,4 @@
-import "antd/dist/antd.css";
-import "./assets/css/global.scss";
 import React, { useState, useEffect } from "react";
-import Login from "./modules/page/Login/Login";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,46 +6,43 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-import HomePage from "./modules/page/HomePage/Homepage";
 
+import "antd/dist/antd.css";
+import "./assets/css/global.scss";
+
+import AppRoute from "./AppRoute";
+
+//page
+import HomePage from "./modules/page/HomePage/Homepage";
+import Login from "./modules/page/Login/Login";
 import Register from "./modules/page/Register/Register";
-// import AuthService from "./services/auth.service";
-import AppContext from "./utils/AppContext";
-import { parseAccessToken } from "./utils/utils";
-import UserService from "./services/user.service";
+import Error from "./modules/components/Error/Error";
+import OTP from "./modules/page/OTPComfirm/OTP";
+
+//layout
 import Default from "./modules/components/Layout/Default";
 import Auth from "./modules/components/Layout/Auth";
-import Error from "./modules/components/Error/Error";
 
-const AppRoute = ({ component: Component, layout: Layout, ...rest }) => {
-  console.log(Layout);
-  return (
-    <Route
-      {...rest}
-      render={(props) => (
-        <Layout>
-          <Component {...props}></Component>
-        </Layout>
-      )}
-    ></Route>
-  );
-};
+//utils
+import AppContext from "./utils/AppContext";
+import { parseAccessToken } from "./utils/utils";
+import Profile from "./modules/page/Profile/Profile";
+import Category from "./modules/page/Category/Category";
 
 const App = () => {
-  // const { token,setToken } = useToken();
+  const history = useHistory();
+
   const [currentUser, setCurrentUser] = useState(undefined);
   const [nameUser, setnameUser] = useState(undefined);
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
 
   const [checkLocalStorage, setCheckLocalStorage] = useState(false);
-  // console.log(checkLocalStorage)
   const saveToken = (userToken) => {
     // dùng để lưu token khi đăng nhập
+
     localStorage.setItem("AcademyOnline_Token", JSON.stringify(userToken));
   };
-  const history = useHistory();
 
-  // console.log(checkOTPConfim);
   useEffect(() => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
@@ -88,11 +82,12 @@ const App = () => {
     >
       <Router>
         <Switch>
-          <AppRoute path="/" exact layout={Default} component={HomePage} />
-           <AppRoute path="/profile"  layout={Default} component={""} />
+        {checkOTPConfim === false ? <OTP /> : ""}
 
-       
-         
+          <AppRoute path="/" exact layout={Default} component={HomePage} />
+          <AppRoute path="/profile" layout={Default} component={Profile} />
+          <AppRoute path="/category" layout={Default} component={Category} />
+
           {checkLocalStorage ? (
             <></>
           ) : (
@@ -101,7 +96,9 @@ const App = () => {
               <AppRoute path="/register" layout={Auth} component={Register} />
             </>
           )}
-          <Route path="/not-found"><Error/></Route>
+          <Route path="/not-found">
+            <Error />
+          </Route>
           <Redirect to="not-found" />
         </Switch>
       </Router>
