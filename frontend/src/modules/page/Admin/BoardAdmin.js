@@ -4,19 +4,19 @@ import UserService from "../../../services/user.service";
 import { parseAccessToken,localparseJson } from "../../../utils/utils";
 
 const BoardAdmin = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState();
   const tokenString = localStorage.getItem("AcademyOnline_Token");
-  const refreshToken = localparseJson(tokenString).refreshToken;
+  const accessToken = localparseJson(tokenString).accessToken;
   const user = parseAccessToken(tokenString);
 
   // lấy trường accessToken đi mã hoá và lấy ID
-  console.log(user);
   useEffect(() => {
-    UserService(user.Usersid,refreshToken)
+    UserService(user.Usersid,accessToken)
       .getUserBoard()
       .then(
         (response) => {
-          setContent(response.data);
+          console.log(response.data)
+          setContent(response.data.Email);
         },
         (error) => {
           const _content =

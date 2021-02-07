@@ -28,19 +28,23 @@ const parseJwt = (token) => {
 
 // lay giá trị parse thành object
 const localparseJson = (localString) => {
-  return JSON.parse(localString);
+  if (localString) return JSON.parse(localString);
+  else return "";
 };
 
 const getAccessToken = (localString) => {
-  return localparseJson(localString).accessToken;
+  if (localString) return localparseJson(localString).accessToken;
+  else return "";
 };
 
 const parseAccessToken = (localString) => {
-  return parseJwt(getAccessToken(localString));
+  if (localString) return parseJwt(getAccessToken(localString));
+  else return "";
 };
 
 const parseAccessToken_res = (data) => {
-  return parseJwt(data.accessToken);
+  if (data) return parseJwt(data.accessToken);
+  else return "";
 };
 
 export {
