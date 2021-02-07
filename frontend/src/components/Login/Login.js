@@ -4,9 +4,9 @@ import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link , useHistory, useLocation } from "react-router-dom";
 
-import AuthService from "../../../services/auth.service";
-import AppContext from "../../../utils/AppContext";
-import { parseAccessToken_res } from "../../../utils/utils";
+import AuthService from "../../services/auth.service";
+import AppContext from "../../utils/AppContext";
+import { parseAccessToken_res } from "../../utils/utils";
 
 import "antd/dist/antd.css";
 import "./login.scss";

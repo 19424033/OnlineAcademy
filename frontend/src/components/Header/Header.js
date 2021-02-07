@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { Input, Avatar, Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
 
-import AuthService from "../../../services/auth.service";
-import AppContext from "../../../utils/AppContext";
+import AuthService from "../../services/auth.service";
+import AppContext from "../../utils/AppContext";
 
 const { Search } = Input;
 

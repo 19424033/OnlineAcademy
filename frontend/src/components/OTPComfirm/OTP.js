@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Form, InputNumber, Button, message } from "antd";
 
-import AuthService from "../../../services/auth.service";
-import AppContext from "../../../utils/AppContext";
+import AuthService from "../../services/auth.service";
+import AppContext from "../../utils/AppContext";
 
-import { parseAccessToken } from "../../../utils/utils";
-import { parseAccessToken_res } from "../../../utils/utils";
+import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 
 const OTP = () => {
   const [form] = Form.useForm();

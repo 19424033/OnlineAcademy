@@ -10,18 +10,18 @@ import "./assets/css/global.scss";
 import AppRoute from "./AppRoute";
 
 //page
-import HomePage from "./modules/page/HomePage/Homepage";
-import Login from "./modules/page/Login/Login";
-import Register from "./modules/page/Register/Register";
-import Error from "./modules/components/Error/Error";
-import OTP from "./modules/page/OTPComfirm/OTP";
-import Profile from "./modules/page/Profile/Profile";
-import Category from "./modules/page/Category/Category";
-import BoardAdmin from "./modules/page/Admin/BoardAdmin";
+import HomePage from "./components/HomePage/Homepage";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Error from "./components/Error/Error";
+import OTP from "./components/OTPComfirm/OTP";
+import Profile from "./components/Profile/Profile";
+import Category from "./containers/Category/Category";
+import BoardAdmin from "./containers/Admin/BoardAdmin";
 
 //layout
-import Default from "./modules/components/Layout/Default";
-import Auth from "./modules/components/Layout/Auth";
+import Default from "./components/Layout/Default";
+import Auth from "./components/Layout/Auth";
 
 //utils
 import AppContext from "./utils/AppContext";

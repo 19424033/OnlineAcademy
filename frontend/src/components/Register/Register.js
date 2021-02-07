@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { useHistory, useLocation ,Link} from "react-router-dom";
 import { Form, Input, Button, Alert } from "antd";
 
-import AuthService from "../../../services/auth.service";
-import AppContext from "../../../utils/AppContext";
-import { parseAccessToken_res } from "../../../utils/utils";
+import AuthService from "../../services/auth.service";
+import AppContext from "../../utils/AppContext";
+import { parseAccessToken_res } from "../../utils/utils";
 
 import "./register.scss";
 var dateFormat = require("dateformat");
