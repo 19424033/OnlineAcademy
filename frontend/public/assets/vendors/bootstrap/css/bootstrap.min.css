@@ -583,10 +583,18 @@ pre code {
 
 .container {
 	width: 100%;
+	height: 100%;
 	padding-right: 15px;
 	padding-left: 15px;
 	margin-right: auto;
 	margin-left: auto
+}
+
+.container-silder {
+	height: 100%; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @media (min-width:576px) {
@@ -8990,7 +8998,7 @@ button.bg-dark:hover {
 }
 
 .text-center {
-	text-align: center!important
+	text-align: center!important;
 }
 
 @media (min-width:576px) {
