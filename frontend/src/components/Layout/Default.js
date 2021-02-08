@@ -9,17 +9,9 @@ export const Default = (props) => {
   return (
     <>
       <HeaderCustomize />
-
-      <Content style={{ padding: "150px 200px 0px 200px" }}>
-        <Layout
-          className="site-layout-background"
-          style={{ padding: "24px 0" }}
-        >
-          <Content style={{ padding: "0 24px", minHeight: 280 }}>
+        <Layout style={{paddingTop:'70px'}}>
             {props.children}
-          </Content>
-        </Layout>
-      </Content>
+      </Layout>
       <FooterCustomize />
     </>
   );
