@@ -34,17 +34,26 @@ module.exports = {
     }
     return { ...users[0] };
   },
-
+  async resetPassword(Email, password) {
+    var user = await db("users").where({ Email: Email });
+    if (user.length === 0) {
+      return null;
+    } else {
+      await db("users").where("Email", Email).update("OTP_Confim", 1);
+      user = await db("users")
+        .where("Email", Email)
+        .update("Password", password);
+      return user[0];
+    }
+  },
   async checkOTP(id, OTP) {
     var user = await db("users").where({ usersid: id, OTP: OTP });
     if (user.length === 0) {
       return null;
-    }
-    else{
-       await db("users").where("usersid", id).update("OTP_Confim", 1);
-       user=await db("users").where({ usersid: id, OTP: OTP });
+    } else {
+      await db("users").where("usersid", id).update("OTP_Confim", 1);
+      user = await db("users").where({ usersid: id, OTP: OTP });
       return user[0];
-
     }
   },
   async updateOTP(id, OTP) {
@@ -52,10 +61,8 @@ module.exports = {
     const user = await db("users").where("usersid", id);
     if (user.length === 0) {
       return null;
-    }
-    else{
+    } else {
       return user[0];
-
     }
   },
 
