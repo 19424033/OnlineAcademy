@@ -4,7 +4,6 @@ import HeaderCustomize from "../../components/Header/Header";
 import FooterCustomize from "../../components/Footer/Footer";
 import { Layout } from "antd";
 
-const { Content } = Layout;
 export const Default = (props) => {
   return (
     <>

@@ -8,7 +8,7 @@ const USERS = require('./server/router/users.route');
 
 const AUTH = require('./server/router/auth.route');
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
-
+const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
 
 if(process.env.NODE_ENV !== 'test') {
@@ -26,6 +26,17 @@ app.get("/", (request, respond) => {
     message: "Welcome to Project Support",
   });
 });
+
+app.get('/api/images', async (req, res) => {
+  const { resources } = await cloudinary.search
+      .expression('folder:Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
+      .sort_by('public_id', 'asc')
+      .execute();
+
+  const publicIds = resources.map((file) => file.public_id);
+  res.send(publicIds);
+});
+
 app.use('/api/users',decentralization, USERS );
 app.use('/api/auth', AUTH );
 
