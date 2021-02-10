@@ -1,16 +1,15 @@
-
 import React, { useState, useContext } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link , useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 import AppContext from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
+import ResetPassword from "../ResetPassword/ResetPassword";
 
 import "antd/dist/antd.css";
 import "./login.scss";
-
 
 const Login = () => {
   const {
@@ -25,6 +24,7 @@ const Login = () => {
   const { from } = location.state || { from: { pathname: "/" } };
 
   const [labelText, setLabelText] = useState("");
+
   const onFinish = (values) => {
     AuthService()
       .login(values)
@@ -103,6 +103,11 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item>
+            <Form.Item>
+              <a style={{ color: "#4E4BF9", textDecoration: "underline" }}>
+                <Link to="/resetPassword">Forgot your password? </Link>
+              </a>
+            </Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>

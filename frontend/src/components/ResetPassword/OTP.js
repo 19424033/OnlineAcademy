@@ -1,20 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, InputNumber, Button, message } from "antd";
 
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
-
-import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 
 const OTP = () => {
   const [form] = Form.useForm();
 
-  const {
-    setnameUser,
-    saveToken,
-    setCheckLocalStorage,
-    setCheckOTPConfim,
-  } = useContext(AppContext);
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [timeLeft, setTimeLeft] = useState(null);

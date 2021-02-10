@@ -10,7 +10,15 @@ export default function AuthService() {
   const login = (values) => {
     return axios.post(`${API_auth}/log-in`, values);
   };
-
+  const checkEmail = (values) => {
+    return axios.post(`${API_auth}/check-email`, values);
+  };
+  const checkOTPEmail = (values) => {
+    return axios.post(`${API_auth}/check-otp-email`, values);
+  };
+  const resetPassword = (values) => {
+    return axios.post(`${API_auth}/forgot-password`, values);
+  };
   const logout = () => {
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
@@ -29,5 +37,8 @@ export default function AuthService() {
     logout,
     updateOTP,
     checkOTPDB,
+    checkEmail,
+    resetPassword,
+    checkOTPEmail,
   };
 }

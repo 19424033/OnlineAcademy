@@ -4,19 +4,20 @@ const jwt = require("jsonwebtoken");
 const randomstring = require("randomstring");
 const userModel = require("../models/users.model");
 const mailer = require("../utils/mailOTP");
+const { clearGroup } = require("../utils/db");
 const router = express.Router();
 
 router.post("/log-in", async function (req, res) {
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
     return res.status(200).json({
-      authenticated: false,
+      email: false,
     });
   }
 
   if (!bcrypt.compareSync(req.body.Password, user.Password)) {
     return res.status(200).json({
-      authenticated: false,
+      Password: false,
     });
   }
 
@@ -41,6 +42,52 @@ router.post("/log-in", async function (req, res) {
     accessToken,
     refreshToken,
   });
+});
+router.post("/check-otp-email", async function (req, res) {
+  const user = await userModel.singleByEmail(req.body.Email);
+  if (user === null) {
+    return res.status(200).json({
+      email: false,
+    });
+  }
+
+  const accessToken = jwt.sign(
+    {
+      Usersid: user.Usersid,
+      Jobid: user.Jobid,
+      Dislayname: user.Dislayname,
+      OTP_Confim: user.OTP_Confim,
+    },
+    "SECRET_KEY",
+    {
+      expiresIn: 60 * 10, // seconds
+    }
+  );
+
+  const refreshToken = randomstring.generate();
+  await userModel.updateRefreshToken(user.Usersid, refreshToken);
+
+  res.status(200).json({
+    authenticated: true,
+    accessToken,
+    refreshToken,
+  });
+});
+router.post("/check-email", async function (req, res) {
+  const user = await userModel.singleByEmail(req.body.Email);
+  if (user === null) {
+    return res.status(200).json({
+      authenticated: false,
+    });
+  } else {
+    user.OTP = Math.random().toString().substring(2, 8);
+    mailer(req.body.Email, user.OTP);
+
+    return res.status(200).json({
+      authenticated: true,
+      user: user,
+    });
+  }
 });
 router.post("/log-out", async function (req, res) {});
 
@@ -69,6 +116,8 @@ router.post("/register", async function (req, res) {
 router.get("/register/:id/:otp", async function (req, res) {
   const id = req.params.id || 0;
   const otp = req.params.otp;
+  console.log(id);
+  console.log(otp);
   const single = await userModel.checkOTP(id, otp);
 
   if (single === null) {
@@ -106,7 +155,16 @@ router.put("/register/:id", async function (req, res) {
   res.json(userres.Email);
 });
 
-router.post("/forgot-password", async function (req, res) {});
+router.post("/forgot-password", async function (req, res) {
+  const user = await userModel.singleByEmail(req.body.Email);
+  if (user === null) {
+    return res.status(200).json(false);
+  }
+  req.body.Password = bcrypt.hashSync(req.body.Password, 3);
+  const temp = await userModel.resetPassword(req.body.Email, req.body.Password);
+  console.log(temp);
+  res.status(200).json({ Mes: "OK" });
+});
 
 router.put("/forgot-password", async function (req, res) {});
 
