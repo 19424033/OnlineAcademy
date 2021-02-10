@@ -17,9 +17,12 @@ import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 import "./resetPassword.scss";
 
 const ResetPassword = () => {
-  const { saveToken, setCheckLocalStorage, setCheckOTPConfim } = useContext(
-    AppContext
-  );
+  const {
+    setnameUser,
+    saveToken,
+    setCheckLocalStorage,
+    setCheckOTPConfim,
+  } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
   const [userName, setUserName] = useState("");
@@ -30,6 +33,7 @@ const ResetPassword = () => {
   const [labelText, setLabelText] = useState("");
   const [otp, setOTP] = useState("");
   const [userId, setUserId] = useState("");
+
   const { from } = location.state || { from: { pathname: "/" } };
 
   const handleInput = (event) => {
@@ -38,8 +42,17 @@ const ResetPassword = () => {
   const handleInputPassword = (event) => {
     setPassWord(event.target.value);
   };
-  const handleInputOTP = (event) => {
-    setOTP(event.target.value);
+  const inputNumber = (evt) => {
+    evt = evt ? evt : window.event;
+    var charCode = evt.which ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+      evt.preventDefault();
+    } else {
+      return true;
+    }
+  };
+  const handleInputOTP = (values) => {
+    setOTP(values.target.value);
   };
   const resetPasswordUser = (values) => {
     let temp = {
@@ -49,14 +62,29 @@ const ResetPassword = () => {
     AuthService()
       .checkOTPDB(userId, otp)
       .then((result) => {
+        console.log(result);
         if (result.data) {
           AuthService()
             .resetPassword(temp)
             .then((result) => {
               if (result.data) {
-                debugger;
+                AuthService()
+                  .login(temp)
+                  .then((res) => {
+                    setnameUser(parseAccessToken_res(res.data).Dislayname);
+
+                    saveToken(res.data);
+                    if (
+                      parseAccessToken_res(res.data).OTP_Confim.data[0] === 1
+                    ) {
+                      setCheckOTPConfim(true);
+                    } else {
+                      setCheckOTPConfim(false);
+                    }
+                    setCheckLocalStorage(true);
+                    history.replace(from);
+                  });
               } else {
-                message.error("Mã OTP Không khớp");
               }
             });
         } else {
@@ -74,6 +102,7 @@ const ResetPassword = () => {
         setAuthenticated(res.data.authenticated);
         if (res.data.authenticated == true) {
           setUserId(res.data.user.Usersid);
+
           setSelect(false);
         } else {
           setLabelText(<Alert message="Email is not exits !!" type="error" />);
@@ -123,19 +152,29 @@ const ResetPassword = () => {
               onChange={handleInput}
             />
           </Form.Item>
-          <div className="errorText ">{labelText}</div>
+          {!authenticated && <div className="errorText ">{labelText}</div>}
 
           {!selectemail && (
             <>
-              <Form.Item>
+              <Form.Item
+                style={{ display: "block" }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your OTP!",
+                  },
+                ]}
+              >
                 <Input
-                  style={{ width: 300 }}
                   type="text"
                   tabIndex="1"
                   maxLength="6"
                   min={0}
                   value={otp}
+                  className="mt-1 form-checkno"
+                  onKeyPress={inputNumber}
                   onChange={handleInputOTP}
+                  placeholder="Input OTP"
                 />
               </Form.Item>
             </>

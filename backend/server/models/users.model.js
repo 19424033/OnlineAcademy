@@ -25,6 +25,9 @@ module.exports = {
   update(id, product) {
     return db("usersid").where("usersid", id).update(product);
   },
+  async updateOTPEmail(email, otp) {
+    return db("users").where("Email", email).update("OTP", otp);
+  },
 
   async singleByEmail(email) {
     const users = await db("users").where("Email", email);

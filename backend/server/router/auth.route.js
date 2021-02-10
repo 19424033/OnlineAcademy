@@ -81,6 +81,7 @@ router.post("/check-email", async function (req, res) {
     });
   } else {
     user.OTP = Math.random().toString().substring(2, 8);
+    await userModel.updateOTPEmail(req.body.Email, user.OTP);
     mailer(req.body.Email, user.OTP);
 
     return res.status(200).json({
@@ -118,6 +119,7 @@ router.get("/register/:id/:otp", async function (req, res) {
   const otp = req.params.otp;
   console.log(id);
   console.log(otp);
+
   const single = await userModel.checkOTP(id, otp);
 
   if (single === null) {
