@@ -19,6 +19,9 @@ export default function AuthService() {
   const resetPassword = (values) => {
     return axios.post(`${API_auth}/forgot-password`, values);
   };
+  const changePassword = (values) => {
+    return axios.post(`${API_auth}/change-password`, values);
+  };
   const logout = () => {
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
@@ -40,5 +43,6 @@ export default function AuthService() {
     checkEmail,
     resetPassword,
     checkOTPEmail,
+    changePassword,
   };
 }

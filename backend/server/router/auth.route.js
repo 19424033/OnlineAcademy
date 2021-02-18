@@ -5,6 +5,7 @@ const randomstring = require("randomstring");
 const userModel = require("../models/users.model");
 const mailer = require("../utils/mailOTP");
 const { clearGroup } = require("../utils/db");
+const e = require("express");
 const router = express.Router();
 
 router.post("/log-in", async function (req, res) {
@@ -24,6 +25,7 @@ router.post("/log-in", async function (req, res) {
   const accessToken = jwt.sign(
     {
       Usersid: user.Usersid,
+      Users: user,
       Jobid: user.Jobid,
       Dislayname: user.Dislayname,
       OTP_Confim: user.OTP_Confim,
@@ -90,6 +92,7 @@ router.post("/check-email", async function (req, res) {
     });
   }
 });
+
 router.post("/log-out", async function (req, res) {});
 
 router.post("/register", async function (req, res) {
@@ -168,7 +171,26 @@ router.post("/forgot-password", async function (req, res) {
   res.status(200).json({ Mes: "OK" });
 });
 
-router.put("/forgot-password", async function (req, res) {});
+router.post("/change-password", async function (req, res) {
+  const user = await userModel.singleByEmail(req.body.Email);
+  if (user === null) {
+    return res.status(404).json(false);
+  }
+  req.body.NewPassword = bcrypt.hashSync(req.body.NewPassword, 3);
+  if (!bcrypt.compareSync(req.body.CurrentPassword, user.Password)) {
+    return res.status(200).json(false);
+  }
+  const temp = await userModel.changePassword(
+    req.body.Email,
+    req.body.NewPassword
+  );
+  if (temp === null) {
+    return res.status(200).json(false);
+  }
+  res.status(200).json(true);
+
+  // req.body.CurrentPassword = bcrypt.hashSync(req.body.CurrentPassword, 3);
+});
 
 router.post("/refresh", async function (req, res) {
   // req.body = {

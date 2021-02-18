@@ -27,6 +27,9 @@ import { parseAccessToken } from "./utils/utils";
 
 const App = () => {
   const [nameUser, setnameUser] = useState(undefined);
+  const [profile, setProfile] = useState(undefined);
+  const [userid, setUserid] = useState(undefined);
+
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
 
   const [checkLocalStorage, setCheckLocalStorage] = useState(false);
@@ -39,8 +42,12 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, Dislayname } = parseAccessToken(tokenString); // lấy trường accessToken đi mã hoá
+      const { OTP_Confim, Dislayname, Usersid, Users } = parseAccessToken(
+        tokenString
+      ); // lấy trường accessToken đi mã hoá
       setnameUser(Dislayname);
+      setUserid(Usersid);
+      setProfile(Users);
       if (OTP_Confim.data[0] === 1) {
         setCheckOTPConfim(true);
       } else {
@@ -57,7 +64,11 @@ const App = () => {
         nameUser,
         checkLocalStorage,
         checkOTPConfim,
+        profile,
+        userid,
         setnameUser,
+        setUserid,
+        setProfile,
         saveToken,
         setCheckLocalStorage,
         setCheckOTPConfim,
