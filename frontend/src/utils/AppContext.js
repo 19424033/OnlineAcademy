@@ -2,5 +2,7 @@ import { createContext } from 'react';
 
 const defaultValue = {};
 const AppContext = createContext(defaultValue);
+const ManagerUserContext = createContext(defaultValue);
 
-export default AppContext;
+
+export  {AppContext,ManagerUserContext };

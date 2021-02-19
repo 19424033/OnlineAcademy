@@ -3,7 +3,7 @@ import { useHistory, useLocation ,Link} from "react-router-dom";
 import { Form, Input, Button, Alert } from "antd";
 
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
 
 import "./register.scss";

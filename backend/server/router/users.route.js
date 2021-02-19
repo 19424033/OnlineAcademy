@@ -1,4 +1,6 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
+
 const usersModel = require("../models/users.model");
 
 const router = express.Router();
@@ -30,5 +32,24 @@ router.get("/:id", async function (req, res) {
 
   res.json(single);
 });
+router.post("/teacher", async function (req, res) {
+  //  tao tai khoan
+  const addTeacher = req.body; 
+   console.log(addTeacher);
 
+  const user = await usersModel.singleByEmail(addTeacher.Email);
+  console.log(user);
+
+  if (user !== null) {
+    return res.status(204).json();
+  } else {
+    addTeacher.Password = bcrypt.hashSync("123456", 3);
+    addTeacher.Jobid = 3;
+    addTeacher.Isactive = 1;
+    addTeacher.OTP_Confim = 1;
+    const resual = await usersModel.add(addTeacher);
+    delete addTeacher.Password;
+    res.status(200).json(resual);
+  }
+});
 module.exports = router;

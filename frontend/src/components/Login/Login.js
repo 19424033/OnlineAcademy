@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
 import ResetPassword from "../ResetPassword/ResetPassword";
 

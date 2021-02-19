@@ -1,26 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { Modal, Form, Input, InputNumber, DatePicker, Select,Alert } from "antd";
-
-const { RangePicker } = DatePicker;
-const { Option } = Select;
+import { Modal, Form, Input, DatePicker, Select, Alert } from "antd";
 
 const ModalForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
-
-  const rangeConfig = {
-    rules: [{ type: "array", required: true, message: "Please select time!" }],
-  };
-
-  function onChange(value) {
-    // console.log("changed", value);
-  }
-
-  function onBlur() {}
-
-  function onFocus() {}
-
-  function onSearch(val) {}
 
   return (
     <Modal
@@ -34,7 +17,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
           .validateFields()
           .then((values) => {
             form.resetFields();
-            // onCreate(values);
+            onCreate(values);
           })
           .catch((info) => {
             console.log("Validate Failed:", info);
@@ -51,8 +34,17 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
       >
         <Form.Item
           name="Email"
-          label="Email:"
-          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+          label="E-mail"
+          rules={[
+            {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
+              required: true,
+              message: "Please input your E-mail!",
+            },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -63,6 +55,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
         >
           <Input />
         </Form.Item>
+
         <Alert message="Mật khẩu mặc định là: 123456" type="warning" />
       </Form>
     </Modal>

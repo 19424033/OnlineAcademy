@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { notification } from "antd";
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";
@@ -19,14 +20,13 @@ import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
 import ManagerCategories from "./containers/Admin/Categories/ManagerCategories";
 
-
 //layout
 import Default from "./containers/Layout/Default";
 import Auth from "./containers/Layout/Auth";
 import AdminBasic from "./containers/Layout/AdminBasic/AdminBasic";
 
 //utils
-import AppContext from "./utils/AppContext";
+import {AppContext} from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
 import AuthService from "./services/auth.service";
 
@@ -83,7 +83,7 @@ const App = () => {
         saveToken,
         setCheckLocalStorage,
         setCheckOTPConfim,
-        logOut
+        logOut,
       }}
     >
       <Router>
@@ -98,12 +98,27 @@ const App = () => {
           />
           <AppRoute path="/profile" layout={Default} component={Profile} />
           <AppRoute path="/category" layout={Default} component={Category} />
-          <AppRoute path="/admin/user" layout={AdminBasic} component={ManagerUser} />
-          <AppRoute path="/admin/categories" layout={AdminBasic} component={ManagerCategories} />
-          <AppRoute path="/admin/source" layout={AdminBasic} component={ManagerSource} />
-
+         
           {checkLocalStorage ? (
-            <AppRoute path="*" layout={Default} component={Error} />
+            <>
+             <AppRoute
+            path="/admin/user"
+            layout={AdminBasic}
+            component={ManagerUser}
+          />
+          <AppRoute
+            path="/admin/categories"
+            layout={AdminBasic}
+            component={ManagerCategories}
+          />
+          <AppRoute
+            path="/admin/source"
+            layout={AdminBasic}
+            component={ManagerSource}
+          />
+            {/* <AppRoute path="*" layout={Default} component={Error} /> */}
+            
+            </>
           ) : (
             <>
               <AppRoute path="/login" layout={Auth} component={Login} />
@@ -113,7 +128,7 @@ const App = () => {
                 layout={Auth}
                 component={ResetPassword}
               />
-              <AppRoute path="*" layout={Default} component={Error} />
+              {/* <AppRoute path="*" layout={Default} component={Error} /> */}
             </>
           )}
         </Switch>

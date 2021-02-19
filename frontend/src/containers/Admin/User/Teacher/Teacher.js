@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import axios from "axios";
 
 import { Table, Button } from "antd";
 import ModalForm from "./Modal_Input_Teacher";
+import {  localparseJson } from "../../../../utils/utils";
+import {ManagerUserContext} from "../../../../utils/AppContext";
 
-const Teacher = ({ datatableTemp }) => {
+var dateFormat = require("dateformat");
+
+const Teacher = () => {
+  const {  datatableTemp,APIgetAllUser} = useContext(ManagerUserContext);
+
   const [data, setdata] = useState();
   useEffect(() => {
     const temp = datatableTemp.filter((item) => item.Jobid === 3);
@@ -34,7 +41,21 @@ const Teacher = ({ datatableTemp }) => {
       },
     },
   ];
-  const onCreate = (values) => {};
+  const onCreate = (values) => {
+    values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+      console.log(values);
+      axios
+      .post("http://localhost:4000/api/users/teacher", values,{ headers: { "x-access-token": localparseJson(localStorage.getItem("AcademyOnline_Token")).accessToken } })
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        console.log("ERROR from server:", error);
+      });
+      setVisible(false);
+      APIgetAllUser();
+  };
   return (
     <>
       <Button

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
 

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import AppContext from "../../../utils/AppContext";
+import {AppContext} from "../../../utils/AppContext";
 
 
 

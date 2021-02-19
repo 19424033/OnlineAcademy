@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import AppContext from "../../../utils/AppContext";
+import {AppContext} from "../../../utils/AppContext";
 
 const AdminBasic = ({ children }) => {
   const { checkLocalStorage, logOut } = useContext(AppContext);

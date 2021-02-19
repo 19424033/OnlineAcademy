@@ -10,7 +10,7 @@ export default function UserService() {
 
   const getAllUser = (accessToken) => {
     return axios.get(`${API_URL}/`,{ headers: authHeader(accessToken) });
-  };
+  };  
   // const getModeratorBoard = () => {
   //   return axios.get(API_URL + "mod", { headers: authHeader() });
   // };

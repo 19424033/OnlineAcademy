@@ -3,7 +3,7 @@ import { Input, Avatar, Dropdown, Menu, notification } from "antd";
 import { Link } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 import { parseAccessToken } from "../../utils/utils";
 
 const { Search } = Input;
@@ -71,13 +71,17 @@ const HeaderCustomize = () => {
     const tokenString = parseAccessToken(
       localStorage.getItem("AcademyOnline_Token")
     );
-    console.log(tokenString.exp * 1000 - Date.now());
-    setTimeout(() => {
-      notification["warning"]({
-        message: "Phiên đăng nhập đã hết hạn vui lòng đăng nhập lại",
-      });
-      logOut();
-    }, tokenString.exp * 1000 - Date.now());
+    if(tokenString)
+    {
+      console.log(tokenString.exp * 1000 - Date.now());
+      setTimeout(() => {
+        notification["warning"]({
+          message: "Phiên đăng nhập đã hết hạn vui lòng đăng nhập lại",
+        });
+        logOut();
+      }, tokenString.exp * 1000 - Date.now());
+    }
+  
     return (
       <>
         <li>
@@ -111,6 +115,7 @@ const HeaderCustomize = () => {
   };
 
   return (
+    
     <header className="header rs-nav header-transparent">
       <div className="top-bar">
         <div className="container">

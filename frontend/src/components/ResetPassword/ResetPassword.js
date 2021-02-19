@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 
 import "./resetPassword.scss";

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Modal, Form, InputNumber, Button, message } from "antd";
 
 import AuthService from "../../services/auth.service";
-import AppContext from "../../utils/AppContext";
+import {AppContext} from "../../utils/AppContext";
 
 import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 
