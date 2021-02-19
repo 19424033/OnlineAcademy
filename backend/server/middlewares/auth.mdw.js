@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
     } catch (err) {
       // console.log(err);
       return res.status(401).json({
-        message: 'Invalid access token.'
+        message: 'Access token has expired.'
       });
     }
   } else {

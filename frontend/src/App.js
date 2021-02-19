@@ -15,9 +15,9 @@ import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
 import Category from "./containers/Category/Category";
-import ManagerUser from "./containers/Admin/ManagerUser";
-import ManagerSource from "./containers/Admin/ManagerSource";
-import ManagerCategories from "./containers/Admin/ManagerCategories";
+import ManagerUser from "./containers/Admin/User/ManagerUser";
+import ManagerSource from "./containers/Admin/Source/ManagerSource";
+import ManagerCategories from "./containers/Admin/Categories/ManagerCategories";
 
 
 //layout
@@ -28,6 +28,7 @@ import AdminBasic from "./containers/Layout/AdminBasic/AdminBasic";
 //utils
 import AppContext from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
+import AuthService from "./services/auth.service";
 
 const App = () => {
   const [nameUser, setnameUser] = useState(undefined);
@@ -39,6 +40,13 @@ const App = () => {
   const saveToken = (userToken) => {
     // dùng để lưu token khi đăng nhập
     localStorage.setItem("AcademyOnline_Token", JSON.stringify(userToken));
+  };
+  const logOut = () => {
+    setnameUser();
+    saveToken();
+    setCheckLocalStorage(false);
+    setCheckOTPConfim();
+    AuthService().logout();
   };
 
   useEffect(() => {
@@ -75,6 +83,7 @@ const App = () => {
         saveToken,
         setCheckLocalStorage,
         setCheckOTPConfim,
+        logOut
       }}
     >
       <Router>

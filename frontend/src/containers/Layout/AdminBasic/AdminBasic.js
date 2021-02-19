@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Layout, Menu } from "antd";
 import "./AdminBasic.scss";
 import {
@@ -8,8 +8,10 @@ import {
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import AppContext from "../../../utils/AppContext";
 
 const AdminBasic = ({ children }) => {
+  const { checkLocalStorage, logOut } = useContext(AppContext);
   const history = useHistory();
 
   return (
@@ -48,13 +50,20 @@ const AdminBasic = ({ children }) => {
       </Layout.Sider>
       <Layout>
         <Layout.Header className="header-admin">
-          <Button type="primary">Hà Minh Bảo Toàn</Button>
-          <Button
-            type="text"
-            //    onClick={() => auth.logout()}
-          >
-            Log out
-          </Button>
+          {!checkLocalStorage ? (
+            <Button type="primary" className="mr-5">
+              <Link to="/login">Đăng Nhập</Link>
+            </Button>
+          ) : (
+            <>
+              <Button type="primary">Hà Minh Bảo Toàn</Button>
+              <Link to="/" onClick={logOut}>
+                <Button type="text" className="mr-4">
+                  Log out
+                </Button>
+              </Link>
+            </>
+          )}
         </Layout.Header>
         <Layout.Content className="layoutContent-admin">
           {children}

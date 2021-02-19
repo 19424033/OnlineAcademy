@@ -5,8 +5,8 @@ import htmlToDraft from "html-to-draftjs";
 
 import React, { useState, useEffect } from "react";
 
-import UserService from "../../services/user.service";
-import { parseAccessToken,localparseJson } from "../../utils/utils";
+import UserService from "../../../services/user.service";
+import { parseAccessToken,localparseJson } from "../../../utils/utils";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Player, PosterImage } from "video-react";

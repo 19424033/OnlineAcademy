@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import { Input, Avatar, Dropdown, Menu } from "antd";
+import { Input, Avatar, Dropdown, Menu, notification } from "antd";
 import { Link } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 import AppContext from "../../utils/AppContext";
+import { parseAccessToken } from "../../utils/utils";
 
 const { Search } = Input;
 
@@ -15,14 +16,9 @@ const HeaderCustomize = () => {
     checkLocalStorage,
     setCheckLocalStorage,
     setCheckOTPConfim,
+    logOut,
   } = useContext(AppContext);
-  const logOut = () => {
-    setnameUser();
-    saveToken();
-    setCheckLocalStorage(false);
-    setCheckOTPConfim();
-    AuthService().logout();
-  };
+
   const onSearch = (value) => console.log(value);
   const firstCharacter = (x) => {
     if (x) return x[0].toUpperCase();
@@ -53,25 +49,35 @@ const HeaderCustomize = () => {
   const login_register = () => {
     return (
       <>
-      <li>
-      <div className="d-flex align-items-stretch ">
-        <div className="pt-btn-join ">
-          <Link to="/login" className="btn-nocolor radius-xl">
-            Đăng Nhập
-          </Link>
-        </div>
-        <div className="pt-btn-join">
-          <Link to="/register" className="btn-color radius-xl">
-            Đăng Ký
-          </Link>
-        </div>
-      </div>
-      </li>
+        <li>
+          <div className="d-flex align-items-stretch ">
+            <div className="pt-btn-join ">
+              <Link to="/login" className="btn-nocolor radius-xl">
+                Đăng Nhập
+              </Link>
+            </div>
+            <div className="pt-btn-join">
+              <Link to="/register" className="btn-color radius-xl">
+                Đăng Ký
+              </Link>
+            </div>
+          </div>
+        </li>
       </>
     );
   };
 
   const islogin = () => {
+    const tokenString = parseAccessToken(
+      localStorage.getItem("AcademyOnline_Token")
+    );
+    console.log(tokenString.exp * 1000 - Date.now());
+    setTimeout(() => {
+      notification["warning"]({
+        message: "Phiên đăng nhập đã hết hạn vui lòng đăng nhập lại",
+      });
+      logOut();
+    }, tokenString.exp * 1000 - Date.now());
     return (
       <>
         <li>
