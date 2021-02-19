@@ -49,6 +49,17 @@ module.exports = {
       return user[0];
     }
   },
+  async changePassword(Email, newPassword) {
+    var user = await db("users").where({ Email: Email });
+    if (user.length === 0) {
+      return null;
+    } else {
+      user = await db("users")
+        .where("Email", Email)
+        .update("Password", newPassword);
+      return user[0];
+    }
+  },
   async checkOTP(id, OTP) {
     var user = await db("users").where({ usersid: id, OTP: OTP });
     if (user.length === 0) {

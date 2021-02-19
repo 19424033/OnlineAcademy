@@ -17,6 +17,8 @@ const Login = () => {
     saveToken,
     setCheckLocalStorage,
     setCheckOTPConfim,
+    setUserid,
+    setProfile,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -32,6 +34,9 @@ const Login = () => {
         const { authenticated } = res.data;
         if (authenticated) {
           setnameUser(parseAccessToken_res(res.data).Dislayname);
+          setUserid(parseAccessToken_res(res.data).Usersid);
+          setProfile(parseAccessToken_res(res.data).Users);
+
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
             setCheckOTPConfim(true);
