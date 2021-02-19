@@ -29,12 +29,15 @@ app.get("/", (request, respond) => {
 
 app.get('/api/images', async (req, res) => {
   const { resources } = await cloudinary.search
-      .expression('folder:Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
+      // .expression('folder:After_Effects_CC_Masterclass')
+      // .expression('folder: Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
+      .expression('folder: Illustrator_CC_2018_Fundamentals_For_Beginners')
+      // .expression('folder: React_basic_in_just_1_hour')
       .sort_by('public_id', 'asc')
       .execute();
 
   const publicIds = resources.map((file) => file.public_id);
-  res.send(publicIds);
+  res.send(resources);
 });
 
 app.use('/api/users',decentralization, USERS );

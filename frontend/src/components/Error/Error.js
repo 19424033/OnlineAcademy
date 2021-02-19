@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 export const Error = () => {
-    console.log("object")
+  console.log("object");
   return (
-    <div className="account-form-inner" >
+    <div className="account-form-inner">
       <div className="account-container">
         <div className="error-page">
           <h3>Ooopps :(</h3>
@@ -13,9 +13,9 @@ export const Error = () => {
             The page you are looking for might have been removed, had its name
             changed, or is temporarily unavailable.
           </p>
-            <Link to="/" className="btn outline black">
-              Back To Home
-            </Link>
+          <Link to="/" className="btn outline black">
+            Back To Home
+          </Link>
         </div>
       </div>
     </div>

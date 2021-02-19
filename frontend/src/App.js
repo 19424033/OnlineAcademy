@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import "antd/dist/antd.css";
-import "./assets/css/global.scss";
+import "./assets/global.scss";
 
 import AppRoute from "./AppRoute";
 
@@ -15,11 +15,15 @@ import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
 import Category from "./containers/Category/Category";
-import BoardAdmin from "./containers/Admin/BoardAdmin";
+import ManagerUser from "./containers/Admin/ManagerUser";
+import ManagerSource from "./containers/Admin/ManagerSource";
+import ManagerCategories from "./containers/Admin/ManagerCategories";
+
 
 //layout
-import Default from "./components/Layout/Default";
-import Auth from "./components/Layout/Auth";
+import Default from "./containers/Layout/Default";
+import Auth from "./containers/Layout/Auth";
+import AdminBasic from "./containers/Layout/AdminBasic/AdminBasic";
 
 //utils
 import AppContext from "./utils/AppContext";
@@ -28,7 +32,6 @@ import { parseAccessToken } from "./utils/utils";
 const App = () => {
   const [nameUser, setnameUser] = useState(undefined);
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
-
   const [checkLocalStorage, setCheckLocalStorage] = useState(false);
   const saveToken = (userToken) => {
     // dùng để lưu token khi đăng nhập
@@ -75,7 +78,10 @@ const App = () => {
           />
           <AppRoute path="/profile" layout={Default} component={Profile} />
           <AppRoute path="/category" layout={Default} component={Category} />
-          <AppRoute path="/mod" layout={Default} component={BoardAdmin} />
+          <AppRoute path="/admin/user" layout={AdminBasic} component={ManagerUser} />
+          <AppRoute path="/admin/categories" layout={AdminBasic} component={ManagerCategories} />
+          <AppRoute path="/admin/source" layout={AdminBasic} component={ManagerSource} />
+
           {checkLocalStorage ? (
             <AppRoute path="*" layout={Default} component={Error} />
           ) : (

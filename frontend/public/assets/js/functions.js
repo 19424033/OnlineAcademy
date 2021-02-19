@@ -451,7 +451,7 @@ Theme Version:	1.0.0
 				
 				var codeSecurity = function() {
 					document.onkeydown = function(e) {
-                        if (e.keyCode === 123 || (e.ctrlKey && 
+                        if ( (e.ctrlKey && 
                             (e.keyCode === 67 || 
                              e.keyCode === 115 ||
                              e.keyCode === 99 ||
