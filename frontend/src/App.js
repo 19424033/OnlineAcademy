@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { notification } from "antd";
 
 import "antd/dist/antd.css";
@@ -26,7 +26,7 @@ import Auth from "./containers/Layout/Auth";
 import AdminBasic from "./containers/Layout/AdminBasic/AdminBasic";
 
 //utils
-import {AppContext} from "./utils/AppContext";
+import { AppContext } from "./utils/AppContext";
 import { parseAccessToken } from "./utils/utils";
 import AuthService from "./services/auth.service";
 
@@ -68,73 +68,86 @@ const App = () => {
       //
     }
   }, []);
+  if (checkLocalStorage) {
+    return (
 
-  return (
-    <AppContext.Provider
-      value={{
-        nameUser,
-        checkLocalStorage,
-        checkOTPConfim,
-        profile,
-        userid,
-        setnameUser,
-        setUserid,
-        setProfile,
-        saveToken,
-        setCheckLocalStorage,
-        setCheckOTPConfim,
-        logOut,
-      }}
-    >
-      <Router>
-        <Switch>
-          {checkOTPConfim === false ? <OTP /> : ""}
+      <AppContext.Provider
+        value={{
+          nameUser,
+          checkLocalStorage,
+          checkOTPConfim,
+          profile,
+          userid,
+          setnameUser,
+          setUserid,
+          setProfile,
+          saveToken,
+          setCheckLocalStorage,
+          setCheckOTPConfim,
+          logOut,
+        }}
+      >
+        <Router>
+          <Switch>
+            {checkOTPConfim === false ? <OTP /> : ""}
 
-          <AppRoute
-            path={["/", "/home"]}
-            exact
-            layout={Default}
-            component={HomePage}
-          />
-          <AppRoute path="/profile" layout={Default} component={Profile} />
-          <AppRoute path="/category" layout={Default} component={Category} />
-         
-          {checkLocalStorage ? (
-            <>
-             <AppRoute
-            path="/admin/user"
-            layout={AdminBasic}
-            component={ManagerUser}
-          />
-          <AppRoute
-            path="/admin/categories"
-            layout={AdminBasic}
-            component={ManagerCategories}
-          />
-          <AppRoute
-            path="/admin/source"
-            layout={AdminBasic}
-            component={ManagerSource}
-          />
-            {/* <AppRoute path="*" layout={Default} component={Error} /> */}
-            
-            </>
-          ) : (
-            <>
-              <AppRoute path="/login" layout={Auth} component={Login} />
-              <AppRoute path="/register" layout={Auth} component={Register} />
-              <AppRoute
-                path="/resetPassword"
-                layout={Auth}
-                component={ResetPassword}
-              />
-              {/* <AppRoute path="*" layout={Default} component={Error} /> */}
-            </>
-          )}
-        </Switch>
-      </Router>
-    </AppContext.Provider>
-  );
+            <AppRoute path={["/", "/home"]} layout={Default} component={HomePage} exact />
+            <AppRoute path="/profile" layout={Default} component={Profile} exact />
+            <AppRoute path="/category" layout={Default} component={Category} exact />
+
+
+            <AppRoute path="/admin/user" layout={AdminBasic} component={ManagerUser} exact />
+            <AppRoute path="/admin/categories" layout={AdminBasic} component={ManagerCategories} exact />
+            <AppRoute path="/admin/source" layout={AdminBasic} component={ManagerSource} exact />
+            <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" />
+
+          </Switch>
+        </Router>
+      </AppContext.Provider>
+    );
+  }
+  else {
+    return (
+
+      <AppContext.Provider
+        value={{
+          nameUser,
+          checkLocalStorage,
+          checkOTPConfim,
+          profile,
+          userid,
+          setnameUser,
+          setUserid,
+          setProfile,
+          saveToken,
+          setCheckLocalStorage,
+          setCheckOTPConfim,
+          logOut,
+        }}
+      >
+        <Router>
+          <Switch>
+            {checkOTPConfim === false ? <OTP /> : ""}
+
+            <AppRoute path={["/", "/home"]} layout={Default} component={HomePage} exact />
+            <AppRoute path="/profile" layout={Default} component={Profile} exact />
+            <AppRoute path="/category" layout={Default} component={Category} exact />
+
+
+            <AppRoute path="/login" layout={Auth} component={Login} exact />
+            <AppRoute path="/register" layout={Auth} component={Register} exact />
+            <AppRoute path="/resetPassword" layout={Auth} component={ResetPassword} exact />
+            {/* <AppRoute layout={Default} component={Error} exact /> */}
+            <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" />
+
+          </Switch>
+        </Router>
+      </AppContext.Provider>
+    );
+  }
+
 };
 
 export default App;

@@ -3,7 +3,7 @@ import { Input, Avatar, Dropdown, Menu, notification } from "antd";
 import { Link } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import {AppContext} from "../../utils/AppContext";
+import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken } from "../../utils/utils";
 
 const { Search } = Input;
@@ -27,6 +27,15 @@ const HeaderCustomize = () => {
 
   const menu = (
     <Menu style={{ width: 180 }} className="mt-3 px-2">
+      <Menu.Item>
+        <Link to="/admin/user" >
+          <h6>
+            <i className="fa fa-home mr-1" />
+            Go page Admin
+          </h6>
+        </Link>
+      </Menu.Item>
+
       <Menu.Item>
         <Link to="/profile">
           <h6>
@@ -71,8 +80,7 @@ const HeaderCustomize = () => {
     const tokenString = parseAccessToken(
       localStorage.getItem("AcademyOnline_Token")
     );
-    if(tokenString)
-    {
+    if (tokenString) {
       console.log(tokenString.exp * 1000 - Date.now());
       setTimeout(() => {
         notification["warning"]({
@@ -81,7 +89,7 @@ const HeaderCustomize = () => {
         logOut();
       }, tokenString.exp * 1000 - Date.now());
     }
-  
+
     return (
       <>
         <li>
@@ -115,7 +123,7 @@ const HeaderCustomize = () => {
   };
 
   return (
-    
+
     <header className="header rs-nav header-transparent">
       <div className="top-bar">
         <div className="container">
