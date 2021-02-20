@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { notification } from "antd";
 
 import "antd/dist/antd.css";
@@ -58,7 +63,6 @@ const App = () => {
       ); // lấy trường accessToken đi mã hoá
       setnameUser(Dislayname);
       setUserid(Usersid);
-      setProfile(Users);
       if (OTP_Confim.data[0] === 1) {
         setCheckOTPConfim(true);
       } else {
@@ -70,7 +74,6 @@ const App = () => {
   }, []);
   if (checkLocalStorage) {
     return (
-
       <AppContext.Provider
         value={{
           nameUser,
@@ -91,25 +94,51 @@ const App = () => {
           <Switch>
             {checkOTPConfim === false ? <OTP /> : ""}
 
-            <AppRoute path={["/", "/home"]} layout={Default} component={HomePage} exact />
-            <AppRoute path="/profile" layout={Default} component={Profile} exact />
-            <AppRoute path="/category" layout={Default} component={Category} exact />
+            <AppRoute
+              path={["/", "/home"]}
+              layout={Default}
+              component={HomePage}
+              exact
+            />
+            <AppRoute
+              path="/profile"
+              layout={Default}
+              component={Profile}
+              exact
+            />
+            <AppRoute
+              path="/category"
+              layout={Default}
+              component={Category}
+              exact
+            />
 
-
-            <AppRoute path="/admin/user" layout={AdminBasic} component={ManagerUser} exact />
-            <AppRoute path="/admin/categories" layout={AdminBasic} component={ManagerCategories} exact />
-            <AppRoute path="/admin/source" layout={AdminBasic} component={ManagerSource} exact />
+            <AppRoute
+              path="/admin/user"
+              layout={AdminBasic}
+              component={ManagerUser}
+              exact
+            />
+            <AppRoute
+              path="/admin/categories"
+              layout={AdminBasic}
+              component={ManagerCategories}
+              exact
+            />
+            <AppRoute
+              path="/admin/source"
+              layout={AdminBasic}
+              component={ManagerSource}
+              exact
+            />
             <AppRoute path="/error" layout={Default} component={Error} exact />
             <Redirect to="/error" />
-
           </Switch>
         </Router>
       </AppContext.Provider>
     );
-  }
-  else {
+  } else {
     return (
-
       <AppContext.Provider
         value={{
           nameUser,
@@ -130,24 +159,46 @@ const App = () => {
           <Switch>
             {checkOTPConfim === false ? <OTP /> : ""}
 
-            <AppRoute path={["/", "/home"]} layout={Default} component={HomePage} exact />
-            <AppRoute path="/profile" layout={Default} component={Profile} exact />
-            <AppRoute path="/category" layout={Default} component={Category} exact />
-
+            <AppRoute
+              path={["/", "/home"]}
+              layout={Default}
+              component={HomePage}
+              exact
+            />
+            <AppRoute
+              path="/profile"
+              layout={Default}
+              component={Profile}
+              exact
+            />
+            <AppRoute
+              path="/category"
+              layout={Default}
+              component={Category}
+              exact
+            />
 
             <AppRoute path="/login" layout={Auth} component={Login} exact />
-            <AppRoute path="/register" layout={Auth} component={Register} exact />
-            <AppRoute path="/resetPassword" layout={Auth} component={ResetPassword} exact />
+            <AppRoute
+              path="/register"
+              layout={Auth}
+              component={Register}
+              exact
+            />
+            <AppRoute
+              path="/resetPassword"
+              layout={Auth}
+              component={ResetPassword}
+              exact
+            />
             {/* <AppRoute layout={Default} component={Error} exact /> */}
             <AppRoute path="/error" layout={Default} component={Error} exact />
             <Redirect to="/error" />
-
           </Switch>
         </Router>
       </AppContext.Provider>
     );
   }
-
 };
 
 export default App;

@@ -17,8 +17,20 @@ const HeaderCustomize = () => {
     setCheckLocalStorage,
     setCheckOTPConfim,
     logOut,
+    userid,
+    setProfile,
   } = useContext(AppContext);
+  const profileUser = () => {
+    let userdata = {
+      userId: userid,
+    };
 
+    AuthService()
+      .getProfile(userdata)
+      .then((data) => {
+        setProfile(data.data.user[0]);
+      });
+  };
   const onSearch = (value) => console.log(value);
   const firstCharacter = (x) => {
     if (x) return x[0].toUpperCase();
@@ -28,7 +40,7 @@ const HeaderCustomize = () => {
   const menu = (
     <Menu style={{ width: 180 }} className="mt-3 px-2">
       <Menu.Item>
-        <Link to="/admin/user" >
+        <Link to="/admin/user">
           <h6>
             <i className="fa fa-home mr-1" />
             Go page Admin
@@ -113,7 +125,11 @@ const HeaderCustomize = () => {
         </li>
         <li>
           <Dropdown overlay={menu}>
-            <Link className="ant-dropdown-link text-white" to="/profile">
+            <Link
+              className="ant-dropdown-link text-white"
+              to="/profile"
+              onClick={profileUser}
+            >
               <Avatar size="large" src="assets/images/testimonials/pic3.jpg" />
             </Link>
           </Dropdown>
@@ -123,7 +139,6 @@ const HeaderCustomize = () => {
   };
 
   return (
-
     <header className="header rs-nav header-transparent">
       <div className="top-bar">
         <div className="container">

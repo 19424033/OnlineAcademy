@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {AppContext} from "../../utils/AppContext";
+import { AppContext } from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
 
@@ -14,7 +14,9 @@ import {
   message,
 } from "antd";
 const Profile = () => {
-  const { userid, profile } = useContext(AppContext);
+  const { userid, profile, nameUser, setProfile, setnameUser } = useContext(
+    AppContext
+  );
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -112,11 +114,32 @@ const Profile = () => {
     }
   };
   const changeProfile = () => {
+    let check = true;
     if (userName === "") {
       setErrorPasswordCurent("Nhập tên ");
+      check = false;
     }
     if (userEmail === "") {
       setErrorPasswordNew("Nhập email ");
+      check = false;
+    }
+    if (check == true) {
+      let data = {
+        userId: userid,
+        userName: userName,
+        Email: userEmail,
+      };
+      AuthService()
+        .editProfile(data)
+        .then((data) => {
+          setProfile(data.data[0]);
+          setnameUser(data.data[0].Dislayname);
+          if (data.data) {
+            message.success("Cập nhập thông tin thành công");
+          } else {
+            setErrorPasswordCurent("Cập nhập thông tin thất bại");
+          }
+        });
     }
   };
   return (
@@ -127,8 +150,8 @@ const Profile = () => {
             <img src="assets/images/profile/pic1.jpg" alt="" />
           </div>
           <div className="profile-info">
-            <h4>{profile.Dislayname}</h4>
-            <span>{profile.Email}</span>
+            <h4>{nameUser}</h4>
+            {/* <span>{userEmail}</span> */}
           </div>
           <div className="profile-social">
             <ul className="list-inline m-a0">

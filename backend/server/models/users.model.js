@@ -25,10 +25,20 @@ module.exports = {
   update(id, user) {
     return db("users").where("usersid", id).update(user);
   },
+
+  profile(id) {
+    return db("users").where("usersid", id);
+  },
   async updateOTPEmail(email, otp) {
     return db("users").where("Email", email).update("OTP", otp);
   },
-
+  async updateProfile(id, username, email) {
+    await db("users").where("usersid", id).update("Email", email);
+    user = await db("users")
+      .where("usersid", id)
+      .update("Dislayname", username);
+    return user[0];
+  },
   async singleByEmail(email) {
     const users = await db("users").where("Email", email);
 

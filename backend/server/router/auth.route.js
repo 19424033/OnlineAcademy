@@ -25,7 +25,6 @@ router.post("/log-in", async function (req, res) {
   const accessToken = jwt.sign(
     {
       Usersid: user.Usersid,
-      Users: user,
       Jobid: user.Jobid,
       Dislayname: user.Dislayname,
       OTP_Confim: user.OTP_Confim,
@@ -94,6 +93,23 @@ router.post("/check-email", async function (req, res) {
 });
 
 router.post("/log-out", async function (req, res) {});
+router.post("/profile-user", async function (req, res) {
+  const userId = req.body.userId;
+  const user = await userModel.profile(userId);
+  return res.status(200).json({
+    user: user,
+  });
+});
+
+router.post("/edit-profile", async function (req, res) {
+  const userId = req.body.userId;
+  const userName = req.body.userName;
+  const Email = req.body.Email;
+  await userModel.updateProfile(userId, userName, Email);
+
+  const user = await userModel.profile(userId);
+  return res.status(200).json(user);
+});
 
 router.post("/register", async function (req, res) {
   //  tao tai khoan

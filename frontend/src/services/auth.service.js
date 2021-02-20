@@ -34,6 +34,12 @@ export default function AuthService() {
   const checkOTPDB = async (id, otp) => {
     return await axios.get(`${API_auth}/register/${id}/${otp}`);
   };
+  const getProfile = async (values) => {
+    return await axios.post(`${API_auth}/profile-user`, values);
+  };
+  const editProfile = async (values) => {
+    return await axios.post(`${API_auth}/edit-profile`, values);
+  };
   return {
     register,
     login,
@@ -44,5 +50,7 @@ export default function AuthService() {
     resetPassword,
     checkOTPEmail,
     changePassword,
+    getProfile,
+    editProfile,
   };
 }
