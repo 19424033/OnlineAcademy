@@ -16,7 +16,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
+            // form.resetFields();
             onCreate(values);
           })
           .catch((info) => {

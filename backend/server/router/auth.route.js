@@ -32,7 +32,7 @@ router.post("/log-in", async function (req, res) {
     },
     "SECRET_KEY",
     {
-      expiresIn: 60 * 10, // seconds
+      expiresIn: 600 * 10, // seconds
     }
   );
 

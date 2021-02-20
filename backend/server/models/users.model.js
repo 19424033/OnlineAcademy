@@ -22,8 +22,8 @@ module.exports = {
     return db("users").where("usersid", id).del();
   },
 
-  update(id, product) {
-    return db("usersid").where("usersid", id).update(product);
+  update(id, user) {
+    return db("users").where("usersid", id).update(user);
   },
   async updateOTPEmail(email, otp) {
     return db("users").where("Email", email).update("OTP", otp);

@@ -52,4 +52,20 @@ router.post("/teacher", async function (req, res) {
     res.status(200).json(resual);
   }
 });
+
+router.put("/:id", async function (req, res) {
+  //  tao tai khoan
+  const id = req.params.id;
+  const user = req.body; 
+  delete user.key;
+  delete user.Usersid;
+
+ console.log(id)
+ await usersModel.update(id, user);
+ res.status(200).json({
+   message: "update success",
+ });
+});
+
+
 module.exports = router;
