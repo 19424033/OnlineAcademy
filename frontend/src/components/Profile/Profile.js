@@ -20,10 +20,12 @@ const Profile = () => {
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [errorPasswordCurent, setErrorPasswordCurent] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState();
   const [errorPasswordNew, setErrorPasswordNew] = useState("");
+  const [errorPasswordRe, setErrorPasswordRe] = useState("");
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [profileUser, setProfileOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
@@ -57,8 +59,20 @@ const Profile = () => {
     setProfileOpen(true);
     setCoursesOpen(false);
     setQuizOpen(false);
-    setUserEmail(profile.Email);
-    setUserName(profile.Dislayname);
+    setErrorPasswordNew("");
+    setErrorPasswordCurent("");
+
+    let userdata = {
+      userId: userid,
+    };
+
+    AuthService()
+      .getProfile(userdata)
+      .then((data) => {
+        setProfile(data.data.user[0]);
+        setUserEmail(data.data.user[0].Email);
+        setUserName(data.data.user[0].Dislayname);
+      });
   };
   const openCourses = () => {
     setPasswordOpen(false);
@@ -80,21 +94,32 @@ const Profile = () => {
       setErrorPasswordNew("");
     }
   };
+  const handleInputRe = (event) => {
+    setRePassword(event.target.value);
+    if (newPassword != event.target.value) {
+      setErrorPasswordRe("Mật khẩu không giống mật khẩu hiện mới");
+    } else {
+      setErrorPasswordRe("");
+    }
+  };
   const ChangePassWord = () => {
     let check = true;
-    if (currentPassword === "") {
+    if (currentPassword == "") {
       setErrorPasswordCurent("Nhập mật khẩu hiện tại");
       check = false;
     }
-    if (currentPassword === newPassword) {
+    if (currentPassword == newPassword) {
       setErrorPasswordNew("Mật khẩu mới không được giống mật khẩu hiện tại");
       check = false;
     }
-    if (newPassword === "") {
+    if (newPassword == "") {
       setErrorPasswordNew("Nhập mật khẩu mới");
       check = false;
     }
-
+    if (newPassword != rePassword) {
+      setErrorPasswordNew("Nhập mật khẩu mới");
+      check = false;
+    }
     if (check == true) {
       let data = {
         Email: profile.Email,
@@ -137,14 +162,16 @@ const Profile = () => {
           if (data.data) {
             message.success("Cập nhập thông tin thành công");
           } else {
-            setErrorPasswordCurent("Cập nhập thông tin thất bại");
           }
         });
     }
   };
   return (
     <div className="row">
-      <div className="col-lg-3 col-md-4 col-sm-12 m-b30">
+      <div
+        className="col-lg-3 col-md-4 col-sm-12"
+        style={{ background: "#fff" }}
+      >
         <div className="profile-bx text-center">
           <div className="user-profile-thumb">
             <img src="assets/images/profile/pic1.jpg" alt="" />
@@ -223,66 +250,110 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="col-lg-9 col-md-4 col-sm-12 m-b30 profileUser">
+      <div className="col-lg-9 col-md-4 col-sm-12 profileUser">
         {passwordOpen && (
           <div className="Change_password">
-            <h4>Thay đổi mật khẩu</h4>
-            <p className="title_change">Mật khẩu hiện tại</p>
-            <input
-              type="password"
-              className="input_password"
-              placeholder=""
-              onChange={handleInputCurrent}
-            />
-            {errorPasswordCurent != "" && (
-              <p style={{ color: "red" }}>{errorPasswordCurent}</p>
-            )}
-            <p className="title_change">Mật khẩu mới</p>
-            <input
-              type="password"
-              className="input_password"
-              placeholder=""
-              onChange={handleInputNew}
-            />
-            {errorPasswordNew != "" && (
-              <p style={{ color: "red" }}>{errorPasswordNew}</p>
-            )}
-            <div className="btn_change">
-              <Button type="primary" onClick={ChangePassWord}>
-                Thay đổi mật khẩu
-              </Button>
+            <div className="row">
+              <div className="col-12 title">
+                <h4>Thay đổi mật khẩu</h4>
+              </div>
+              <div className="col-4 mb-4 mt-3 pl-0 pr-0">
+                <p className="title_change">Mật khẩu hiện tại</p>
+              </div>
+              <div className="col-8 mb-4 mt-3 ">
+                <input
+                  type="password"
+                  className="input_password"
+                  placeholder=""
+                  onChange={handleInputCurrent}
+                />
+                {errorPasswordCurent != "" && (
+                  <p style={{ color: "red" }}>{errorPasswordCurent}</p>
+                )}
+              </div>
+              <div className="col-4  mb-4 pl-0 pr-0">
+                <p className="title_change">Mật khẩu mới</p>
+              </div>
+              <div className="col-8  mb-4 ">
+                <input
+                  type="password"
+                  className="input_password"
+                  placeholder=""
+                  onChange={handleInputNew}
+                />
+                {errorPasswordNew != "" && (
+                  <p style={{ color: "red" }}>{errorPasswordNew}</p>
+                )}
+              </div>
+              <div className="col-4 pl-0 pr-0 ">
+                <p className="title_change">Nhập lại mật khẩu mới</p>
+              </div>
+              <div className="col-8">
+                <input
+                  type="password"
+                  className="input_password"
+                  placeholder=""
+                  onChange={handleInputRe}
+                />
+                {errorPasswordRe != "" && (
+                  <p style={{ color: "red" }}>{errorPasswordRe}</p>
+                )}
+              </div>
+              <div className="col-4"></div>
+              <div className="col-8">
+                <div className="btn_change">
+                  <Button type="primary" onClick={ChangePassWord}>
+                    Thay đổi mật khẩu
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         )}
         {profileUser && (
           <div className="Change_password">
-            <h4>Thay đổi thông tin</h4>
-            <p className="title_change">Tên</p>
-            <input
-              type="text"
-              className="input_password"
-              placeholder=""
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            {errorPasswordCurent != "" && (
-              <p style={{ color: "red" }}>{errorPasswordCurent}</p>
-            )}
-            <p className="title_change">Email</p>
-            <input
-              type="text"
-              className="input_password"
-              placeholder=""
-              value={userEmail}
-              onChange={handleInputEmail}
-            />
-            {errorPasswordNew != "" && (
-              <p style={{ color: "red" }}>{errorPasswordNew}</p>
-            )}
-            <div className="btn_change">
-              <Button type="primary" onClick={changeProfile}>
-                Thay đổi thông tin
-              </Button>
+            <div className="row">
+              <div className="col-12 title">
+                <h4>Thay đổi thông tin</h4>
+              </div>
+              <div className="col-4  mb-4 mt-3 pl-0 pr-0">
+                <p className="title_change">Tên</p>
+              </div>
+              <div className="col-8  mb-4  mt-3">
+                <input
+                  type="text"
+                  className="input_password"
+                  placeholder=""
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                {errorPasswordCurent != "" && userName == "" && (
+                  <p style={{ color: "red" }}>{errorPasswordCurent}</p>
+                )}
+              </div>
+              <div className="col-4 pl-0 pr-0 ">
+                <p className="title_change">Email</p>
+              </div>
+              <div className="col-8">
+                <input
+                  type="text"
+                  className="input_password"
+                  placeholder=""
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                />
+                {errorPasswordNew != "" && userEmail == "" && (
+                  <p style={{ color: "red" }}>{errorPasswordNew}</p>
+                )}
+              </div>
+              <div className="col-4"></div>
+              <div className="col-8">
+                <div className="btn_change">
+                  <Button type="primary" onClick={changeProfile}>
+                    Thay đổi thông tin
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         )}

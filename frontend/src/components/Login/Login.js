@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
-import {AppContext} from "../../utils/AppContext";
+import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
 import ResetPassword from "../ResetPassword/ResetPassword";
 
@@ -35,8 +35,6 @@ const Login = () => {
         if (authenticated) {
           setnameUser(parseAccessToken_res(res.data).Dislayname);
           setUserid(parseAccessToken_res(res.data).Usersid);
-          setProfile(parseAccessToken_res(res.data).Users);
-
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
             setCheckOTPConfim(true);
