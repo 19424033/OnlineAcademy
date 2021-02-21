@@ -76,8 +76,6 @@ const Login = () => {
           setimageUser(parseAccessToken_res(res.data).Image);
 
           setUserid(parseAccessToken_res(res.data).Usersid);
-          setProfile(parseAccessToken_res(res.data).Users);
-
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
             setCheckOTPConfim(true);
