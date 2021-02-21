@@ -125,9 +125,6 @@ router.post("/check-email", async function (req, res) {
   }
 });
 
-<<<<<<< HEAD
-router.post("/log-out", async function (req, res) { });
-=======
 router.post("/log-out", async function (req, res) {});
 router.post("/profile-user", async function (req, res) {
   const userId = req.body.userId;
@@ -146,7 +143,6 @@ router.post("/edit-profile", async function (req, res) {
   const user = await userModel.profile(userId);
   return res.status(200).json(user);
 });
->>>>>>> ba07c0126a6ffb195a6cd09429ffa8dc452189b0
 
 router.post("/register", async function (req, res) {
   //  tao tai khoan
