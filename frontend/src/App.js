@@ -137,8 +137,8 @@ const App = () => {
               component={ManagerSource}
               exact
             />
-            <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" />
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" /> */}
           </Switch>
         </Router>
       </AppContext.Provider>
@@ -200,8 +200,8 @@ const App = () => {
               exact
             />
             {/* <AppRoute layout={Default} component={Error} exact /> */}
-            <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" />
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" /> */}
           </Switch>
         </Router>
       </AppContext.Provider>

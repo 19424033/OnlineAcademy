@@ -163,7 +163,7 @@ const Teacher = () => {
   ];
   function showDeleteConfirm(user) {
     confirm({
-      title: `Bạn có chắc muốn xoá món ${user.Email} ?`,
+      title: `Bạn có chắc muốn xoá ${user.Email} ?`,
       icon: <ExclamationCircleOutlined />,
       okText: "Delete",
       okType: "danger",
