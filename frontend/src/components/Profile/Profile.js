@@ -139,15 +139,21 @@ const Profile = () => {
     }
   };
   const changeProfile = () => {
+    var letter3 = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     let check = true;
-    if (userName === "") {
-      setErrorPasswordCurent("Nhập tên ");
-      check = false;
-    }
     if (userEmail === "") {
       setErrorPasswordNew("Nhập email ");
       check = false;
     }
+    if (userEmail.match(letter3) == null) {
+      setErrorPasswordNew("Nhập sai địa chỉ email ");
+      check = false;
+    }
+    if (userName === "") {
+      setErrorPasswordCurent("Nhập tên ");
+      check = false;
+    }
+
     if (check == true) {
       let data = {
         userId: userid,
@@ -336,9 +342,10 @@ const Profile = () => {
               </div>
               <div className="col-8">
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
+                  id="email"
                   className="input_password"
-                  placeholder=""
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                 />
