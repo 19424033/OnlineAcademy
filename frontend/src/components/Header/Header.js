@@ -11,6 +11,7 @@ const { Search } = Input;
 const HeaderCustomize = () => {
   const {
     nameUser,
+    imageUser,
     setnameUser,
     saveToken,
     checkLocalStorage,
@@ -130,7 +131,7 @@ const HeaderCustomize = () => {
               to="/profile"
               onClick={profileUser}
             >
-              <Avatar size="large" src="assets/images/testimonials/pic3.jpg" />
+              <Avatar size="large" src={`data:image/jpg;base64,${imageUser}`}/>
             </Link>
           </Dropdown>
         </li>
@@ -148,6 +149,7 @@ const HeaderCustomize = () => {
                 <Link to="/">
                   <img
                     src={process.env.PUBLIC_URL + "/logo.png"}
+                    // {imageUser}
                     className="logo"
                     alt=""
                   />

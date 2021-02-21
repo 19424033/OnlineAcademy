@@ -34,8 +34,8 @@ router.get("/:id", async function (req, res) {
 });
 router.post("/teacher", async function (req, res) {
   //  tao tai khoan
-  const addTeacher = req.body; 
-   console.log(addTeacher);
+  const addTeacher = req.body;
+  console.log(addTeacher);
 
   const user = await usersModel.singleByEmail(addTeacher.Email);
   console.log(user);
@@ -56,16 +56,31 @@ router.post("/teacher", async function (req, res) {
 router.put("/:id", async function (req, res) {
   //  tao tai khoan
   const id = req.params.id;
-  const user = req.body; 
+  const user = req.body;
   delete user.key;
   delete user.Usersid;
+  delete user.OTP_Confim;
 
- console.log(id)
- await usersModel.update(id, user);
- res.status(200).json({
-   message: "update success",
- });
+  console.log(user)
+  await usersModel.update(id, user);
+  res.status(200).json({
+    message: "update success",
+  });
 });
 
+
+router.delete("/:id", async function (req, res) {
+  const id = req.params.id || 0;
+  if (id === 0) {
+    return res.status(304).end();
+  }
+  await usersModel.del(id).then((result) => {
+    res.json({
+      message: "delete success",
+    });
+  }).catch((err) => {
+    res.status(500).json(err);
+  });
+});
 
 module.exports = router;

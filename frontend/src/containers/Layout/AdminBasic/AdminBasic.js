@@ -16,7 +16,7 @@ const AdminBasic = ({ children }) => {
 
   return (
     <Layout className="layout-admin">
-      <Layout.Sider width={250}>
+      <Layout.Sider width={250}  height={"100%"}>
         <Link to="/admin/user" className="logo-admin">
           <img
             src={process.env.PUBLIC_URL + "/logo.png"}

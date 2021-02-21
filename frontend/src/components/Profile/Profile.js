@@ -14,7 +14,7 @@ import {
   message,
 } from "antd";
 const Profile = () => {
-  const { userid, profile, nameUser, setProfile, setnameUser } = useContext(
+  const { userid, profile, nameUser, setProfile, setnameUser,imageUser } = useContext(
     AppContext
   );
 
@@ -180,7 +180,7 @@ const Profile = () => {
       >
         <div className="profile-bx text-center">
           <div className="user-profile-thumb">
-            <img src="assets/images/profile/pic1.jpg" alt="" />
+            <img src={`data:image/jpg;base64,${imageUser}`} alt="" />
           </div>
           <div className="profile-info">
             <h4>{nameUser}</h4>

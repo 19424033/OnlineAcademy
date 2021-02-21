@@ -4,6 +4,8 @@ import { Tabs } from "antd";
 import { ManagerUserContext } from "../../../utils/AppContext";
 
 import Teacher from "./Teacher/Teacher";
+import Student from "./Student/Student";
+
 const { TabPane } = Tabs;
 
 const ManagerUser = () => {
@@ -28,8 +30,12 @@ const ManagerUser = () => {
               Usersid: response.data[i].Usersid,
               Email: response.data[i].Email,
               Dislayname: response.data[i].Dislayname,
+              Telephone: response.data[i].Telephone,
               Jobid: response.data[i].Jobid,
               Isactive: response.data[i].Isactive,
+              OTP: response.data[i].OTP,
+              OTP_Confim: response.data[i].OTP_Confim,
+              Point: response.data[i].Point,
             });
           }
           setDatatable(data);
@@ -63,7 +69,10 @@ const ManagerUser = () => {
           <h3>{content}</h3>
           <Teacher />
         </TabPane>
-        <TabPane tab="Sinh Viên" key="2"></TabPane>
+        <TabPane tab="Sinh Viên" key="2">
+        <h3>{content}</h3>
+          <Student />
+        </TabPane>
       </Tabs>
     </ManagerUserContext.Provider>
   );

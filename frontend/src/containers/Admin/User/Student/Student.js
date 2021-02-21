@@ -10,8 +10,7 @@ import {
 import { Table, Button, notification, Input, Row, Col, Popover, Modal ,Tag} from "antd";
 import Icon, { IconCustom } from "../../../../components/Icon";
 
-import ModalForm from "./Modal_Input_Teacher";
-import ModalEdit from "./Modal_Edit_Teacher";
+import ModalEdit from "./Modal_Edit_Student";
 
 
 import { localparseJson } from "../../../../utils/utils";
@@ -26,10 +25,9 @@ const Teacher = () => {
   const [data, setdata] = useState();
   const [visibleModalEdit, setVisibleModalEdit] = useState(false);
   const [userEditModal, setuserEditModal] = useState({});
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const temp = datatableTemp.filter((item) => item.Jobid === 3);
+    const temp = datatableTemp.filter((item) => item.Jobid === 2);
     setdata(temp);
   }, [datatableTemp]);
   const columns = [
@@ -244,39 +242,6 @@ const Teacher = () => {
       });
     }
   };
-  const onCreate = (values) => {
-    values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-
-    console.log(values);
-    axios
-      .post("http://localhost:4000/api/users/teacher", values, {
-        headers: {
-          "x-access-token": localparseJson(
-            localStorage.getItem("AcademyOnline_Token")
-          ).accessToken,
-        },
-      })
-      .then((response) => {
-        console.log(response.status);
-        if (response.status === 204) {
-          notification["error"]({
-            message: "Không thành công",
-            description: `Tài khoản đã tồn tại`,
-          });
-        } else {
-          notification["success"]({
-            message: "Hoàn Tất",
-            description: `Bạn vừa thêm thành công`,
-          });
-          setVisible(false);
-          APIgetAllUser();
-        }
-      })
-      .catch(function (error) {
-        console.log("ERROR from server:", error);
-      });
-  };
-
   return (
     <>
       <Row>
@@ -292,26 +257,8 @@ const Teacher = () => {
             allowClear
           />
         </Col>
-        <Col span={12}>
-          <Button
-            className="float-right"
-            type="primary"
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            + Cấp tài khoản giảng viên
-          </Button>
-        </Col>
       </Row>
 
-      <ModalForm
-        visible={visible}
-        onCreate={onCreate}
-        onCancel={() => {
-          setVisible(false);
-        }}
-      />
       <ModalEdit
         visibleModalEdit={visibleModalEdit}
         userEditModal={userEditModal}
