@@ -7,9 +7,18 @@ export default function AuthService() {
     return axios.post(`${API_auth}/register`, velues);
   };
 
+  const registerWithGoogle = (values) => {
+    return axios.post(`${API_auth}/register-with-google`, values);
+  };
+
   const login = (values) => {
     return axios.post(`${API_auth}/log-in`, values);
   };
+
+  const loginWithGoogle = (values) => {
+    return axios.post(`${API_auth}/log-in-with-google`, values);
+  };
+
   const checkEmail = (values) => {
     return axios.post(`${API_auth}/check-email`, values);
   };
@@ -44,5 +53,7 @@ export default function AuthService() {
     resetPassword,
     checkOTPEmail,
     changePassword,
+    registerWithGoogle,
+    loginWithGoogle
   };
 }

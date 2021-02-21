@@ -32,6 +32,8 @@ import AuthService from "./services/auth.service";
 
 const App = () => {
   const [nameUser, setnameUser] = useState(undefined);
+  const [imageUser, setimageUser] = useState(undefined);
+
   const [profile, setProfile] = useState(undefined);
   const [userid, setUserid] = useState(undefined);
 
@@ -43,6 +45,7 @@ const App = () => {
   };
   const logOut = () => {
     setnameUser();
+    setimageUser();
     saveToken();
     setCheckLocalStorage(false);
     setCheckOTPConfim();
@@ -53,10 +56,11 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, Dislayname, Usersid, Users } = parseAccessToken(
+      const { OTP_Confim, Dislayname, Usersid, Users,Image } = parseAccessToken(
         tokenString
       ); // lấy trường accessToken đi mã hoá
       setnameUser(Dislayname);
+      setimageUser(Image);
       setUserid(Usersid);
       setProfile(Users);
       if (OTP_Confim.data[0] === 1) {
@@ -74,11 +78,13 @@ const App = () => {
       <AppContext.Provider
         value={{
           nameUser,
+          imageUser,
           checkLocalStorage,
           checkOTPConfim,
           profile,
           userid,
           setnameUser,
+          setimageUser,
           setUserid,
           setProfile,
           saveToken,
@@ -113,11 +119,13 @@ const App = () => {
       <AppContext.Provider
         value={{
           nameUser,
+          imageUser,
           checkLocalStorage,
           checkOTPConfim,
           profile,
           userid,
           setnameUser,
+          setimageUser,
           setUserid,
           setProfile,
           saveToken,

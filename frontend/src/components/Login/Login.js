@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory, useLocation } from "react-router-dom";
-
+import { GoogleLogin } from 'react-google-login';
 import AuthService from "../../services/auth.service";
-import {AppContext} from "../../utils/AppContext";
+import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
 import ResetPassword from "../ResetPassword/ResetPassword";
 
@@ -14,6 +14,7 @@ import "./login.scss";
 const Login = () => {
   const {
     setnameUser,
+    setimageUser,
     saveToken,
     setCheckLocalStorage,
     setCheckOTPConfim,
@@ -27,6 +28,44 @@ const Login = () => {
 
   const [labelText, setLabelText] = useState("");
 
+  const responseSuccessGoogle = (response) => {
+
+    var values = {};
+    values.Email = response.profileObj.email;
+    AuthService()
+      .loginWithGoogle(values)
+      .then((res) => {
+        const { authenticated } = res.data;
+        if (authenticated) {
+          setnameUser(parseAccessToken_res(res.data).Dislayname);
+          setimageUser(parseAccessToken_res(res.data).Image);
+          setUserid(parseAccessToken_res(res.data).Usersid);
+          setProfile(parseAccessToken_res(res.data).Users);
+
+          saveToken(res.data);
+          if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
+            setCheckOTPConfim(true);
+          } else {
+            setCheckOTPConfim(false);
+          }
+          setCheckLocalStorage(true);
+          setLabelText(<Alert message="ok !!" type="success" />);
+          history.replace(from);
+        } else {
+          setLabelText(
+            <Alert message="Email or Password is incorrect !!" type="error" />
+          );
+          setTimeout(() => setLabelText(), 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+  const responseErrorGoogle = (response) => {
+
+    console.log(response);
+  }
   const onFinish = (values) => {
     AuthService()
       .login(values)
@@ -34,6 +73,8 @@ const Login = () => {
         const { authenticated } = res.data;
         if (authenticated) {
           setnameUser(parseAccessToken_res(res.data).Dislayname);
+          setimageUser(parseAccessToken_res(res.data).Image);
+
           setUserid(parseAccessToken_res(res.data).Usersid);
           setProfile(parseAccessToken_res(res.data).Users);
 
@@ -133,12 +174,19 @@ const Login = () => {
           <div className="col-lg-12">
             <h6>Login with Social media</h6>
             <div className="d-flex">
-              <Link className="btn flex-fill m-r5 facebook" to="/">
+              {/* <Link className="btn flex-fill m-r5 facebook" to="/">
                 <i className="fa fa-facebook"></i>Facebook
               </Link>
               <Link className="btn flex-fill m-l5 google-plus" to="/">
                 <i className="fa fa-google-plus"></i>Google Plus
-              </Link>
+              </Link> */}
+              <GoogleLogin
+                clientId="2439593696-itguu1n7cadvq75k3611al1f2lf17nc2.apps.googleusercontent.com"
+                buttonText="Login With Google"
+                onSuccess={responseSuccessGoogle}
+                onFailure={responseErrorGoogle}
+                cookiePolicy={'single_host_origin'}
+              />
             </div>
           </div>
         </div>

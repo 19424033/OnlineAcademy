@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Modal, Form, InputNumber, Button, message } from "antd";
 
 import AuthService from "../../services/auth.service";
-import {AppContext} from "../../utils/AppContext";
+import { AppContext } from "../../utils/AppContext";
 
 import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
 
@@ -11,6 +11,7 @@ const OTP = () => {
 
   const {
     setnameUser,
+    setimageUser,
     saveToken,
     setCheckLocalStorage,
     setCheckOTPConfim,
@@ -43,6 +44,8 @@ const OTP = () => {
               setConfirmLoading(false);
               message.success("Xác nhận OPT thành công");
               setnameUser(parseAccessToken_res(result.data).Dislayname);
+              setimageUser(parseAccessToken_res(result.data).Image);
+
               saveToken(result.data);
               if (parseAccessToken_res(result.data).OTP_Confim.data[0] === 1) {
                 setCheckOTPConfim(true);

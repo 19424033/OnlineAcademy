@@ -14,7 +14,7 @@ import {
   message,
 } from "antd";
 const Profile = () => {
-  const { userid, profile } = useContext(AppContext);
+  const { userid, profile, imageUser } = useContext(AppContext);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -124,11 +124,11 @@ const Profile = () => {
       <div className="col-lg-3 col-md-4 col-sm-12 m-b30">
         <div className="profile-bx text-center">
           <div className="user-profile-thumb">
-            <img src="assets/images/profile/pic1.jpg" alt="" />
+            <img src={`data:image/jpg;base64,${imageUser}`} alt="" />
           </div>
           <div className="profile-info">
-            <h4>{profile.Dislayname}</h4>
-            <span>{profile.Email}</span>
+            {/* <h4>{profile.Dislayname}</h4>
+            <span>{profile.Email}</span> */}
           </div>
           <div className="profile-social">
             <ul className="list-inline m-a0">

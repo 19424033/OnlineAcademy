@@ -22,24 +22,7 @@ const ManagetUser = () => {
 
   // lấy trường accessToken đi mã hoá và lấy ID
   useEffect(() => {
-    UserService(user.Usersid,accessToken)
-      .getUserBoard()
-      .then(
-        (response) => {
-          console.log(response.data)
-          setContent(response.data.Email);
-        },
-        (error) => {
-          const _content =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          setContent(_content);
-        }
-      );
+   
   }, []);
   const onEditorStateChange = (editorState) => {
     seteditorState(editorState);

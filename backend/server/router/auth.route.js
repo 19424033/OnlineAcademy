@@ -4,8 +4,7 @@ const jwt = require("jsonwebtoken");
 const randomstring = require("randomstring");
 const userModel = require("../models/users.model");
 const mailer = require("../utils/mailOTP");
-const { clearGroup } = require("../utils/db");
-const e = require("express");
+const imageToBase64 = require('image-to-base64');
 const router = express.Router();
 
 router.post("/log-in", async function (req, res) {
@@ -28,6 +27,7 @@ router.post("/log-in", async function (req, res) {
       Users: user,
       Jobid: user.Jobid,
       Dislayname: user.Dislayname,
+      Image: user.Image,
       OTP_Confim: user.OTP_Confim,
     },
     "SECRET_KEY",
@@ -45,6 +45,39 @@ router.post("/log-in", async function (req, res) {
     refreshToken,
   });
 });
+router.post("/log-in-with-google", async function (req, res) {
+  console.log(req.body)
+  const user = await userModel.singleByEmail(req.body.Email);
+  if (user === null) {
+    return res.status(200).json({
+      email: false,
+    });
+  }
+
+  const accessToken = jwt.sign(
+    {
+      Usersid: user.Usersid,
+      Jobid: user.Jobid,
+      Image: user.Image,
+      Dislayname: user.Dislayname,
+      OTP_Confim: user.OTP_Confim,
+    },
+    "SECRET_KEY",
+    {
+      expiresIn: 600 * 10, // seconds
+    }
+  );
+
+  const refreshToken = randomstring.generate();
+  await userModel.updateRefreshToken(user.Usersid, refreshToken);
+
+  res.status(200).json({
+    authenticated: true,
+    accessToken,
+    refreshToken,
+  });
+});
+
 router.post("/check-otp-email", async function (req, res) {
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
@@ -93,7 +126,7 @@ router.post("/check-email", async function (req, res) {
   }
 });
 
-router.post("/log-out", async function (req, res) {});
+router.post("/log-out", async function (req, res) { });
 
 router.post("/register", async function (req, res) {
   //  tao tai khoan
@@ -110,12 +143,47 @@ router.post("/register", async function (req, res) {
     user_register.Password = bcrypt.hashSync(user_register.Password, 3);
     user_register.Jobid = 2;
     user_register.Isactive = 1;
+    user_register.Point = 0;
+
     user_register.Userid = await userModel.add(user_register);
     delete user_register.Password;
     mailer(user_register.Email, user_register.OTP);
     res.status(200).json();
   }
 });
+
+router.post("/register-with-google", async function (req, res) {
+  //  tao tai khoan
+  const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
+  //  console.log(user_register);
+
+  const user = await userModel.singleByEmail(user_register.Email);
+  console.log(user);
+
+  if (user !== null) {
+    return res.status(204).json();
+  }
+  else {
+    user_register.OTP = Math.random().toString().substring(2, 8);
+    user_register.Jobid = 2;
+    user_register.Isactive = 1;
+    user_register.Point = 0;
+
+    await imageToBase64(user_register.Image) // Image URL
+      .then((response) => {
+        user_register.Image =response;
+        })
+      .catch((error) => {
+          console.log(error); // Logs an error if there was one
+        })
+    user_register.Userid = await userModel.add(user_register);
+
+    mailer(user_register.Email, user_register.OTP);
+    res.status(200).json();
+  }
+});
+
+
 
 router.get("/register/:id/:otp", async function (req, res) {
   const id = req.params.id || 0;
