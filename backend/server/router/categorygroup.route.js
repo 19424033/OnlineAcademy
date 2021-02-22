@@ -9,11 +9,9 @@ router.get("/", async function (req, res) {
 
 router.post("/", async function (req, res) {
   const addCategoryGroup = req.body;
-  console.log(addCategoryGroup);
-  addCategoryGroup.Isactive =1;
-
-    const resual = await categorygroupModel.add(addCategoryGroup);
-    res.status(200).json(resual);
+  addCategoryGroup.Isactive = 1;
+  const resual = await categorygroupModel.add(addCategoryGroup);
+  res.status(200).json(resual);
 });
 router.put("/:id", async function (req, res) {
   const id = req.params.id;
@@ -32,12 +30,19 @@ router.delete("/:id", async function (req, res) {
   if (id === 0) {
     return res.status(304).end();
   }
-  await categorygroupModel.delete(id).then((result) => {
-    res.json({
-      message: "delete success",
+  const list = await categorygroupModel.GetCategoryByCategoryGroupid(id);
+
+  if (list.length === 0) {
+    await categorygroupModel.delete(id).then((result) => {
+      res.status(200).json(list);
+    }).catch((err) => {
+      res.status(500).json(err);
     });
-  }).catch((err) => {
-    res.status(500).json(err);
-  });
+  }
+  else {
+    res.status(202).json({ message: "Tồn Tại Khóa Học Trong Lĩnh Vực Này" });
+   
+  }
+
 });
 module.exports = router;

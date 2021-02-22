@@ -247,7 +247,6 @@ const Teacher = () => {
   const onCreate = (values) => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
-    console.log(values);
     axios
       .post("http://localhost:4000/api/users/teacher", values, {
         headers: {
@@ -257,7 +256,6 @@ const Teacher = () => {
         },
       })
       .then((response) => {
-        console.log(response.status);
         if (response.status === 204) {
           notification["error"]({
             message: "Không thành công",

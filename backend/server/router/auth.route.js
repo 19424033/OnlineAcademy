@@ -45,7 +45,6 @@ router.post("/log-in", async function (req, res) {
   });
 });
 router.post("/log-in-with-google", async function (req, res) {
-  console.log(req.body)
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
     return res.status(200).json({
@@ -148,10 +147,8 @@ router.post("/edit-profile", async function (req, res) {
 router.post("/register", async function (req, res) {
   //  tao tai khoan
   const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
-  //  console.log(user_register);
 
   const user = await userModel.singleByEmail(user_register.Email);
-  console.log(user);
 
   if (user !== null) {
     return res.status(204).json();
@@ -172,10 +169,8 @@ router.post("/register", async function (req, res) {
 router.post("/register-with-google", async function (req, res) {
   //  tao tai khoan
   const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
-  //  console.log(user_register);
 
   const user = await userModel.singleByEmail(user_register.Email);
-  console.log(user);
 
   if (user !== null) {
     return res.status(204).json();
@@ -206,8 +201,6 @@ router.post("/register-with-google", async function (req, res) {
 router.get("/register/:id/:otp", async function (req, res) {
   const id = req.params.id || 0;
   const otp = req.params.otp;
-  console.log(id);
-  console.log(otp);
 
   const single = await userModel.checkOTP(id, otp);
 
@@ -254,7 +247,6 @@ router.post("/forgot-password", async function (req, res) {
   }
   req.body.Password = bcrypt.hashSync(req.body.Password, 3);
   const temp = await userModel.resetPassword(req.body.Email, req.body.Password);
-  console.log(temp);
   res.status(200).json({ Mes: "OK" });
 });
 

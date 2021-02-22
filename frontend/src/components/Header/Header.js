@@ -94,7 +94,6 @@ const HeaderCustomize = () => {
       localStorage.getItem("AcademyOnline_Token")
     );
     if (tokenString) {
-      console.log(tokenString.exp * 1000 - Date.now());
       setTimeout(() => {
         notification["warning"]({
           message: "Phiên đăng nhập đã hết hạn vui lòng đăng nhập lại",

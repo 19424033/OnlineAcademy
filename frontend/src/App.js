@@ -5,7 +5,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { notification } from "antd";
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";

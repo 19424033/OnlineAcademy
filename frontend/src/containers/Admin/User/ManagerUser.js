@@ -40,7 +40,6 @@ const ManagerUser = () => {
           }
           setDatatable(data);
           setDatatableTemp(data);
-          console.log(data);
         },
         (error) => {
           const _content =

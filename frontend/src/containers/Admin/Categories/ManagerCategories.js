@@ -11,6 +11,7 @@ import {
 import CategorygroupService from "../../../services/categorygroup.service";
 import ModalForm from "./Modal_Add_CategoryGroup";
 import './ManagerCategories.scss'
+import { Link } from "react-router-dom";
 var dateFormat = require("dateformat");
 const { confirm } = Modal;
 
@@ -68,11 +69,20 @@ const ManagetUser = () => {
       onOk() {
         CategorygroupService().deleteSingleCatagoryGroup(item.CategoryGroupid)
           .then((response) => {
-            APIgetAllCategoryGroup();
-            notification["success"]({
-              message: "Hoàn Tất",
-              description: "bạn đã xoá thành công",
-            });
+            if (response.status === 202) {
+              notification["error"]({
+                message: "Không Thành Công",
+                description: response.data.message,
+              });
+            }
+            else {
+              APIgetAllCategoryGroup();
+              notification["success"]({
+                message: "Hoàn Tất",
+                description: "bạn đã xoá thành công",
+              });
+            }
+
           })
           .catch(function (error) {
             console.log("ERROR from server:", error);
@@ -102,21 +112,21 @@ const ManagetUser = () => {
     }
     if (setDisable === true) {
       CategorygroupService()
-      .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
-        ...categoryGroup,
-        Isactive: 0,
+        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+          ...categoryGroup,
+          Isactive: 0,
 
-      })
-      .then((response) => {
-        APIgetAllCategoryGroup();
-        notification["success"]({
-          message: "Hoàn Tất",
-          description: "Bạn đã sửa thành công",
+        })
+        .then((response) => {
+          APIgetAllCategoryGroup();
+          notification["success"]({
+            message: "Hoàn Tất",
+            description: "Bạn đã sửa thành công",
+          });
+        })
+        .catch(function (error) {
+          console.log("ERROR from server:", error);
         });
-      })
-      .catch(function (error) {
-        console.log("ERROR from server:", error);
-      });
     }
     if (upDatecategoryGroup === true) {
 
@@ -133,7 +143,6 @@ const ManagetUser = () => {
             placeholder="Mã sản phẩm, tên sản phẩm"
             size="large"
             onChange={(e) => txt_Changed(e)}
-            size="large"
             prefix={
               <SearchOutlined style={{ fontSize: "16px", color: "#a3a3a3" }} />
             }
@@ -163,8 +172,8 @@ const ManagetUser = () => {
                   />
                 </div>
                 <div className="info-bx text-center">
-                  <h4><a href="#">{item.CategoryGroupname}</a></h4>
-                  <a href="#" className="btn radius-xl">View More</a>
+                  <h4><Link to="#">{item.CategoryGroupname}</Link></h4>
+                  <Link to="#" className="btn radius-xl">View More</Link>
                 </div>
                 <div className="handle-btn text-center">
                   <Button type="primary" shape="round" icon={<EditOutlined />} />

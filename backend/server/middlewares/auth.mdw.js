@@ -7,10 +7,8 @@ module.exports = function (req, res, next) {
     try {
       const decoded = jwt.verify(accessToken, 'SECRET_KEY');
       req.accessTokenPayload = decoded;
-      // console.log(decoded);
       next();
     } catch (err) {
-      // console.log(err);
       return res.status(401).json({
         message: 'Access token has expired.'
       });

@@ -5,18 +5,12 @@ import htmlToDraft from "html-to-draftjs";
 
 import React, { useState, useEffect } from "react";
 
-import UserService from "../../../services/user.service";
-import { parseAccessToken,localparseJson } from "../../../utils/utils";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Player, PosterImage } from "video-react";
 
 const ManagetUser = () => {
   const [content, setContent] = useState();
-  const tokenString = localStorage.getItem("AcademyOnline_Token");
-  const accessToken = localparseJson(tokenString).accessToken;
-  const user = parseAccessToken(tokenString);
-
   const [editorState, seteditorState] = useState();
   const [editorStateDraft, seteditorStateDraft] = useState();
 

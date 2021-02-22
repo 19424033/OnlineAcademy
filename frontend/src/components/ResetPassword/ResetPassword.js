@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useHistory, useLocation, Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Form,
   Input,
   Button,
-  Checkbox,
   Alert,
-  InputNumber,
   message,
 } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import AuthService from "../../services/auth.service";
-import {AppContext} from "../../utils/AppContext";
-import { parseAccessToken, parseAccessToken_res } from "../../utils/utils";
+import { AppContext } from "../../utils/AppContext";
+import { parseAccessToken_res } from "../../utils/utils";
 
 import "./resetPassword.scss";
 
@@ -62,7 +60,6 @@ const ResetPassword = () => {
     AuthService()
       .checkOTPDB(userId, otp)
       .then((result) => {
-        console.log(result);
         if (result.data) {
           AuthService()
             .resetPassword(temp)
@@ -100,7 +97,7 @@ const ResetPassword = () => {
       .checkEmail(temp)
       .then((res) => {
         setAuthenticated(res.data.authenticated);
-        if (res.data.authenticated == true) {
+        if (res.data.authenticated === true) {
           setUserId(res.data.user.Usersid);
 
           setSelect(false);
@@ -113,19 +110,19 @@ const ResetPassword = () => {
         console.log("err", err);
       });
   };
-  const inputfocus = (elmnt) => {
-    if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
-      const next = elmnt.target.tabIndex - 2;
-      if (next > -1) {
-        elmnt.target.form.elements[next].focus();
-      }
-    } else {
-      const next = elmnt.target.tabIndex;
-      if (next < 6) {
-        elmnt.target.form.elements[next].focus();
-      }
-    }
-  };
+  // const inputfocus = (elmnt) => {
+  //   if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
+  //     const next = elmnt.target.tabIndex - 2;
+  //     if (next > -1) {
+  //       elmnt.target.form.elements[next].focus();
+  //     }
+  //   } else {
+  //     const next = elmnt.target.tabIndex;
+  //     if (next < 6) {
+  //       elmnt.target.form.elements[next].focus();
+  //     }
+  //   }
+  // };
 
   return (
     <div className="account-form-inner">

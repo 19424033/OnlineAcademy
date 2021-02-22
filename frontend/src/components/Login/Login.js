@@ -6,7 +6,6 @@ import { GoogleLogin } from 'react-google-login';
 import AuthService from "../../services/auth.service";
 import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
-import ResetPassword from "../ResetPassword/ResetPassword";
 
 import "antd/dist/antd.css";
 import "./login.scss";
@@ -148,9 +147,9 @@ const Login = () => {
           </Form.Item>
           <Form.Item>
             <Form.Item>
-              <a style={{ color: "#4E4BF9", textDecoration: "underline" }}>
+              <Link style={{ color: "#4E4BF9", textDecoration: "underline" }}>
                 <Link to="/resetPassword">Forgot your password? </Link>
-              </a>
+              </Link>
             </Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import {
   SearchOutlined,
   LockOutlined,
@@ -9,15 +8,11 @@ import {
 
 import { Table, Button, notification, Input, Row, Col, Popover, Modal ,Tag} from "antd";
 import Icon, { IconCustom } from "../../../../components/Icon";
-
 import ModalEdit from "./Modal_Edit_Student";
-
-
-import { localparseJson } from "../../../../utils/utils";
 import { ManagerUserContext } from "../../../../utils/AppContext";
 const { confirm } = Modal;
 
-var dateFormat = require("dateformat");
+// var dateFormat = require("dateformat");
 
 const Teacher = () => {
   const { datatableTemp, APIgetAllUser, txt_Changed, UserService } = useContext(ManagerUserContext);

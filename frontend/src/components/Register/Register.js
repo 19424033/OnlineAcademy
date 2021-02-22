@@ -27,7 +27,6 @@ const Register = () => {
   const location = useLocation();
   const [labelText, setLabelText] = useState("");
   const { from } = location.state || { from: { pathname: "/" } };
-  console.log(from)
 
   const {
     setnameUser,
@@ -40,13 +39,10 @@ const Register = () => {
   const onFinish = (values) => {
     delete values.confirm;
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-
-    console.log("Received values of form: ", values);
     AuthService()
       .register(values)
       .then((res) => {
         var confirm = res.status;
-        console.log(confirm);
         if (confirm === 204) {
           setLabelText(
             <Alert
@@ -56,7 +52,6 @@ const Register = () => {
           );
           setTimeout(() => setLabelText(), 3000);
         } else {
-          console.log(values)
           AuthService()
             .login(values)
             .then((res) => {
@@ -92,7 +87,6 @@ const Register = () => {
       .registerWithGoogle(values)
       .then((res) => {
         var confirm = res.status;
-        console.log(confirm);
         if (confirm === 204) {
           setLabelText(
             <Alert
@@ -102,7 +96,6 @@ const Register = () => {
           );
           setTimeout(() => setLabelText(), 3000);
         } else {
-          console.log(values)
           AuthService()
             .loginWithGoogle(values)
             .then((res) => {
