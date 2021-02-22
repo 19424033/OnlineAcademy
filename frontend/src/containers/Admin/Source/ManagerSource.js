@@ -4,10 +4,13 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
 import React, { useState, useEffect } from "react";
+import { Tabs } from "antd";
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Player, PosterImage } from "video-react";
+import Test from "./test";
+const { TabPane } = Tabs;
 
 const ManagetUser = () => {
   const [content, setContent] = useState();
@@ -16,7 +19,7 @@ const ManagetUser = () => {
 
   // lấy trường accessToken đi mã hoá và lấy ID
   useEffect(() => {
-   
+
   }, []);
   const onEditorStateChange = (editorState) => {
     seteditorState(editorState);
@@ -32,10 +35,11 @@ const ManagetUser = () => {
     }
   };
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-        
+    <Tabs type="card">
+      <TabPane tab="tab1" key="1">
+        <Test></Test>
+      </TabPane>
+      <TabPane tab="tab2" key="2">
         <Editor
           editorState={editorState}
           toolbarClassName="toolbarClassName"
@@ -62,8 +66,9 @@ const ManagetUser = () => {
           poster="http://res.cloudinary.com/dzyfkhpce/video/upload/v1613474027/Illustrator_CC_2018_Fundamentals_For_Beginners/01._Introduction_ixunyw.jpg"
           src="http://res.cloudinary.com/dzyfkhpce/video/upload/v1613474027/Illustrator_CC_2018_Fundamentals_For_Beginners/01._Introduction_ixunyw.mp4"
         />
-      </header>
-    </div>
+      </TabPane>
+    </Tabs>
+
   );
 };
 

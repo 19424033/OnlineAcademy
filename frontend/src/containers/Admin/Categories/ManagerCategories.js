@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 import CategorygroupService from "../../../services/categorygroup.service";
 import ModalForm from "./Modal_Add_CategoryGroup";
+import ModalEdit from "./Modal_Edit_CategoryGroup";
+
 import './ManagerCategories.scss'
 import { Link } from "react-router-dom";
 var dateFormat = require("dateformat");
@@ -20,6 +22,8 @@ const ManagetUser = () => {
   const [dataRespon, setdataRespon] = useState([])
   const [dataRespontemp, setdataRespontemp] = useState([])
   const [visible, setVisible] = useState(false);
+  const [visibleModalEdit, setVisibleModalEdit] = useState(false);
+  const [categoryGroupEditModal, setcategoryGroupEditModal] = useState({});
 
   useEffect(() => {
     APIgetAllCategoryGroup();
@@ -129,8 +133,28 @@ const ManagetUser = () => {
         });
     }
     if (upDatecategoryGroup === true) {
+      var id = categoryGroup.CategoryGroupid;
+      delete  categoryGroup.CategoryGroupid;
+      CategorygroupService()
+      .setSingleCategorygroup(id, {
+        ...categoryGroup
+      })
+      .then((response) => {
+        APIgetAllCategoryGroup();
+        notification["success"]({
+          message: "Hoàn Tất",
+          description: "Bạn đã sửa thành công",
+        });
 
+      })
+      .catch(function (error) {
+        console.log("ERROR from server:", error);
+      });
     }
+  };
+  const onEdit = (values) => {
+    handleProduct(values, false, false, true);
+    setVisibleModalEdit(false);
   };
   return (
     <>
@@ -176,7 +200,12 @@ const ManagetUser = () => {
                   <Link to="#" className="btn radius-xl">View More</Link>
                 </div>
                 <div className="handle-btn text-center">
-                  <Button type="primary" shape="round" icon={<EditOutlined />} />
+                  <Button type="primary" shape="round"
+                    onClick={() => {
+                      setVisibleModalEdit(true);
+                      setcategoryGroupEditModal(item);
+                    }}
+                    icon={<EditOutlined />} />
                   {item.Isactive.data[0]
                     ? <Button type="primary" className='mx-2' shape="round"
                       onClick={() => handleProduct(item, false, true, false)}
@@ -197,6 +226,14 @@ const ManagetUser = () => {
         onCreate={onCreate}
         onCancel={() => {
           setVisible(false);
+        }}
+      />
+      <ModalEdit
+        visibleModalEdit={visibleModalEdit}
+        categoryGroupEditModal={categoryGroupEditModal}
+        onEdit={onEdit}
+        onCancel={() => {
+          setVisibleModalEdit(false);
         }}
       />
     </>
