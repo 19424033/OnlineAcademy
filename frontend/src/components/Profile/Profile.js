@@ -17,7 +17,7 @@ const Profile = () => {
   const { userid, profile, nameUser, setProfile, setnameUser,imageUser } = useContext(
     AppContext
   );
-
+console.log(imageUser)
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [rePassword, setRePassword] = useState("");

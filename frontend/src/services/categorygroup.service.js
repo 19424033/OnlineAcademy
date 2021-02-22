@@ -15,12 +15,16 @@ export default function UserService() {
   const addCategorygroup = (values) => {
     return axios.post(`${API_URL}`,values, { headers: authHeader(accessToken) });
   };
+  const setSingleCategorygroup = (id, values) => {
+    return axios.put(`${API_URL}/${id}`, values, { headers: authHeader(accessToken) });
+  };
   const deleteSingleCatagoryGroup = (id) => {
     return axios.delete(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
   };
   return {
     getAllCategorygroup,
     addCategorygroup,
-    deleteSingleCatagoryGroup
+    deleteSingleCatagoryGroup,
+    setSingleCategorygroup
   };
 }

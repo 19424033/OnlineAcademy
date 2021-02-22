@@ -81,6 +81,47 @@ const ManagetUser = () => {
       onCancel() { },
     });
   }
+  const handleProduct = (categoryGroup, setEnable, setDisable, upDatecategoryGroup) => {
+    if (setEnable === true) {
+      CategorygroupService()
+        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+          ...categoryGroup,
+          Isactive: 1,
+
+        })
+        .then((response) => {
+          APIgetAllCategoryGroup();
+          notification["success"]({
+            message: "Hoàn Tất",
+            description: "Bạn đã sửa thành công",
+          });
+        })
+        .catch(function (error) {
+          console.log("ERROR from server:", error);
+        });
+    }
+    if (setDisable === true) {
+      CategorygroupService()
+      .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+        ...categoryGroup,
+        Isactive: 0,
+
+      })
+      .then((response) => {
+        APIgetAllCategoryGroup();
+        notification["success"]({
+          message: "Hoàn Tất",
+          description: "Bạn đã sửa thành công",
+        });
+      })
+      .catch(function (error) {
+        console.log("ERROR from server:", error);
+      });
+    }
+    if (upDatecategoryGroup === true) {
+
+    }
+  };
   return (
     <>
       <Row>
@@ -127,13 +168,17 @@ const ManagetUser = () => {
                 </div>
                 <div className="handle-btn text-center">
                   <Button type="primary" shape="round" icon={<EditOutlined />} />
-                  {item.Isactive.data[0] ? <Button type="primary" className='mx-2' shape="round" icon={<UnlockOutlined />} /> : <Button type="default" className='mx-2' shape="round" icon={<LockOutlined />} />}
+                  {item.Isactive.data[0]
+                    ? <Button type="primary" className='mx-2' shape="round"
+                      onClick={() => handleProduct(item, false, true, false)}
+                      icon={<UnlockOutlined />} />
+                    : <Button type="default" className='mx-2' shape="round"
+                      onClick={() => handleProduct(item, true, false, false)}
+
+                      icon={<LockOutlined />} />}
                   <Button type="primary" shape="round" danger icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(item)} />
                 </div>
-
-
               </div>
-
             </Col>
           )
         })}

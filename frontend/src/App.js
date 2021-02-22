@@ -61,7 +61,7 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, Dislayname, Usersid, Users,Image } = parseAccessToken(
+      const { OTP_Confim, Dislayname, Usersid,Image } = parseAccessToken(
         tokenString
       ); // lấy trường accessToken đi mã hoá
       setnameUser(Dislayname);

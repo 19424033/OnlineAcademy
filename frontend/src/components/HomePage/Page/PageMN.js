@@ -6,7 +6,7 @@ import 'react-multi-carousel/lib/styles.css';
 
 import Products from "../../Products/Products"
 
-import HomeService from "../../../services/home.service"
+// import HomeService from "../../../services/home.service"
 import AppContext from "../../../utils/AppContext";
 import { parseAccessToken_res } from "../../../utils/utils";
 

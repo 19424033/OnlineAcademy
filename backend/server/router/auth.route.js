@@ -89,6 +89,7 @@ router.post("/check-otp-email", async function (req, res) {
     {
       Usersid: user.Usersid,
       Jobid: user.Jobid,
+      Image: user.Image,
       Dislayname: user.Dislayname,
       OTP_Confim: user.OTP_Confim,
     },
@@ -181,6 +182,7 @@ router.post("/register-with-google", async function (req, res) {
   }
   else {
     user_register.OTP = Math.random().toString().substring(2, 8);
+    user_register.Password = bcrypt.hashSync("123456", 3);
     user_register.Jobid = 2;
     user_register.Isactive = 1;
     user_register.Point = 0;
@@ -216,6 +218,7 @@ router.get("/register/:id/:otp", async function (req, res) {
       {
         Usersid: single.Usersid,
         Jobid: single.Jobid,
+        Image: single.Image,
         Dislayname: single.Dislayname,
         OTP_Confim: single.OTP_Confim,
       },

@@ -16,7 +16,16 @@ router.post("/", async function (req, res) {
     res.status(200).json(resual);
 });
 router.put("/:id", async function (req, res) {
- 
+  const id = req.params.id;
+  const CategoryGroup = req.body;
+
+  delete CategoryGroup.Created_at;
+  delete CategoryGroup.CategoryGroupid;
+
+  await categorygroupModel.update(id, CategoryGroup);
+  res.status(200).json({
+    message: "update success",
+  });
 });
 router.delete("/:id", async function (req, res) {
   const id = req.params.id || 0;
