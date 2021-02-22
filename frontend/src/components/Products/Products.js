@@ -1,39 +1,37 @@
 import * as React from "react";
 import { Rate } from 'antd';
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 
 const Products = (props) => {
   return (
-    <div className="item">
+    <div className="item" style={{margin:'0 5px'}}>
       <div className="cours-bx">
-        <div className="action-box">
-            <img src="assets/images/courses/pic1.jpg" alt />
-            <Link to = {"/courses/" +props.products.Categoryname} className="btn">Read More</Link>
+        <div className="action-box"  style={{ height:'200px', backgroundSize:'cover', backgroundImage: props.products.Picture }} />
+        <div className="info-bx text-center" style={{height:'100px'}}>
+            <h6><Link to = {"/courses/" +props.products.Categoryname} >{ props.products.Categoryname }</Link></h6>
+            <span> { props.products.CategorGroupname } </span>
         </div>
         <div className="info-bx">
           <ul className="media-post">
-            <li><i className="fa fa-calendar" />{" "} Jan 02 2019</li>
-            <li><i className="fa fa-user" />{" "}By William</li>
+            <li><i className="fa fa-calendar" />: {moment(props.products.Create_at).format('DD/MM/yyyy') }</li>
+            <li><i className="fa fa-user" />: {props.products.Dislayname}</li>
         </ul>
-        </div>
-        <div className="info-bx text-center">
-            <h5><Link to = {"/courses/" +props.products.Categoryname} >{ props.products.Categoryname }</Link></h5>
-            <span> { props.products.CategoryGroup } </span>
         </div>
         <div className="cours-more-info">
             <div className="review">
-              <span>Yêu thích</span><br></br>
-              <span>{ props.products.QuanLike } <i className="fa fa-heart" /> </span>
+            <span>Đăng Ký: { props.products.Quanres } <i className="fa fa-user" /> </span> <br></br>
+              <span>Yêu Thích: { props.products.Quanlike } <i className="fa fa-heart" /> </span>
             </div>
             <div className="price">
-            { props.products.Discount != 0
+            { props.products.value != null
             ? <>
-                <del> { props.products.Price.toLocaleString()} đ </del>
-                <h5>{ (props.products.Price * (100 - props.products.Discount) / 100).toLocaleString()  } đ </h5> 
+                <del> { parseInt(props.products.Price).toLocaleString() } đ </del>
+                <h5>{ (props.products.Price * (100-props.products.value) /100).toLocaleString()  } đ </h5> 
               </>
             : <> 
-                <br></br><h5>{ props.products.Price.toLocaleString() } đ </h5>  </> }
+                <br></br><h5>{ parseInt(props.products.Price).toLocaleString() } đ </h5>  </> }
             </div>
         </div>
       </div>
