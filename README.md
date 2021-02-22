@@ -17,7 +17,8 @@
 # Hướng dẫn chạy chương trình:
 - b1: clone về: $git clone https://github.com/19424033/OnlineAcademy
 - b2: npm install (lâu, đợi cài package cà frontend và backend )
-- b3: npm start 
+- b3: npm install react-multi-carousel (tại ./frontend)
+- b4: npm start 
    - note: 
       - frontend localhost: 3000
       - backend localhost: 4000

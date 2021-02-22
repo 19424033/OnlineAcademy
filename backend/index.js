@@ -7,6 +7,7 @@ const app = express();
 const USERS = require('./server/router/users.route');
 const CATEGORYGROUP = require('./server/router/categorygroup.route');
 const AUTH = require('./server/router/auth.route');
+const HOME = require('./server/router/home.route');
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
 const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
@@ -46,6 +47,8 @@ app.use('/api/users',decentralization, USERS );
 app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
 
 app.use('/api/auth', AUTH );
+
+app.use('/api/home', HOME);
 
 
 app.get('/err', function (req, res) {
