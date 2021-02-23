@@ -18,7 +18,7 @@ router.put("/:id", async function (req, res) {
   const CategoryGroup = req.body;
 
   delete CategoryGroup.Created_at;
-  delete CategoryGroup.CategoryGroupid;
+  delete CategoryGroup.CategoryGroupId;
 
   await categorygroupModel.update(id, CategoryGroup);
   res.status(200).json({
@@ -30,7 +30,7 @@ router.delete("/:id", async function (req, res) {
   if (id === 0) {
     return res.status(304).end();
   }
-  const list = await categorygroupModel.GetCategoryByCategoryGroupid(id);
+  const list = await categorygroupModel.GetCategoryByCategoryGroupId(id);
 
   if (list.length === 0) {
     await categorygroupModel.delete(id).then((result) => {

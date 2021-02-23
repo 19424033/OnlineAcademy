@@ -6,7 +6,7 @@ module.exports = {
   },
 
   async single(id) {
-    const user = await db("users").where("usersid", id);
+    const user = await db("users").where("UsersId", id);
     if (user.length === 0) {
       return null;
     }
@@ -20,21 +20,21 @@ module.exports = {
   //   return user;
   // },
   async DetailCategory(id) {
-    const user = await db("category").where("Categoryid", id);
+    const user = await db("category").where("CategoryId", id);
     if (user.length === 0) {
       return null;
     }
     return user[0];
   },
-  async favoriteCategory(id) {
-    const user = await db("likedetail").where("usersid", id);
-    if (user.length === 0) {
-      return null;
-    }
-    return user;
-  },
+  // async favoriteCategory(id) {
+  //   const user = await db("likedetail").where("UsersId", id);
+  //   if (user.length === 0) {
+  //     return null;
+  //   }
+  //   return user;
+  // },
   async categoryDetail(id) {
-    const user = await db("category").where("Categoryid", id);
+    const user = await db("category").where("CategoryId", id);
     if (user.length === 0) {
       return null;
     }
@@ -47,24 +47,24 @@ module.exports = {
   },
 
   del(id) {
-    return db("users").where("usersid", id).del();
+    return db("users").where("UsersId", id).del();
   },
 
   update(id, user) {
-    return db("users").where("usersid", id).update(user);
+    return db("users").where("UsersId", id).update(user);
   },
 
   profile(id) {
-    return db("users").where("usersid", id);
+    return db("users").where("UsersId", id);
   },
   async updateOTPEmail(email, otp) {
     return db("users").where("Email", email).update("OTP", otp);
   },
   async updateProfile(id, username, email) {
-    await db("users").where("usersid", id).update("Email", email);
+    await db("users").where("UsersId", id).update("Email", email);
     user = await db("users")
-      .where("usersid", id)
-      .update("Dislayname", username);
+      .where("UsersId", id)
+      .update("DislayName", username);
     return user[0];
   },
   async singleByEmail(email) {
@@ -99,18 +99,18 @@ module.exports = {
     }
   },
   async checkOTP(id, OTP) {
-    var user = await db("users").where({ usersid: id, OTP: OTP });
+    var user = await db("users").where({ UsersId: id, OTP: OTP });
     if (user.length === 0) {
       return null;
     } else {
-      await db("users").where("usersid", id).update("OTP_Confim", 1);
-      user = await db("users").where({ usersid: id, OTP: OTP });
+      await db("users").where("UsersId", id).update("OTP_Confim", 1);
+      user = await db("users").where({ UsersId: id, OTP: OTP });
       return user[0];
     }
   },
   async updateOTP(id, OTP) {
-    await db("users").where("usersid", id).update("OTP", OTP);
-    const user = await db("users").where("usersid", id);
+    await db("users").where("UsersId", id).update("OTP", OTP);
+    const user = await db("users").where("UsersId", id);
     if (user.length === 0) {
       return null;
     } else {
@@ -119,12 +119,12 @@ module.exports = {
   },
 
   updateRefreshToken(id, refreshToken) {
-    return db("users").where("usersid", id).update("rfToken", refreshToken);
+    return db("users").where("UsersId", id).update("rfToken", refreshToken);
   },
 
   async isValidRefreshToken(id, refreshToken) {
     const list = await db("users")
-      .where("usersid", id)
+      .where("UsersId", id)
       .andWhere("rfToken", refreshToken);
     if (list.length > 0) {
       return true;

@@ -7,7 +7,7 @@ const router = express.Router();
 
 const someFunction = (myArray) => {
     const promises = myArray.map(async (item, index) => {
-        const folder = item.Categoryname.split(" ").join("_")
+        const folder = item.CategoryName.split(" ").join("_")
         const { resources } = await cloudinary.search
             .expression(`folder: ${folder}`)
             .sort_by('public_id', 'asc')
@@ -31,9 +31,9 @@ router.get("/", async function (req, res) {
 });
 
 // router.post("/cloudinary", async function (req, res) {
-//     const Categoryname = req.body.Categoryname;
+//     const CategoryName = req.body.CategoryName;
 
-//     const folder = Categoryname.split(" ").join("_")
+//     const folder = CategoryName.split(" ").join("_")
 //     const { resources } = await cloudinary.search
 //         .expression(`folder: ${folder}`)
 //         .sort_by('public_id', 'asc')
