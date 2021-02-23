@@ -4,7 +4,10 @@ module.exports = {
   all() {
     return db("category").where("Isactive",true);
   },
+  allAdmin() {
+    return db("category").leftJoin('categorygroup', 'categorygroup.categorygroupid', '=', 'category.categoryid')
 
+  },
   async single(Categoryid) {
     const category = await db("category").where("Categoryid", Categoryid);
     if (category.length === 0) {

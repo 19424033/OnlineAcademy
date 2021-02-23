@@ -8,6 +8,9 @@ const formatDate = (date) => {
 const formatNumber = (number = 0) => {
   return parseInt(number)?.toLocaleString();
 };
+const formatMoney = (number = 0) => {
+  return parseInt(number)?.toLocaleString()+ " đ";
+};
 
 const parseJwt = (token) => {
   var base64Url = _.split(token, ".")[1];
@@ -55,4 +58,5 @@ export {
   getAccessToken,
   parseAccessToken,
   parseAccessToken_res,
+  formatMoney
 };
