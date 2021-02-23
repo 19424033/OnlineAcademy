@@ -12,6 +12,34 @@ module.exports = {
     }
     return user[0];
   },
+  // async favoriteCategory(id) {
+  //   const user = await db("users");
+  //   if (user.length === 0) {
+  //     return null;
+  //   }
+  //   return user;
+  // },
+  async DetailCategory(id) {
+    const user = await db("category").where("Categoryid", id);
+    if (user.length === 0) {
+      return null;
+    }
+    return user[0];
+  },
+  async favoriteCategory(id) {
+    const user = await db("likedetail").where("usersid", id);
+    if (user.length === 0) {
+      return null;
+    }
+    return user;
+  },
+  async categoryDetail(id) {
+    const user = await db("category").where("Categoryid", id);
+    if (user.length === 0) {
+      return null;
+    }
+    return user;
+  },
 
   async add(user) {
     const ids = await db("users").insert(user);
