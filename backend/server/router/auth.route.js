@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const randomstring = require("randomstring");
 const userModel = require("../models/users.model");
 const mailer = require("../utils/mailOTP");
-const imageToBase64 = require('image-to-base64');
+const imageToBase64 = require("image-to-base64");
 const router = express.Router();
 
 router.post("/log-in", async function (req, res) {
@@ -45,7 +45,7 @@ router.post("/log-in", async function (req, res) {
   });
 });
 router.post("/log-in-with-google", async function (req, res) {
-  console.log(req.body)
+  console.log(req.body);
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
     return res.status(200).json({
@@ -178,8 +178,7 @@ router.post("/register-with-google", async function (req, res) {
 
   if (user !== null) {
     return res.status(204).json();
-  }
-  else {
+  } else {
     user_register.OTP = Math.random().toString().substring(2, 8);
     user_register.Jobid = 2;
     user_register.Isactive = 1;
@@ -187,19 +186,17 @@ router.post("/register-with-google", async function (req, res) {
 
     await imageToBase64(user_register.Image) // Image URL
       .then((response) => {
-        user_register.Image =response;
-        })
+        user_register.Image = response;
+      })
       .catch((error) => {
-          console.log(error); // Logs an error if there was one
-        })
+        console.log(error); // Logs an error if there was one
+      });
     user_register.Userid = await userModel.add(user_register);
 
     mailer(user_register.Email, user_register.OTP);
     res.status(200).json();
   }
 });
-
-
 
 router.get("/register/:id/:otp", async function (req, res) {
   const id = req.params.id || 0;
@@ -301,5 +298,20 @@ router.post("/refresh", async function (req, res) {
     message: "Invalid refresh token.",
   });
 });
-
+router.post("/favorite-category", async function (req, res) {
+  console.log(req);
+  const id = req.body.userId;
+  const User = await userModel.favoriteCategory(id);
+  if (User == null) {
+    return res.status(200).json(false);
+  }
+  let temp = [];
+  User.forEach((e) => {
+    const category = userModel.categoryDetail(e.Categoryid);
+    temp.push(category);
+  });
+  res.status(200).json(temp);
+  // const listCategory = [];
+  // listCategory=   User.Categoryid;
+});
 module.exports = router;

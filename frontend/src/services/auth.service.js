@@ -37,6 +37,7 @@ export default function AuthService() {
       localStorage.removeItem("AcademyOnline_Token");
     }
   };
+
   const updateOTP = (id) => {
     return axios.put(`${API_auth}/register/${id}`);
   };
@@ -48,6 +49,9 @@ export default function AuthService() {
   };
   const editProfile = async (values) => {
     return await axios.post(`${API_auth}/edit-profile`, values);
+  };
+  const getAllFavoriteCategory = (id) => {
+    return axios.post(`${API_auth}/favorite-category`, id);
   };
   return {
     register,
@@ -62,6 +66,7 @@ export default function AuthService() {
     getProfile,
     editProfile,
     registerWithGoogle,
-    loginWithGoogle
+    loginWithGoogle,
+    getAllFavoriteCategory,
   };
 }

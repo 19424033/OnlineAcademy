@@ -10,10 +10,11 @@ const router = express.Router();
 //   user.Password = bcrypt.hashSync(user.Password, 3);
 //   user.id = await usersModel.add(user);
 //   delete user.password;
-//   res.status(201).json(user); 
+//   res.status(201).json(user);
 // });
 
-router.get("/", async function (req, res) {  // dua vao token lấy user
+router.get("/", async function (req, res) {
+  // dua vao token lấy user
 
   console.log(req.accessTokenPayload);
   const list = await usersModel.all();
@@ -23,7 +24,7 @@ router.get("/", async function (req, res) {  // dua vao token lấy user
 
 router.get("/:id", async function (req, res) {
   const id = req.params.id || 0;
-  // console.log(req) 
+  // console.log(req)
   const single = await usersModel.single(id);
 
   if (single === null) {
@@ -32,6 +33,7 @@ router.get("/:id", async function (req, res) {
 
   res.json(single);
 });
+
 router.post("/teacher", async function (req, res) {
   //  tao tai khoan
   const addTeacher = req.body;
@@ -61,26 +63,28 @@ router.put("/:id", async function (req, res) {
   delete user.Usersid;
   delete user.OTP_Confim;
 
-  console.log(user)
+  console.log(user);
   await usersModel.update(id, user);
   res.status(200).json({
     message: "update success",
   });
 });
 
-
 router.delete("/:id", async function (req, res) {
   const id = req.params.id || 0;
   if (id === 0) {
     return res.status(304).end();
   }
-  await usersModel.del(id).then((result) => {
-    res.json({
-      message: "delete success",
+  await usersModel
+    .del(id)
+    .then((result) => {
+      res.json({
+        message: "delete success",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
-  }).catch((err) => {
-    res.status(500).json(err);
-  });
 });
 
 module.exports = router;

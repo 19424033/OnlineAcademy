@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 
 import {
   Form,
@@ -14,9 +15,14 @@ import {
   message,
 } from "antd";
 const Profile = () => {
-  const { userid, profile, nameUser, setProfile, setnameUser,imageUser } = useContext(
-    AppContext
-  );
+  const {
+    userid,
+    profile,
+    nameUser,
+    setProfile,
+    setnameUser,
+    imageUser,
+  } = useContext(AppContext);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -26,6 +32,7 @@ const Profile = () => {
   const [userName, setUserName] = useState();
   const [errorPasswordNew, setErrorPasswordNew] = useState("");
   const [errorPasswordRe, setErrorPasswordRe] = useState("");
+  const [favoriteCategory, setFavoriteCategory] = useState("");
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [profileUser, setProfileOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
@@ -79,6 +86,18 @@ const Profile = () => {
     setProfileOpen(false);
     setCoursesOpen(true);
     setQuizOpen(false);
+    let data = {
+      userId: userid,
+    };
+    AuthService()
+      .getAllFavoriteCategory(data)
+      .then((data) => {
+        if (data.data == false) {
+          setFavoriteCategory("");
+        } else {
+          setFavoriteCategory(data.data);
+        }
+      });
   };
   const openQuiz = () => {
     setPasswordOpen(false);
@@ -219,7 +238,7 @@ const Profile = () => {
                   to="#courses"
                   onClick={openCourses}
                 >
-                  <i className="ti-book"></i>Courses
+                  <i className="ti-book"></i>Khóa học yêu thích
                 </Link>
               </li>
               <li className="nav-item">
@@ -229,7 +248,7 @@ const Profile = () => {
                   to="#quiz-results"
                   onClick={openQuiz}
                 >
-                  <i className="ti-bookmark-alt"></i>Quiz Results{" "}
+                  <i className="ti-bookmark-alt"></i>Khóa học đã đăng kí{" "}
                 </Link>
               </li>
               <li className="nav-item">
@@ -239,7 +258,7 @@ const Profile = () => {
                   to="#edit-profile"
                   onClick={openChangeProfile}
                 >
-                  <i className="ti-pencil-alt"></i>Edit Profile
+                  <i className="ti-pencil-alt"></i>Thay đổi thông tin
                 </Link>
               </li>
               <li className="nav-item">
@@ -249,7 +268,7 @@ const Profile = () => {
                   to="#change-password"
                   onClick={openChangePassWord}
                 >
-                  <i className="ti-lock"></i>Change Password
+                  <i className="ti-lock"></i>Thay đổi mật khẩu
                 </Link>
               </li>
             </ul>
@@ -257,6 +276,14 @@ const Profile = () => {
         </div>
       </div>
       <div className="col-lg-9 col-md-4 col-sm-12 profileUser">
+        {coursesOpen && (
+          <div>
+            {favoriteCategory === "" && (
+              <h4 className="mt-3">Không có khóa học yêu thích nào</h4>
+            )}
+            {favoriteCategory != "" && <div>Danh sách khóa học</div>}
+          </div>
+        )}
         {passwordOpen && (
           <div className="Change_password">
             <div className="row">

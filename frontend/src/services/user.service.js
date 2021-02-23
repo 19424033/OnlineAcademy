@@ -16,16 +16,20 @@ export default function UserService() {
     return axios.get(`${API_URL}/`, { headers: authHeader(accessToken) });
   };
   const setSingleUser = (id, values) => {
-    return axios.put(`${API_URL}/${id}`, values, { headers: authHeader(accessToken) });
+    return axios.put(`${API_URL}/${id}`, values, {
+      headers: authHeader(accessToken),
+    });
   };
   const deleteSingleUser = (id) => {
-    return axios.delete(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
+    return axios.delete(`${API_URL}/${id}`, {
+      headers: authHeader(accessToken),
+    });
   };
 
   return {
     getUserByID,
     getAllUser,
-    setSingleUser, 
-    deleteSingleUser
+    setSingleUser,
+    deleteSingleUser,
   };
 }
