@@ -24,7 +24,6 @@ router.get("/", async function (req, res) {
 
 router.get("/:id", async function (req, res) {
   const id = req.params.id || 0;
-  // console.log(req)
   const single = await usersModel.single(id);
 
   if (single === null) {
@@ -37,10 +36,8 @@ router.get("/:id", async function (req, res) {
 router.post("/teacher", async function (req, res) {
   //  tao tai khoan
   const addTeacher = req.body;
-  console.log(addTeacher);
 
   const user = await usersModel.singleByEmail(addTeacher.Email);
-  console.log(user);
 
   if (user !== null) {
     return res.status(204).json();
@@ -63,7 +60,6 @@ router.put("/:id", async function (req, res) {
   delete user.Usersid;
   delete user.OTP_Confim;
 
-  console.log(user);
   await usersModel.update(id, user);
   res.status(200).json({
     message: "update success",

@@ -5,8 +5,9 @@ const morgan = require("morgan");
 const app = express();
 
 const USERS = require('./server/router/users.route');
-
+const CATEGORYGROUP = require('./server/router/categorygroup.route');
 const AUTH = require('./server/router/auth.route');
+const HOME = require('./server/router/home.route');
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
 const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
@@ -17,8 +18,10 @@ if(process.env.NODE_ENV !== 'test') {
 
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(morgan("dev"));
 
 app.get("/", (request, respond) => {
@@ -41,7 +44,11 @@ app.get('/api/images', async (req, res) => {
 });
 
 app.use('/api/users',decentralization, USERS );
+app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
+
 app.use('/api/auth', AUTH );
+
+app.use('/api/home', HOME);
 
 
 app.get('/err', function (req, res) {

@@ -45,7 +45,6 @@ router.post("/log-in", async function (req, res) {
   });
 });
 router.post("/log-in-with-google", async function (req, res) {
-  console.log(req.body);
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
     return res.status(200).json({
@@ -89,6 +88,7 @@ router.post("/check-otp-email", async function (req, res) {
     {
       Usersid: user.Usersid,
       Jobid: user.Jobid,
+      Image: user.Image,
       Dislayname: user.Dislayname,
       OTP_Confim: user.OTP_Confim,
     },
@@ -147,10 +147,8 @@ router.post("/edit-profile", async function (req, res) {
 router.post("/register", async function (req, res) {
   //  tao tai khoan
   const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
-  //  console.log(user_register);
 
   const user = await userModel.singleByEmail(user_register.Email);
-  console.log(user);
 
   if (user !== null) {
     return res.status(204).json();
@@ -171,15 +169,14 @@ router.post("/register", async function (req, res) {
 router.post("/register-with-google", async function (req, res) {
   //  tao tai khoan
   const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
-  //  console.log(user_register);
 
   const user = await userModel.singleByEmail(user_register.Email);
-  console.log(user);
 
   if (user !== null) {
     return res.status(204).json();
   } else {
     user_register.OTP = Math.random().toString().substring(2, 8);
+    user_register.Password = bcrypt.hashSync("123456", 3);
     user_register.Jobid = 2;
     user_register.Isactive = 1;
     user_register.Point = 0;
@@ -201,8 +198,6 @@ router.post("/register-with-google", async function (req, res) {
 router.get("/register/:id/:otp", async function (req, res) {
   const id = req.params.id || 0;
   const otp = req.params.otp;
-  console.log(id);
-  console.log(otp);
 
   const single = await userModel.checkOTP(id, otp);
 
@@ -213,6 +208,7 @@ router.get("/register/:id/:otp", async function (req, res) {
       {
         Usersid: single.Usersid,
         Jobid: single.Jobid,
+        Image: single.Image,
         Dislayname: single.Dislayname,
         OTP_Confim: single.OTP_Confim,
       },
@@ -248,7 +244,6 @@ router.post("/forgot-password", async function (req, res) {
   }
   req.body.Password = bcrypt.hashSync(req.body.Password, 3);
   const temp = await userModel.resetPassword(req.body.Email, req.body.Password);
-  console.log(temp);
   res.status(200).json({ Mes: "OK" });
 });
 

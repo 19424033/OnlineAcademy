@@ -11,7 +11,6 @@ const OTP = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [email, setemail] = useState("");
   const onCreate = (values) => {
-    console.log(values);
     if (
       values.otp1 !== "null" &&
       values.otp2 !== "null" &&
@@ -23,7 +22,6 @@ const OTP = () => {
       const OTP = `${values.otp1}${values.otp2}${values.otp3}${values.otp4}${values.otp5}${values.otp6}`;
       const tokenString = localStorage.getItem("AcademyOnline_Token");
       const userID = parseAccessToken(tokenString);
-      console.log(userID);
       AuthService()
         .checkOTPDB(userID.Usersid, OTP)
         .then((result) => {
@@ -88,7 +86,6 @@ const OTP = () => {
       .updateOTP(userID.Usersid)
       .then((result) => {
         setemail(result.data);
-        console.log(result);
       })
       .catch((err) => {
         console.log(err);

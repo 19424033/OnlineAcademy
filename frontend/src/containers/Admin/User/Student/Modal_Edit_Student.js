@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
-import { Modal, Form, Input, Alert } from "antd";
+import { Modal, Form, Input } from "antd";
 
 const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
   const [form] = Form.useForm();
@@ -42,38 +42,38 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
         <Form.Item name="Usersid" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
-      <Form.Item
-        name="Email"
-        label="E-mail"
-        rules={[
-          {
-            type: "email",
-            message: "The input is not valid E-mail!",
-          },
-          {
-            required: true,
-            message: "Please input your E-mail!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="Dislayname"
-        label="Tên hiển thị:"
-        rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+        <Form.Item
+          name="Email"
+          label="E-mail"
+          rules={[
+            {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
+              required: true,
+              message: "Please input your E-mail!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Dislayname"
+          label="Tên hiển thị:"
+          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
 
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="Telephone"
-        label="Điện thoại:"
-        rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Telephone"
+          label="Điện thoại:"
+          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
 
-      >
-        <Input />
-      </Form.Item>
+        >
+          <Input />
+        </Form.Item>
       </Form>
     </Modal >
   );

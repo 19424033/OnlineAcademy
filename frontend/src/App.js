@@ -5,7 +5,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { notification } from "antd";
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";
@@ -61,7 +60,7 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, Dislayname, Usersid, Users,Image } = parseAccessToken(
+      const { OTP_Confim, Dislayname, Usersid,Image } = parseAccessToken(
         tokenString
       ); // lấy trường accessToken đi mã hoá
       setnameUser(Dislayname);
@@ -137,8 +136,8 @@ const App = () => {
               component={ManagerSource}
               exact
             />
-            <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" />
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" /> */}
           </Switch>
         </Router>
       </AppContext.Provider>
@@ -200,8 +199,8 @@ const App = () => {
               exact
             />
             {/* <AppRoute layout={Default} component={Error} exact /> */}
-            <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" />
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" /> */}
           </Switch>
         </Router>
       </AppContext.Provider>

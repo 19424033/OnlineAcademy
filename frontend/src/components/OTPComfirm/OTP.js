@@ -21,7 +21,6 @@ const OTP = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [email, setemail] = useState("");
   const onCreate = (values) => {
-    console.log(values);
     if (
       values.otp1 !== "null" &&
       values.otp2 !== "null" &&
