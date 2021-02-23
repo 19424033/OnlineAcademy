@@ -71,7 +71,7 @@ const ManagetUser = () => {
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        CategorygroupService().deleteSingleCatagoryGroup(item.CategoryGroupid)
+        CategorygroupService().deleteSingleCatagoryGroup(item.CategoryGroupId)
           .then((response) => {
             if (response.status === 202) {
               notification["error"]({
@@ -98,7 +98,7 @@ const ManagetUser = () => {
   const handleProduct = (categoryGroup, setEnable, setDisable, upDatecategoryGroup) => {
     if (setEnable === true) {
       CategorygroupService()
-        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+        .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
           Isactive: 1,
 
@@ -116,7 +116,7 @@ const ManagetUser = () => {
     }
     if (setDisable === true) {
       CategorygroupService()
-        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+        .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
           Isactive: 0,
 
@@ -133,8 +133,8 @@ const ManagetUser = () => {
         });
     }
     if (upDatecategoryGroup === true) {
-      var id = categoryGroup.CategoryGroupid;
-      delete  categoryGroup.CategoryGroupid;
+      var id = categoryGroup.CategoryGroupId;
+      delete  categoryGroup.CategoryGroupId;
       CategorygroupService()
       .setSingleCategorygroup(id, {
         ...categoryGroup

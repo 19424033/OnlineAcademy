@@ -35,7 +35,7 @@ const Test = ({ datasource }) => {
                     </div>
                     <div className="card-courses-full-dec">
                         <div className="card-courses-title">
-                            <h4>{item.Categoryname}</h4>
+                            <h4>{item.CategoryName}</h4>
                         </div>
                         <div className="card-courses-list-bx">
                             <ul className="card-courses-view">

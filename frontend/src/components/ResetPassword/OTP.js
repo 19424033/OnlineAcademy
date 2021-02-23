@@ -23,7 +23,7 @@ const OTP = () => {
       const tokenString = localStorage.getItem("AcademyOnline_Token");
       const userID = parseAccessToken(tokenString);
       AuthService()
-        .checkOTPDB(userID.Usersid, OTP)
+        .checkOTPDB(userID.UsersId, OTP)
         .then((result) => {
           if (result.data) {
             setConfirmLoading(true);
@@ -31,7 +31,7 @@ const OTP = () => {
               setIsModalVisible(false);
               setConfirmLoading(false);
               message.success("Xác nhận OPT thành công");
-              setnameUser(parseAccessToken_res(result.data).Dislayname);
+              setnameUser(parseAccessToken_res(result.data).DislayName);
               saveToken(result.data);
               if (parseAccessToken_res(result.data).OTP_Confim.data[0] === 1) {
                 setCheckOTPConfim(true);
@@ -83,7 +83,7 @@ const OTP = () => {
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     const userID = parseAccessToken(tokenString);
     AuthService()
-      .updateOTP(userID.Usersid)
+      .updateOTP(userID.UsersId)
       .then((result) => {
         setemail(result.data);
       })

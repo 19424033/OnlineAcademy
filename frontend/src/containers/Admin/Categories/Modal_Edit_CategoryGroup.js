@@ -9,7 +9,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
   useEffect(() => {
     setimageBase64(categoryGroupEditModal.Image);
     form.setFieldsValue({
-      CategoryGroupid: categoryGroupEditModal.CategoryGroupid,
+      CategoryGroupId: categoryGroupEditModal.CategoryGroupId,
       CategoryGroupname: categoryGroupEditModal.CategoryGroupname,
       Image: categoryGroupEditModal.Image,
     });
@@ -74,7 +74,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
         <Form.Item name="Image" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
-        <Form.Item name="CategoryGroupid" style={{ display: "none" }}>
+        <Form.Item name="CategoryGroupId" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
       </Form>

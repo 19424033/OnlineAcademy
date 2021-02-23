@@ -28,7 +28,7 @@ const Teacher = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "Usersid",
+      dataIndex: "UsersId",
       width: 50,
       align: "center",
     },
@@ -40,7 +40,7 @@ const Teacher = () => {
     },
     {
       title: "Display Name",
-      dataIndex: "Dislayname",
+      dataIndex: "DislayName",
       width: 50,
       align: "center",
     },
@@ -162,7 +162,7 @@ const Teacher = () => {
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        UserService().deleteSingleUser(user.Usersid)
+        UserService().deleteSingleUser(user.UsersId)
           .then((response) => {
             APIgetAllUser();
             notification["success"]({
@@ -184,7 +184,7 @@ const Teacher = () => {
   const handleProduct = (user, setEnable, setDisable, upDateUser) => {
     if (setEnable === true) {
       UserService()
-        .setSingleUser(user.Usersid, {
+        .setSingleUser(user.UsersId, {
           ...user,
           Isactive: 1,
           
@@ -202,7 +202,7 @@ const Teacher = () => {
     }
     if (setDisable === true) {
       UserService()
-        .setSingleUser(user.Usersid, {
+        .setSingleUser(user.UsersId, {
           ...user,
           Isactive: 0,
         })
@@ -218,8 +218,8 @@ const Teacher = () => {
         });
     }
     if (upDateUser === true) {
-      var id = user.Usersid;
-      delete user.Usersid;
+      var id = user.UsersId;
+      delete user.UsersId;
       UserService()
       .setSingleUser(id, {
         ...user

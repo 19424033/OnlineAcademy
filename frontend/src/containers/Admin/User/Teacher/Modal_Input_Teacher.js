@@ -49,7 +49,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="Dislayname"
+          name="DislayName"
           label="Tên hiển thị:"
           rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
         >

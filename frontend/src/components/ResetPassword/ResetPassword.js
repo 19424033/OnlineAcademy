@@ -68,7 +68,7 @@ const ResetPassword = () => {
                 AuthService()
                   .login(temp)
                   .then((res) => {
-                    setnameUser(parseAccessToken_res(res.data).Dislayname);
+                    setnameUser(parseAccessToken_res(res.data).DislayName);
 
                     saveToken(res.data);
                     if (
@@ -98,7 +98,7 @@ const ResetPassword = () => {
       .then((res) => {
         setAuthenticated(res.data.authenticated);
         if (res.data.authenticated === true) {
-          setUserId(res.data.user.Usersid);
+          setUserId(res.data.user.UsersId);
 
           setSelect(false);
         } else {

@@ -36,9 +36,9 @@ const Login = () => {
       .then((res) => {
         const { authenticated } = res.data;
         if (authenticated) {
-          setnameUser(parseAccessToken_res(res.data).Dislayname);
+          setnameUser(parseAccessToken_res(res.data).DislayName);
           setimageUser(parseAccessToken_res(res.data).Image);
-          setUserid(parseAccessToken_res(res.data).Usersid);
+          setUserid(parseAccessToken_res(res.data).UsersId);
           setProfile(parseAccessToken_res(res.data).Users);
 
           saveToken(res.data);
@@ -71,10 +71,10 @@ const Login = () => {
       .then((res) => {
         const { authenticated } = res.data;
         if (authenticated) {
-          setnameUser(parseAccessToken_res(res.data).Dislayname);
+          setnameUser(parseAccessToken_res(res.data).DislayName);
           setimageUser(parseAccessToken_res(res.data).Image);
 
-          setUserid(parseAccessToken_res(res.data).Usersid);
+          setUserid(parseAccessToken_res(res.data).UsersId);
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
             setCheckOTPConfim(true);

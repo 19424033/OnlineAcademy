@@ -8,24 +8,24 @@ const Products = (props) => {
   return (
     <div className="item" style={{margin:'0 5px'}}>
       <div className="cours-bx">
-        <Link to = {"/courses/" +props.products.Categoryid} >
-          <div className="action-box"  style={{ height:'200px', backgroundSize:'cover', backgroundImage: props.products.Picture }} />
+        <Link to = {"/courses/" +props.products.CategoryId} >
+          <div className="action-box"  style={{ height:'200px', backgroundSize:'cover', backgroundImage: props.products.Images }} />
         </Link>
         <div className="info-bx text-center" style={{height:'100px'}}>
-            <h5><Link to = {"/courses/" +props.products.Categoryid} >{ props.products.Categoryname }</Link></h5>
-            <span> { props.products.CategorGroupname } </span>
+            <h5><Link to = {"/courses/" +props.products.CategoryId} >{ props.products.CategoryName }</Link></h5>
+            <span> { props.products.CategoryGroupName } </span>
         </div>
         <div className="info-bx">
           <ul className="media-post">
-            <li><i className="fa fa-calendar" />: {moment(props.products.Create_at).format('DD/MM/yyyy') }</li>
-            <li><i className="fa fa-user" />: {props.products.Dislayname}</li>
+            <li><i className="fa fa-calendar" />: {moment(props.products.Create_At).format('DD/MM/yyyy') }</li>
+            <li><i className="fa fa-user" />: {props.products.DislayName}</li>
           </ul>
 
         </div>
         
         <div className="cours-more-info" style={{background:'white'}}>
             <div style={{width:'50%', padding:'0px 5px'}}>
-            <span>Đăng Ký: { props.products.Quanres } <i className="fa fa-user" /> </span> <br></br>
+            <span>Đăng Ký: { props.products.QuanRes } <i className="fa fa-user" /> </span> <br></br>
               <Rate allowHalf disabled defaultValue={ props.products.Rate} /> { props.products.Rate }/5
             </div>
             <div className="price">

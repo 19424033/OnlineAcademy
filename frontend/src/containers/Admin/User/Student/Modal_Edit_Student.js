@@ -6,9 +6,9 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
-      Usersid: userEditModal.Usersid,
+      UsersId: userEditModal.UsersId,
       Email: userEditModal.Email,
-      Dislayname: userEditModal.Dislayname,
+      DislayName: userEditModal.DislayName,
       Telephone: userEditModal.Telephone,
     });
   }, [userEditModal])
@@ -39,7 +39,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
           modifier: "public",
         }}
       >
-        <Form.Item name="Usersid" style={{ display: "none" }}>
+        <Form.Item name="UsersId" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
         <Form.Item
@@ -59,7 +59,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="Dislayname"
+          name="DislayName"
           label="Tên hiển thị:"
           rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
 
