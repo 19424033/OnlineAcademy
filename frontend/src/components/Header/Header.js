@@ -19,6 +19,8 @@ const HeaderCustomize = () => {
     setCheckOTPConfim,
     logOut,
     userid,
+    userJobId,
+    setUserJobId,
     setProfile,
   } = useContext(AppContext);
   const profileUser = () => {
@@ -40,14 +42,16 @@ const HeaderCustomize = () => {
 
   const menu = (
     <Menu style={{ width: 180 }} className="mt-3 px-2">
-      <Menu.Item>
-        <Link to="/admin/user">
-          <h6>
-            <i className="fa fa-home mr-1" />
-            Go page Admin
-          </h6>
-        </Link>
-      </Menu.Item>
+      {userJobId === 1 && (
+        <Menu.Item>
+          <Link to="/admin/user">
+            <h6>
+              <i className="fa fa-home mr-1" />
+              Go page Admin
+            </h6>
+          </Link>
+        </Menu.Item>
+      )}
 
       <Menu.Item>
         <Link to="/profile">
@@ -130,7 +134,7 @@ const HeaderCustomize = () => {
               to="/profile"
               onClick={profileUser}
             >
-              <Avatar size="large" src={`data:image/jpg;base64,${imageUser}`}/>
+              <Avatar size="large" src={`data:image/jpg;base64,${imageUser}`} />
             </Link>
           </Dropdown>
         </li>

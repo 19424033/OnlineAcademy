@@ -5,7 +5,6 @@ import { Modal, Form, Input, Image } from "antd";
 const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal }) => {
   const [form] = Form.useForm();
   const [imageBase64, setimageBase64] = useState();
-  console.log(categoryGroupEditModal)
   useEffect(() => {
     setimageBase64(categoryGroupEditModal.Image);
     form.setFieldsValue({

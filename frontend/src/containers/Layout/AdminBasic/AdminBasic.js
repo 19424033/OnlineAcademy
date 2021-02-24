@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Layout, Menu } from "antd";
 import "./AdminBasic.scss";
 import {
@@ -6,43 +6,46 @@ import {
   HomeOutlined,
   ReadOutlined,
 } from "@ant-design/icons";
-import { useHistory } from "react-router";
+import { useHistory,useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import {AppContext} from "../../../utils/AppContext";
+import { AppContext } from "../../../utils/AppContext";
 
 const AdminBasic = ({ children }) => {
-  const { checkLocalStorage, logOut } = useContext(AppContext);
+  const { checkLocalStorage, logOut, nameUser } = useContext(AppContext);
   const history = useHistory();
-
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
+  console.log(location.pathname)
+  
   return (
     <Layout className="layout-admin">
-      <Layout.Sider width={250}  height={"100%"}>
-        <Link to="/admin/user" className="logo-admin">
+      <Layout.Sider width={250} height={"100%"}>
+        <Link to="/" className="logo-admin">
           <img
             src={process.env.PUBLIC_URL + "/logo.png"}
             width="200"
             alt="logo"
           />
         </Link>
-        <Menu theme="dark" defaultSelectedKeys={["managerUser"]}>
+        <Menu theme="dark" selectedKeys={[location.pathname]}>
           <Menu.Item
-            key="managerUser"
+            key="/admin/user"
             icon={<HomeOutlined />}
-            onClick={() => history.push("/admin/user")}
+            onClick={() =>history.push("/admin/user")}
           >
             Học viên và giảng viên
           </Menu.Item>
           <Menu.Item
-            key="categories"
+            key="/admin/categories"
             icon={<OrderedListOutlined />}
             onClick={() => history.push("/admin/categories")}
           >
             Lĩnh vực
           </Menu.Item>
           <Menu.Item
-            key="source"
+            key="/admin/source"
             icon={<ReadOutlined />}
-            onClick={() => history.push("/admin/source")}
+            onClick={() =>history.push("/admin/source")}
           >
             Khoá học
           </Menu.Item>
@@ -50,20 +53,12 @@ const AdminBasic = ({ children }) => {
       </Layout.Sider>
       <Layout>
         <Layout.Header className="header-admin">
-          {!checkLocalStorage ? (
-            <Button type="primary" className="mr-5">
-              <Link to="/login">Đăng Nhập</Link>
+          <Button type="primary">{nameUser}</Button>
+          <Link to="/" onClick={logOut}>
+            <Button type="text" className="mr-4">
+              Đăng Xuất
             </Button>
-          ) : (
-            <>
-              <Button type="primary">Hà Minh Bảo Toàn</Button>
-              <Link to="/" onClick={logOut}>
-                <Button type="text" className="mr-4">
-                  Log out
-                </Button>
-              </Link>
-            </>
-          )}
+          </Link>
         </Layout.Header>
         <Layout.Content className="layoutContent-admin">
           {children}

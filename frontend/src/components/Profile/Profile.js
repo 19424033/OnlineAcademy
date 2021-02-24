@@ -184,205 +184,260 @@ const Profile = () => {
     }
   };
   return (
-    <div className="row">
-      <div
-        className="col-lg-3 col-md-4 col-sm-12"
-        style={{ background: "#fff" }}
-      >
-        <div className="profile-bx text-center">
-          <div className="user-profile-thumb">
-            <img src={`data:image/jpg;base64,${imageUser}`} alt="" />
-          </div>
-          <div className="profile-info">
-            <h4>{nameUser}</h4>
-            {/* <span>{userEmail}</span> */}
-          </div>
-          <div className="profile-social">
-            <ul className="list-inline m-a0">
-              <li>
-                <Link to="#">
-                  <i className="fa fa-facebook"></i>
-                </Link>
-              </li>
-              <li>
-                <Link to="#">
-                  <i className="fa fa-twitter"></i>
-                </Link>
-              </li>
-              <li>
-                <Link to="#">
-                  <i className="fa fa-linkedin"></i>
-                </Link>
-              </li>
-              <li>
-                <Link to="#">
-                  <i className="fa fa-google-plus"></i>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="profile-tabnav">
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  data-toggle="tab"
-                  to="#courses"
-                  onClick={openCourses}
-                >
-                  <i className="ti-book"></i>Khóa học yêu thích
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  data-toggle="tab"
-                  to="#quiz-results"
-                  onClick={openQuiz}
-                >
-                  <i className="ti-bookmark-alt"></i>Khóa học đã đăng kí{" "}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  data-toggle="tab"
-                  to="#edit-profile"
-                  onClick={openChangeProfile}
-                >
-                  <i className="ti-pencil-alt"></i>Thay đổi thông tin
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  data-toggle="tab"
-                  to="#change-password"
-                  onClick={openChangePassWord}
-                >
-                  <i className="ti-lock"></i>Thay đổi mật khẩu
-                </Link>
-              </li>
-            </ul>
+    <div class="page-content">
+      <div className="content-block">
+        <div className="section-area section-sp1">
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-lg-3 col-md-4 col-sm-12"
+                // style={{ background: "#fff" }}
+              >
+                <div className="profile-bx text-center">
+                  <div className="user-profile-thumb">
+                    <img src={`data:image/jpg;base64,${imageUser}`} alt="" />
+                  </div>
+                  <div className="profile-info">
+                    <h4>{nameUser}</h4>
+                    <span>{userEmail}</span>
+                  </div>
+                  <div className="profile-social">
+                    <ul className="list-inline m-a0">
+                      <li>
+                        <Link to="#">
+                          <i className="fa fa-facebook"></i>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="#">
+                          <i className="fa fa-twitter"></i>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="#">
+                          <i className="fa fa-linkedin"></i>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="#">
+                          <i className="fa fa-google-plus"></i>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="profile-tabnav">
+                    <ul className="nav nav-tabs">
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link active"
+                          data-toggle="tab"
+                          onClick={openCourses}
+                        >
+                          <i className="ti-book"></i>Khóa học yêu thích
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          data-toggle="tab"
+                          onClick={openQuiz}
+                        >
+                          <i className="ti-bookmark-alt"></i>Khóa học đã đăng kí{" "}
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          data-toggle="tab"
+                          onClick={openChangeProfile}
+                        >
+                          <i className="ti-pencil-alt"></i>Thay đổi thông tin
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          data-toggle="tab"
+                          onClick={openChangePassWord}
+                        >
+                          <i className="ti-lock"></i>Thay đổi mật khẩu
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-4 col-sm-12">
+                <div className="profile-content-bx">
+                  <div className="tab-content">
+                    {coursesOpen && (
+                      <>
+                        <div className="profile-head">
+                          <h3>Khóa Học Yêu Thích</h3>
+                        </div>
+                        <div className="courses-filter">
+                          <div className="clearfix">
+                            {favoriteCategory === "" && (
+                              <p className="mt-3 text-center">
+                                Không có khóa học yêu thích nào
+                              </p>
+                            )}
+                            {favoriteCategory != "" && (
+                              <div>Danh sách khóa học</div>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {/* <>
+                      <div className="profile-head">
+                        <h3>Khóa Học Đã Đăng Ký</h3>
+                      </div>
+                      <div className="courses-filter">
+                        <div className="clearfix">
+                          <p className="mt-3 text-center">
+                            Không có khóa học yêu thích nào
+                          </p>
+                        </div>
+                      </div>
+                    </> */}
+                    {passwordOpen && (
+                      <>
+                        <div class="profile-head">
+                          <h3>Change Password</h3>
+                        </div>
+                        <div class="edit-profile">
+                          <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">
+                              Mật khẩu hiện tại
+                            </label>
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder=""
+                                onChange={handleInputCurrent}
+                              />
+                              {errorPasswordCurent != "" && (
+                                <p style={{ color: "red" }}>
+                                  {errorPasswordCurent}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">
+                              Mật khẩu mới
+                            </label>
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder=""
+                                onChange={handleInputNew}
+                              />
+                              {errorPasswordNew != "" && (
+                                <p style={{ color: "red" }}>
+                                  {errorPasswordNew}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">
+                              {" "}
+                              Nhập lại mật khẩu mới
+                            </label>
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                              <input
+                                type="password"
+                                class="form-control"
+                                placeholder=""
+                                onChange={handleInputRe}
+                              />
+                              {errorPasswordRe != "" && (
+                                <p style={{ color: "red" }}>
+                                  {errorPasswordRe}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-3"></div>
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                              <button className="btn" onClick={ChangePassWord}>
+                                Thay đổi mật khẩu
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {profileUser && (
+                      <>
+                        <div className="profile-head">
+                          <h3>Thay đổi thông tin</h3>
+                        </div>
+                        <div className="edit-profile">
+                          <div className="">
+                            <div className="form-group row">
+                              <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
+                                Họ Và Tên
+                              </label>
+                              <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder=""
+                                  value={userName}
+                                  onChange={(e) => setUserName(e.target.value)}
+                                />
+                                {errorPasswordCurent != "" &&
+                                  userName == "" && (
+                                    <p style={{ color: "red" }}>
+                                      {errorPasswordCurent}
+                                    </p>
+                                  )}
+                              </div>
+                            </div>
+                            <div className="form-group row">
+                              <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
+                                Email
+                              </label>
+                              <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                                <input
+                                  type="email"
+                                  name="email"
+                                  id="email"
+                                  className="form-control"
+                                  value={userEmail}
+                                  onChange={(e) => setUserEmail(e.target.value)}
+                                />
+                                {errorPasswordNew != "" && userEmail == "" && (
+                                  <p style={{ color: "red" }}>
+                                    {errorPasswordNew}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-12 col-sm-3 col-md-3 col-lg-2"></div>
+                              <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                                <button className="btn" onClick={changeProfile}>
+                                  Thay đổi thông tin
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-lg-9 col-md-4 col-sm-12 profileUser">
-        {coursesOpen && (
-          <div>
-            {favoriteCategory === "" && (
-              <h4 className="mt-3">Không có khóa học yêu thích nào</h4>
-            )}
-            {favoriteCategory != "" && <div>Danh sách khóa học</div>}
-          </div>
-        )}
-        {passwordOpen && (
-          <div className="Change_password">
-            <div className="row">
-              <div className="col-12 title">
-                <h4>Thay đổi mật khẩu</h4>
-              </div>
-              <div className="col-4 mb-4 mt-3 pl-0 pr-0">
-                <p className="title_change">Mật khẩu hiện tại</p>
-              </div>
-              <div className="col-8 mb-4 mt-3 ">
-                <input
-                  type="password"
-                  className="input_password"
-                  placeholder=""
-                  onChange={handleInputCurrent}
-                />
-                {errorPasswordCurent != "" && (
-                  <p style={{ color: "red" }}>{errorPasswordCurent}</p>
-                )}
-              </div>
-              <div className="col-4  mb-4 pl-0 pr-0">
-                <p className="title_change">Mật khẩu mới</p>
-              </div>
-              <div className="col-8  mb-4 ">
-                <input
-                  type="password"
-                  className="input_password"
-                  placeholder=""
-                  onChange={handleInputNew}
-                />
-                {errorPasswordNew != "" && (
-                  <p style={{ color: "red" }}>{errorPasswordNew}</p>
-                )}
-              </div>
-              <div className="col-4 pl-0 pr-0 ">
-                <p className="title_change">Nhập lại mật khẩu mới</p>
-              </div>
-              <div className="col-8">
-                <input
-                  type="password"
-                  className="input_password"
-                  placeholder=""
-                  onChange={handleInputRe}
-                />
-                {errorPasswordRe != "" && (
-                  <p style={{ color: "red" }}>{errorPasswordRe}</p>
-                )}
-              </div>
-              <div className="col-4"></div>
-              <div className="col-8">
-                <div className="btn_change">
-                  <button class="btnSave" onClick={ChangePassWord}>
-                    Thay đổi mật khẩu
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {profileUser && (
-          <div className="Change_password">
-            <div className="row">
-              <div className="col-12 title">
-                <h4>Thay đổi thông tin</h4>
-              </div>
-              <div className="col-4  mb-4 mt-3 pl-0 pr-0">
-                <p className="title_change">Tên</p>
-              </div>
-              <div className="col-8  mb-4  mt-3">
-                <input
-                  type="text"
-                  className="input_password"
-                  placeholder=""
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-                {errorPasswordCurent != "" && userName == "" && (
-                  <p style={{ color: "red" }}>{errorPasswordCurent}</p>
-                )}
-              </div>
-              <div className="col-4 pl-0 pr-0 ">
-                <p className="title_change">Email</p>
-              </div>
-              <div className="col-8">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="input_password"
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                />
-                {errorPasswordNew != "" && userEmail == "" && (
-                  <p style={{ color: "red" }}>{errorPasswordNew}</p>
-                )}
-              </div>
-              <div className="col-4"></div>
-              <div className="col-8">
-                <div className="btn_change">
-                  <button class="btnSave" onClick={changeProfile}>
-                    Thay đổi thông tin
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

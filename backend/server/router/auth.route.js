@@ -7,6 +7,23 @@ const mailer = require("../utils/mailOTP");
 const imageToBase64 = require("image-to-base64");
 const router = express.Router();
 
+const accessTokenfs = (user) => {
+  const accessToken = jwt.sign(
+    {
+      UsersId: user.UsersId,
+      JobId: user.JobId,
+      DislayName: user.DislayName,
+      Image: user.Image,
+      OTP_Confim: user.OTP_Confim,
+    },
+    "SECRET_KEY",
+    {
+      expiresIn: 600 * 10, // seconds
+    }
+  );
+  return accessToken;
+};
+
 router.post("/log-in", async function (req, res) {
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
@@ -21,19 +38,7 @@ router.post("/log-in", async function (req, res) {
     });
   }
 
-  const accessToken = jwt.sign(
-    {
-      UsersId: user.UsersId,
-      Jobid: user.Jobid,
-      DislayName: user.DislayName,
-      Image: user.Image,
-      OTP_Confim: user.OTP_Confim,
-    },
-    "SECRET_KEY",
-    {
-      expiresIn: 600 * 10, // seconds
-    }
-  );
+  const accessToken = accessTokenfs(user);
 
   const refreshToken = randomstring.generate();
   await userModel.updateRefreshToken(user.UsersId, refreshToken);
@@ -52,19 +57,7 @@ router.post("/log-in-with-google", async function (req, res) {
     });
   }
 
-  const accessToken = jwt.sign(
-    {
-      UsersId: user.UsersId,
-      Jobid: user.Jobid,
-      Image: user.Image,
-      DislayName: user.DislayName,
-      OTP_Confim: user.OTP_Confim,
-    },
-    "SECRET_KEY",
-    {
-      expiresIn: 600 * 10, // seconds
-    }
-  );
+  const accessToken = accessTokenfs(user);
 
   const refreshToken = randomstring.generate();
   await userModel.updateRefreshToken(user.UsersId, refreshToken);
@@ -84,19 +77,7 @@ router.post("/check-otp-email", async function (req, res) {
     });
   }
 
-  const accessToken = jwt.sign(
-    {
-      UsersId: user.UsersId,
-      Jobid: user.Jobid,
-      Image: user.Image,
-      DislayName: user.DislayName,
-      OTP_Confim: user.OTP_Confim,
-    },
-    "SECRET_KEY",
-    {
-      expiresIn: 60 * 10, // seconds
-    }
-  );
+  const accessToken = accessTokenfs(user);
 
   const refreshToken = randomstring.generate();
   await userModel.updateRefreshToken(user.UsersId, refreshToken);
@@ -155,7 +136,7 @@ router.post("/register", async function (req, res) {
   } else {
     user_register.OTP = Math.random().toString().substring(2, 8);
     user_register.Password = bcrypt.hashSync(user_register.Password, 3);
-    user_register.Jobid = 2;
+    user_register.JobId = 2;
     user_register.Isactive = 1;
     user_register.Point = 0;
 
@@ -177,7 +158,7 @@ router.post("/register-with-google", async function (req, res) {
   } else {
     user_register.OTP = Math.random().toString().substring(2, 8);
     user_register.Password = bcrypt.hashSync("123456", 3);
-    user_register.Jobid = 2;
+    user_register.JobId = 2;
     user_register.Isactive = 1;
     user_register.Point = 0;
 
@@ -204,19 +185,7 @@ router.get("/register/:id/:otp", async function (req, res) {
   if (single === null) {
     res.json(false);
   } else {
-    const accessToken = jwt.sign(
-      {
-        UsersId: single.UsersId,
-        Jobid: single.Jobid,
-        Image: single.Image,
-        DislayName: single.DislayName,
-        OTP_Confim: single.OTP_Confim,
-      },
-      "SECRET_KEY",
-      {
-        expiresIn: 60 * 10, // seconds
-      }
-    );
+    const accessToken = accessTokenfs(single);
 
     const refreshToken = randomstring.generate();
     await userModel.updateRefreshToken(single.UsersId, refreshToken);
@@ -264,24 +233,17 @@ router.post("/change-password", async function (req, res) {
     return res.status(200).json(false);
   }
   res.status(200).json(true);
-
-  // req.body.CurrentPassword = bcrypt.hashSync(req.body.CurrentPassword, 3);
 });
 
 router.post("/refresh", async function (req, res) {
-  // req.body = {
-  //   accessToken,
-  //   refreshToken
-  // }
-
   const { accessToken, refreshToken } = req.body;
-  const { UsersId, Jobid } = jwt.verify(accessToken, "SECRET_KEY", {
+  const { UsersId, JobId } = jwt.verify(accessToken, "SECRET_KEY", {
     ignoreExpiration: true,
   });
 
   const ret = await userModel.isValidRefreshToken(UsersId, refreshToken);
   if (ret === true) {
-    const newAccessToken = jwt.sign({ UsersId, Jobid }, "SECRET_KEY", {
+    const newAccessToken = jwt.sign({ UsersId, JobId }, "SECRET_KEY", {
       expiresIn: 60 * 10,
     });
     return res.json({
@@ -293,20 +255,5 @@ router.post("/refresh", async function (req, res) {
     message: "Invalid refresh token.",
   });
 });
-// router.post("/favorite-category", async function (req, res) {
-//   console.log(req);
-//   const id = req.body.userId;
-//   const User = await userModel.favoriteCategory(id);
-//   if (User == null) {
-//     return res.status(200).json(false);
-//   }
-//   let temp = [];
-//   User.forEach((e) => {
-//     const category = userModel.categoryDetail(e.CategoryId);
-//     temp.push(category);
-//   });
-//   res.status(200).json(temp);
-//   // const listCategory = [];
-//   // listCategory=   User.CategoryId;
-// });
+
 module.exports = router;

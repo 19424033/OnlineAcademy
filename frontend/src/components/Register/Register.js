@@ -34,6 +34,7 @@ const Register = () => {
     saveToken,
     setCheckLocalStorage,
     setCheckOTPConfim,
+    setUserJobId,
   } = useContext(AppContext);
 
   const onFinish = (values) => {
@@ -57,7 +58,7 @@ const Register = () => {
             .then((res) => {
               setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
-
+              setUserJobId(parseAccessToken_res(res.data).JobId)
               saveToken(res.data);
               if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
                 setCheckOTPConfim(true);
@@ -101,7 +102,7 @@ const Register = () => {
             .then((res) => {
               setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
-
+              setUserJobId(parseAccessToken_res(res.data).JobId)
               saveToken(res.data);
               if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
                 setCheckOTPConfim(true);

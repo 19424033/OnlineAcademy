@@ -6,7 +6,6 @@ import { formatMoney } from '../../../utils/utils'
 import CategoryService from "../../../services/category.service";
 
 const Source = ({ datasource, APIgetAllCategory }) => {
-    console.log(datasource)
     const handleProduct = (category, setEnable, setDisable, upDatecategory) => {
         if (setEnable === true) {
             CategoryService()

@@ -199,26 +199,26 @@ const ResetPassword = () => {
           )}
           {selectemail && (
             <Form.Item style={{ display: "block" }}>
-              <Button
+              <button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
+                className="btn login-form-button"
                 onClick={selectEmail}
               >
                 Send OTP to email
-              </Button>
+              </button>
             </Form.Item>
           )}
           {!selectemail && (
             <Form.Item style={{ display: "block" }}>
-              <Button
+              <button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
+                className="btn login-form-button"
                 onClick={resetPasswordUser}
               >
                 Reset password
-              </Button>
+              </button>
             </Form.Item>
           )}
         </Form>

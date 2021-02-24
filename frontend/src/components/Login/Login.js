@@ -19,6 +19,7 @@ const Login = () => {
     setCheckOTPConfim,
     setUserid,
     setProfile,
+    setUserJobId,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -40,7 +41,7 @@ const Login = () => {
           setimageUser(parseAccessToken_res(res.data).Image);
           setUserid(parseAccessToken_res(res.data).UsersId);
           setProfile(parseAccessToken_res(res.data).Users);
-
+          setUserJobId(parseAccessToken_res(res.data).JobId)
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
             setCheckOTPConfim(true);
@@ -71,9 +72,9 @@ const Login = () => {
       .then((res) => {
         const { authenticated } = res.data;
         if (authenticated) {
+          setUserJobId(parseAccessToken_res(res.data).JobId)
           setnameUser(parseAccessToken_res(res.data).DislayName);
           setimageUser(parseAccessToken_res(res.data).Image);
-
           setUserid(parseAccessToken_res(res.data).UsersId);
           saveToken(res.data);
           if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
@@ -146,24 +147,24 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Form.Item>
+            <Form.Item className="float-right">
               <Link style={{ color: "#4E4BF9", textDecoration: "underline" }}>
                 <Link to="/resetPassword">Forgot your password? </Link>
               </Link>
             </Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox >Remember me</Checkbox>
             </Form.Item>
           </Form.Item>
 
           <Form.Item>
-            <Button
+            <button
               type="primary"
               htmlType="submit"
-              className="login-form-button"
+              className="btn btn-md login-form-button"
             >
               Log in
-            </Button>
+            </button>
           </Form.Item>
         </Form>
         <div className="errorText ">{labelText}</div>

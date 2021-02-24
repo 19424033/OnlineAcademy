@@ -41,6 +41,7 @@ const App = () => {
 
   const [profile, setProfile] = useState(undefined);
   const [userid, setUserid] = useState(undefined);
+  const [userJobId, setUserJobId] = useState(0);
 
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
   const [checkLocalStorage, setCheckLocalStorage] = useState(false);
@@ -54,6 +55,7 @@ const App = () => {
     saveToken();
     setCheckLocalStorage(false);
     setCheckOTPConfim();
+    setUserJobId(0);
     AuthService().logout();
   };
 
@@ -61,12 +63,18 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, DislayName, UsersId,Image } = parseAccessToken(
-        tokenString
-      ); // lấy trường accessToken đi mã hoá
+      const {
+        OTP_Confim,
+        DislayName,
+        UsersId,
+        Image,
+        JobId,
+      } = parseAccessToken(tokenString); // lấy trường accessToken đi mã hoá
       setnameUser(DislayName);
       setimageUser(Image);
       setUserid(UsersId);
+      setUserJobId(JobId);
+
       if (OTP_Confim.data[0] === 1) {
         setCheckOTPConfim(true);
       } else {
@@ -86,6 +94,8 @@ const App = () => {
           checkOTPConfim,
           profile,
           userid,
+          userJobId,
+          setUserJobId,
           setnameUser,
           setimageUser,
           setUserid,
@@ -118,27 +128,31 @@ const App = () => {
               component={Category}
               exact
             />
+            {userJobId === 1 && (
+              <>
+                <AppRoute
+                  path="/admin/user"
+                  layout={AdminBasic}
+                  component={ManagerUser}
+                  exact
+                />
+                <AppRoute
+                  path="/admin/categories"
+                  layout={AdminBasic}
+                  component={ManagerCategoriesGroup}
+                  exact
+                />
+                <AppRoute
+                  path="/admin/source"
+                  layout={AdminBasic}
+                  component={ManagerSource}
+                  exact
+                />
+              </>
+            )}
 
-            <AppRoute
-              path="/admin/user"
-              layout={AdminBasic}
-              component={ManagerUser}
-              exact
-            />
-            <AppRoute
-              path="/admin/categories"
-              layout={AdminBasic}
-              component={ManagerCategoriesGroup}
-              exact
-            />
-            <AppRoute
-              path="/admin/source"
-              layout={AdminBasic}
-              component={ManagerSource}
-              exact
-            />
-            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" /> */}
+            <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" />
           </Switch>
         </Router>
       </AppContext.Provider>
@@ -153,6 +167,8 @@ const App = () => {
           checkOTPConfim,
           profile,
           userid,
+          userJobId,
+          setUserJobId,
           setnameUser,
           setimageUser,
           setUserid,
@@ -192,7 +208,6 @@ const App = () => {
               exact
             />
 
-
             <AppRoute path="/login" layout={Auth} component={Login} exact />
             <AppRoute
               path="/register"
@@ -207,8 +222,8 @@ const App = () => {
               exact
             />
             {/* <AppRoute layout={Default} component={Error} exact /> */}
-            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" /> */}
+            <AppRoute path="/error" layout={Default} component={Error} exact />
+            <Redirect to="/error" />
           </Switch>
         </Router>
       </AppContext.Provider>
