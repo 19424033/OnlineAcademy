@@ -182,13 +182,22 @@ const HeaderCustomize = () => {
             <div className="topbar-right">
               <ul>
                 <li>
-                  <Link to="/courses" className="text-white ">
+                  <Link to="/category" className="text-white ">
                     <span className="h6">
                       <i
                         style={{ marginLeft: "20px" }}
                         className="typcn typcn-point-of-interest-outline"
                       />{" "}
                       Danh Mục
+                    </span>
+                  </Link>
+                  <Link to="/courses" className="text-white ">
+                    <span className="h6">
+                      <i
+                        style={{ marginLeft: "20px" }}
+                        className="typcn typcn-point-of-interest-outline"
+                      />{" "}
+                      Khóa Học
                     </span>
                   </Link>
                 </li>
