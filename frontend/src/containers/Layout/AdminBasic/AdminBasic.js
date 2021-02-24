@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Layout, Menu } from "antd";
 import "./AdminBasic.scss";
 import {
@@ -6,17 +6,14 @@ import {
   HomeOutlined,
   ReadOutlined,
 } from "@ant-design/icons";
-import { useHistory,useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../utils/AppContext";
 
 const AdminBasic = ({ children }) => {
-  const { checkLocalStorage, logOut, nameUser } = useContext(AppContext);
+  const { logOut, nameUser } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
-  console.log(location.pathname)
-  
   return (
     <Layout className="layout-admin">
       <Layout.Sider width={250} height={"100%"}>
@@ -31,7 +28,7 @@ const AdminBasic = ({ children }) => {
           <Menu.Item
             key="/admin/user"
             icon={<HomeOutlined />}
-            onClick={() =>history.push("/admin/user")}
+            onClick={() => history.push("/admin/user")}
           >
             Học viên và giảng viên
           </Menu.Item>
@@ -45,7 +42,7 @@ const AdminBasic = ({ children }) => {
           <Menu.Item
             key="/admin/source"
             icon={<ReadOutlined />}
-            onClick={() =>history.push("/admin/source")}
+            onClick={() => history.push("/admin/source")}
           >
             Khoá học
           </Menu.Item>

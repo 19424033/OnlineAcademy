@@ -52,7 +52,12 @@ const HeaderCustomize = () => {
           </Link>
         </Menu.Item>
       )}
-
+      {userJobId === 2 && (
+          <h6 className='text-center text-black-50' >Sinh Viên</h6>
+      )}
+       {userJobId === 3 && (
+          <h6 className='text-center'>Giảng Viên</h6>
+      )}
       <Menu.Item>
         <Link to="/profile">
           <h6>

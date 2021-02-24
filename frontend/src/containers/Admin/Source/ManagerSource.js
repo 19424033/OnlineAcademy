@@ -8,7 +8,7 @@ import { Tabs, Spin } from "antd";
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
-import { Player, PosterImage } from "video-react";
+import { Player } from "video-react"; // PosterImage
 import Source from "./Source";
 import CategoryService from "../../../services/category.service";
 import './ManagerSource.scss'

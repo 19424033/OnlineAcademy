@@ -237,20 +237,29 @@ router.post("/change-password", async function (req, res) {
 
 router.post("/refresh", async function (req, res) {
   const { accessToken, refreshToken } = req.body;
-  const { UsersId, JobId } = jwt.verify(accessToken, "SECRET_KEY", {
-    ignoreExpiration: true,
-  });
-
+  const { UsersId, JobId, DislayName, Image, OTP_Confim } = jwt.verify(
+    accessToken,
+    "SECRET_KEY",
+    {
+      ignoreExpiration: true,
+    }
+  );
+  const singleUser = await userModel.single(UsersId);
   const ret = await userModel.isValidRefreshToken(UsersId, refreshToken);
+  var singleUser_DislayName = singleUser.DislayName;
   if (ret === true) {
-    const newAccessToken = jwt.sign({ UsersId, JobId }, "SECRET_KEY", {
-      expiresIn: 60 * 10,
-    });
+    const newAccessToken = jwt.sign(
+      { UsersId, JobId, DislayName:singleUser_DislayName, Image, OTP_Confim },
+      "SECRET_KEY",
+      {
+        expiresIn: 600 * 10,
+      }
+    );
     return res.json({
       accessToken: newAccessToken,
     });
   }
-
+  
   res.status(400).json({
     message: "Invalid refresh token.",
   });

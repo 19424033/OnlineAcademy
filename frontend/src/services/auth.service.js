@@ -31,6 +31,7 @@ export default function AuthService() {
   const changePassword = (values) => {
     return axios.post(`${API_auth}/change-password`, values);
   };
+
   const logout = () => {
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
@@ -53,6 +54,10 @@ export default function AuthService() {
   const getAllFavoriteCategory = (id) => {
     return axios.post(`${API_auth}/favorite-category`, id);
   };
+
+  const refresh = (values) => {
+    return axios.post(`${API_auth}/refresh`, values);
+  };
   return {
     register,
     login,
@@ -68,5 +73,6 @@ export default function AuthService() {
     registerWithGoogle,
     loginWithGoogle,
     getAllFavoriteCategory,
+    refresh,
   };
 }

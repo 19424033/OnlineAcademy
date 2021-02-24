@@ -190,12 +190,6 @@ const App = () => {
               exact
             />
             <AppRoute
-              path="/profile"
-              layout={Default}
-              component={Profile}
-              exact
-            />
-            <AppRoute
               path="/category"
               layout={Default}
               component={Category}
