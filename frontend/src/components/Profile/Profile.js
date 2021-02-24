@@ -5,15 +5,7 @@ import "./Profile.scss";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Alert,
-  InputNumber,
-  message,
-} from "antd";
+import { Button, message } from "antd";
 const Profile = () => {
   const {
     userid,
@@ -335,9 +327,9 @@ const Profile = () => {
               <div className="col-4"></div>
               <div className="col-8">
                 <div className="btn_change">
-                  <Button type="primary" onClick={ChangePassWord}>
+                  <button class="btnSave" onClick={ChangePassWord}>
                     Thay đổi mật khẩu
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
@@ -383,9 +375,9 @@ const Profile = () => {
               <div className="col-4"></div>
               <div className="col-8">
                 <div className="btn_change">
-                  <Button type="primary" onClick={changeProfile}>
+                  <button class="btnSave" onClick={changeProfile}>
                     Thay đổi thông tin
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
