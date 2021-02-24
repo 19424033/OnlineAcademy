@@ -12,7 +12,7 @@ import CategorygroupService from "../../../services/categorygroup.service";
 import ModalForm from "./Modal_Add_CategoryGroup";
 import ModalEdit from "./Modal_Edit_CategoryGroup";
 
-import './ManagerCategories.scss'
+import './ManagerCategoriesGroup.scss'
 import { Link } from "react-router-dom";
 var dateFormat = require("dateformat");
 const { confirm } = Modal;
@@ -55,6 +55,10 @@ const ManagetUser = () => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     CategorygroupService().addCategorygroup(values)
       .then((response) => {
+        notification["success"]({
+          message: "Hoàn Tất",
+          description: "Bạn đã thêm thành công",
+        });
         setVisible(false);
         APIgetAllCategoryGroup();
       }, (error) => {
@@ -101,7 +105,6 @@ const ManagetUser = () => {
         .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
           IsActive: 1,
-
         })
         .then((response) => {
           APIgetAllCategoryGroup();
@@ -197,9 +200,7 @@ const ManagetUser = () => {
                 </div>
                 <div className="info-bx text-center">
                   <h4><Link to="#">{item.CategoryGroupName}</Link></h4>
-                  <Link to="#" className="btn radius-xl">View More</Link>
-                </div>
-                <div className="handle-btn text-center">
+                  {/* <Link to="#" className="btn radius-xl">View More</Link> */}
                   <Button type="primary" shape="round"
                     onClick={() => {
                       setVisibleModalEdit(true);
@@ -216,6 +217,9 @@ const ManagetUser = () => {
                       icon={<LockOutlined />} />}
                   <Button type="primary" shape="round" danger icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(item)} />
                 </div>
+                {/* <div className="handle-btn text-center">
+                 
+                </div> */}
               </div>
             </Col>
           )

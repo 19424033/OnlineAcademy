@@ -30,23 +30,15 @@ router.get("/", async function (req, res) {
     }
 });
 
-// router.post("/cloudinary", async function (req, res) {
-//     const CategoryName = req.body.CategoryName;
-
-//     const folder = CategoryName.split(" ").join("_")
-//     const { resources } = await cloudinary.search
-//         .expression(`folder: ${folder}`)
-//         .sort_by('public_id', 'asc')
-//         .execute();
-//         res.send(resources);
-//     // const list = await categoryModel.allAdmin();
-//     // if (list.length !== 0) {
-//     //     res.json( list);
-//     // }
-//     // else {
-//     //     console.log("null")
-//     // }
-// });
-
+router.put("/:id", async function (req, res) {
+    const id = req.params.id;
+    const values = req.body;
+  
+  
+    await categoryModel.update(id, values);
+    res.status(200).json({
+      message: "update success",
+    });
+  });
 
 module.exports = router;

@@ -60,14 +60,14 @@ const Teacher = () => {
     },
     {
       title: "Khóa",
-      dataIndex: "Isactive",
+      dataIndex: "IsActive",
       width: 100,
       align: "center",
-      key: "Isactive",
+      key: "IsActive",
 
-      render: (Isactive, user) => (
+      render: (IsActive, user) => (
         <>
-          {Isactive ? (
+          {IsActive ? (
             <Button
               type="primary"
               shape="round"
@@ -186,7 +186,7 @@ const Teacher = () => {
       UserService()
         .setSingleUser(user.UsersId, {
           ...user,
-          Isactive: 1,
+          IsActive: 1,
           
         })
         .then((response) => {
@@ -204,7 +204,7 @@ const Teacher = () => {
       UserService()
         .setSingleUser(user.UsersId, {
           ...user,
-          Isactive: 0,
+          IsActive: 0,
         })
         .then((response) => {
           APIgetAllUser();

@@ -1076,7 +1076,7 @@
 .card-courses-media img{
 	width: 100%;
 	object-fit:cover;
-	height: 250px;
+	/* height: 250px; */
 }
 .card-courses-view{
 	margin:0;

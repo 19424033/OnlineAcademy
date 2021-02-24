@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Modal, Form, Input, Image } from "antd";
 
-const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal }) => {
+const ModalForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
   const [imageBase64, setimageBase64] = useState();
-  console.log(categoryGroupEditModal)
-  useEffect(() => {
-    setimageBase64(categoryGroupEditModal.Image);
-    form.setFieldsValue({
-      CategoryGroupId: categoryGroupEditModal.CategoryGroupId,
-      CategoryGroupname: categoryGroupEditModal.CategoryGroupname,
-      Image: categoryGroupEditModal.Image,
-    });
-  }, [categoryGroupEditModal])
+
   return (
     <Modal
-      visible={visibleModalEdit}
-      title="Sửa Lĩnh Vực"
-      okText="Sửa"
+      visible={visible}
+      title="Thêm lĩnh vực"
+      okText="Thêm"
       cancelText="Đóng"
       onCancel={onCancel}
       onOk={() => {
@@ -26,7 +18,9 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onEdit(values);
+            onCreate(values);
+            setimageBase64();
+
           })
           .catch((info) => {
             console.log("Validate Failed:", info);
@@ -58,7 +52,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
         <input
           className="inputFile"
           type="file"
-          accept="image/jpeg"
+          accept="image/*"
           onChange={(e) => {
             var reader = new FileReader();
             reader.readAsDataURL(e.target.files[0]);
@@ -72,9 +66,6 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
           }}
         />
         <Form.Item name="Image" style={{ display: "none" }}>
-          <Input type={"hidden"} />
-        </Form.Item>
-        <Form.Item name="CategoryGroupId" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
       </Form>

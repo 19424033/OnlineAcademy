@@ -32,7 +32,7 @@
 }
 .header {
     position: relative;
-    z-index: 999;
+    z-index: 1000000;
 }
 .header ul,
 .header ol {

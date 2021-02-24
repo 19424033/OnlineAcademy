@@ -23,7 +23,7 @@ import Category from "./containers/Category/Category";
 import Courses from "./containers/Courses/Courses";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
-import ManagerCategories from "./containers/Admin/Categories/ManagerCategories";
+import ManagerCategoriesGroup from "./containers/Admin/CategoriesGroup/ManagerCategoriesGroup";
 
 //layout
 import Default from "./containers/Layout/Default";
@@ -128,7 +128,7 @@ const App = () => {
             <AppRoute
               path="/admin/categories"
               layout={AdminBasic}
-              component={ManagerCategories}
+              component={ManagerCategoriesGroup}
               exact
             />
             <AppRoute

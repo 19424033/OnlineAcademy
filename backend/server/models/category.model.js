@@ -5,7 +5,15 @@ module.exports = {
     return db("category").where("Isactive",true);
   },
   allAdmin() {
-    return db("category").leftJoin('categorygroup', 'categorygroup.CategoryGroupId', '=', 'category.CategoryId')
+    // return db("category").leftJoin('categorygroup', 'categorygroup.CategoryGroupId', '=', 'category.CategoryId')
+    return db({ a: 'category', b: 'categorygroup', c: 'users' })
+    .select('a.*',{
+      categoryImage: 'a.Image',
+      categorygroupImage: 'b.Image',
+      NameTeacher: 'c.DislayName',
+      CategoryGroupName:'b.CategoryGroupName'
+    })
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
 
   },
   async single(CategoryId) {
@@ -26,7 +34,7 @@ module.exports = {
   },
 
   update(CategoryId, Category) {
-    return db("Category").where("CategoryId", id).update(Category);
+    return db("Category").where("CategoryId", CategoryId).update(Category);
   },
 
   async courses(CategoryGroupId) {

@@ -17,7 +17,7 @@ router.put("/:id", async function (req, res) {
   const id = req.params.id;
   const CategoryGroup = req.body;
 
-  delete CategoryGroup.Created_at;
+  delete CategoryGroup.Created_At;
   delete CategoryGroup.CategoryGroupId;
 
   await categorygroupModel.update(id, CategoryGroup);

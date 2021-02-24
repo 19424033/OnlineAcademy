@@ -9,9 +9,9 @@ import { Tabs, Spin } from "antd";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Player, PosterImage } from "video-react";
-import Test from "./test";
+import Source from "./Source";
 import CategoryService from "../../../services/category.service";
-import  './ManagerSource.scss'
+import './ManagerSource.scss'
 const { TabPane } = Tabs;
 
 const ManagetUser = () => {
@@ -24,6 +24,7 @@ const ManagetUser = () => {
   useEffect(() => {
     APIgetAllCategory();
   }, []);
+
   useEffect(() => {
     if (timeLeft === 0) {
       setTimeLeft(null);
@@ -35,6 +36,7 @@ const ManagetUser = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [timeLeft]);
+
   const APIgetAllCategory = () => {
     CategoryService().getAllCategory()
       .then((response) => {
@@ -76,7 +78,7 @@ const ManagetUser = () => {
         {timeLeft
           ? renderSpin()
           :
-          <Test datasource={datasource}></Test>
+          <Source datasource={datasource} APIgetAllCategory={APIgetAllCategory}></Source>
         }
       </TabPane>
       <TabPane tab="tab2" key="2">

@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/", async function (req, res) {
   // dua vao token lấy user
 
-  console.log(req.accessTokenPayload);
+  // console.log(req.accessTokenPayload);
   const list = await usersModel.all();
 
   res.json(list);
