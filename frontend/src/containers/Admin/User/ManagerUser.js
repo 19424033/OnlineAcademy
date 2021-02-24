@@ -27,12 +27,12 @@ const ManagerUser = () => {
           for (let i = response.data.length - 1; i >= 0; i--) {
             data.push({
               key: i,
-              Usersid: response.data[i].Usersid,
+              UsersId: response.data[i].UsersId,
               Email: response.data[i].Email,
-              Dislayname: response.data[i].Dislayname,
+              DislayName: response.data[i].DislayName,
               Telephone: response.data[i].Telephone,
-              Jobid: response.data[i].Jobid,
-              Isactive: response.data[i].Isactive,
+              Jobid: response.data[i].JobId,
+              IsActive: response.data[i].IsActive,
               OTP: response.data[i].OTP,
               OTP_Confim: response.data[i].OTP_Confim,
               Point: response.data[i].Point,

@@ -6,10 +6,17 @@ const app = express();
 
 const USERS = require('./server/router/users.route');
 const CATEGORYGROUP = require('./server/router/categorygroup.route');
+const CATEGORY = require('./server/router/category.route');
+
 const AUTH = require('./server/router/auth.route');
 const HOME = require('./server/router/home.route');
+
+
+
+
+
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
-const { cloudinary } = require('./server/utils/cloudinary');
+// const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
 
 if(process.env.NODE_ENV !== 'test') {
@@ -30,21 +37,22 @@ app.get("/", (request, respond) => {
   });
 });
 
-app.get('/api/images', async (req, res) => {
-  const { resources } = await cloudinary.search
-      // .expression('folder:After_Effects_CC_Masterclass')
-      // .expression('folder: Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
-      .expression('folder: Illustrator_CC_2018_Fundamentals_For_Beginners')
-      // .expression('folder: React_basic_in_just_1_hour')
-      .sort_by('public_id', 'asc')
-      .execute();
+// app.get('/api/images', async (req, res) => {
+//   const { resources } = await cloudinary.search
+//       // .expression('folder:After_Effects_CC_Masterclass')
+//       // .expression('folder: Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
+//       .expression('folder: Illustrator_CC_2018_Fundamentals_For_Beginners')
+//       // .expression('folder: React_basic_in_just_1_hour')
+//       .sort_by('public_id', 'asc')
+//       .execute();
 
-  const publicIds = resources.map((file) => file.public_id);
-  res.send(resources);
-});
+//   const publicIds = resources.map((file) => file.public_id);
+//   res.send(resources);
+// });
 
 app.use('/api/users',decentralization, USERS );
 app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
+app.use('/api/category',decentralization, CATEGORY );
 
 app.use('/api/auth', AUTH );
 

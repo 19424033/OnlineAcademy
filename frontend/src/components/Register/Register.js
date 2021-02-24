@@ -55,7 +55,7 @@ const Register = () => {
           AuthService()
             .login(values)
             .then((res) => {
-              setnameUser(parseAccessToken_res(res.data).Dislayname);
+              setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
 
               saveToken(res.data);
@@ -82,7 +82,7 @@ const Register = () => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     values.Email = response.profileObj.email;
     values.Image = response.profileObj.imageUrl;
-    values.Dislayname = response.profileObj.name;
+    values.DislayName = response.profileObj.name;
     AuthService()
       .registerWithGoogle(values)
       .then((res) => {
@@ -99,7 +99,7 @@ const Register = () => {
           AuthService()
             .loginWithGoogle(values)
             .then((res) => {
-              setnameUser(parseAccessToken_res(res.data).Dislayname);
+              setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
 
               saveToken(res.data);
@@ -146,7 +146,7 @@ const Register = () => {
           scrollToFirstError
         >
           <Form.Item
-            name="Dislayname"
+            name="DislayName"
             label={<span>Nickname&nbsp;</span>}
             rules={[
               {

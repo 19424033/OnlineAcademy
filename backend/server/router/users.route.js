@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/", async function (req, res) {
   // dua vao token lấy user
 
-  console.log(req.accessTokenPayload);
+  // console.log(req.accessTokenPayload);
   const list = await usersModel.all();
 
   res.json(list);
@@ -57,7 +57,7 @@ router.put("/:id", async function (req, res) {
   const id = req.params.id;
   const user = req.body;
   delete user.key;
-  delete user.Usersid;
+  delete user.UsersId;
   delete user.OTP_Confim;
 
   await usersModel.update(id, user);

@@ -12,7 +12,7 @@ import CategorygroupService from "../../../services/categorygroup.service";
 import ModalForm from "./Modal_Add_CategoryGroup";
 import ModalEdit from "./Modal_Edit_CategoryGroup";
 
-import './ManagerCategories.scss'
+import './ManagerCategoriesGroup.scss'
 import { Link } from "react-router-dom";
 var dateFormat = require("dateformat");
 const { confirm } = Modal;
@@ -47,7 +47,7 @@ const ManagetUser = () => {
   }
   const txt_Changed = function (e) {
     const temp = dataRespon.filter((item) =>
-      item.CategoryGroupname.toLowerCase().includes(e.target.value.toLowerCase())
+      item.CategoryGroupName.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setdataRespontemp(temp);
   };
@@ -55,6 +55,10 @@ const ManagetUser = () => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     CategorygroupService().addCategorygroup(values)
       .then((response) => {
+        notification["success"]({
+          message: "Hoàn Tất",
+          description: "Bạn đã thêm thành công",
+        });
         setVisible(false);
         APIgetAllCategoryGroup();
       }, (error) => {
@@ -65,13 +69,13 @@ const ManagetUser = () => {
 
   function showDeleteConfirm(item) {
     confirm({
-      title: `Bạn có chắc muốn xoá ${item.CategoryGroupname} ?`,
+      title: `Bạn có chắc muốn xoá ${item.CategoryGroupName} ?`,
       icon: <ExclamationCircleOutlined />,
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        CategorygroupService().deleteSingleCatagoryGroup(item.CategoryGroupid)
+        CategorygroupService().deleteSingleCatagoryGroup(item.CategoryGroupId)
           .then((response) => {
             if (response.status === 202) {
               notification["error"]({
@@ -98,10 +102,9 @@ const ManagetUser = () => {
   const handleProduct = (categoryGroup, setEnable, setDisable, upDatecategoryGroup) => {
     if (setEnable === true) {
       CategorygroupService()
-        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+        .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
-          Isactive: 1,
-
+          IsActive: 1,
         })
         .then((response) => {
           APIgetAllCategoryGroup();
@@ -116,9 +119,9 @@ const ManagetUser = () => {
     }
     if (setDisable === true) {
       CategorygroupService()
-        .setSingleCategorygroup(categoryGroup.CategoryGroupid, {
+        .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
-          Isactive: 0,
+          IsActive: 0,
 
         })
         .then((response) => {
@@ -133,8 +136,8 @@ const ManagetUser = () => {
         });
     }
     if (upDatecategoryGroup === true) {
-      var id = categoryGroup.CategoryGroupid;
-      delete  categoryGroup.CategoryGroupid;
+      var id = categoryGroup.CategoryGroupId;
+      delete  categoryGroup.CategoryGroupId;
       CategorygroupService()
       .setSingleCategorygroup(id, {
         ...categoryGroup
@@ -196,17 +199,15 @@ const ManagetUser = () => {
                   />
                 </div>
                 <div className="info-bx text-center">
-                  <h4><Link to="#">{item.CategoryGroupname}</Link></h4>
-                  <Link to="#" className="btn radius-xl">View More</Link>
-                </div>
-                <div className="handle-btn text-center">
+                  <h4><Link to="#">{item.CategoryGroupName}</Link></h4>
+                  {/* <Link to="#" className="btn radius-xl">View More</Link> */}
                   <Button type="primary" shape="round"
                     onClick={() => {
                       setVisibleModalEdit(true);
                       setcategoryGroupEditModal(item);
                     }}
                     icon={<EditOutlined />} />
-                  {item.Isactive.data[0]
+                  {item.IsActive
                     ? <Button type="primary" className='mx-2' shape="round"
                       onClick={() => handleProduct(item, false, true, false)}
                       icon={<UnlockOutlined />} />
@@ -216,6 +217,9 @@ const ManagetUser = () => {
                       icon={<LockOutlined />} />}
                   <Button type="primary" shape="round" danger icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(item)} />
                 </div>
+                {/* <div className="handle-btn text-center">
+                 
+                </div> */}
               </div>
             </Col>
           )

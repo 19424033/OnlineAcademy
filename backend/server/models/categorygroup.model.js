@@ -9,20 +9,20 @@ module.exports = {
     return db("categorygroup").insert(category);
   },
   update(id, category) {
-    return db('categorygroup').where('categorygroupid', id).update(category)
+    return db('categorygroup').where('CategoryGroupId', id).update(category)
   },
   delete(id) {
     return db('categorygroup')
-      .where('categorygroupid', id)
+      .where('CategoryGroupId', id)
       .del();
   },
-  GetCategoryByCategoryGroupid(id) {
+  GetCategoryByCategoryGroupId(id) {
     return db({ a: 'categorygroup', b: 'category' })
-      .whereRaw('?? = ?? ', ['a.categorygroupid', 'b.categoryid'])
-      .where('a.categorygroupid', id);
+      .whereRaw('?? = ?? ', ['a.CategoryGroupId', 'b.CategoryId'])
+      .where('a.CategoryGroupId', id);
 
     // return  db('categorygroup')
-    // .leftJoin('category', 'categorygroup.categorygroupid', '=', 'category.categoryid')
-    // .where('categorygroup.categorygroupid', id);
+    // .leftJoin('category', 'categorygroup.CategoryGroupId', '=', 'category.CategoryId')
+    // .where('categorygroup.CategoryGroupId', id);
   }
 };

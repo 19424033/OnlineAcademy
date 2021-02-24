@@ -8,11 +8,11 @@ import PageMN from "./Page/PageMN"
 const Homepage = () => {
   return (
     <div>
-      {/* <Slide />
+      <Slide />
       <PageYTN />
       <PageXNN />
       <PageDK />
-      <PageMN /> */}
+      <PageMN />
     </div>
   );
 };

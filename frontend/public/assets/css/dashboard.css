@@ -1063,17 +1063,20 @@
 	margin-bottom: 0;
 }
 .card-courses-media{
-	width: 250px;
+	width: 350px;
 	min-width: 250px;
 	height: 250px;
 	margin-right: 30px;
 	border-radius: 4px;
 	overflow: hidden;
 }
+.card-courses-full-dec{
+	width: 100%;
+}
 .card-courses-media img{
 	width: 100%;
 	object-fit:cover;
-	height: 250px;
+	/* height: 250px; */
 }
 .card-courses-view{
 	margin:0;

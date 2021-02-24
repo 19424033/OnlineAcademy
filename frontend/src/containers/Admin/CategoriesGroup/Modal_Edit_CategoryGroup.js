@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Modal, Form, Input, Image } from "antd";
 
-const ModalForm = ({ visible, onCreate, onCancel }) => {
+const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal }) => {
   const [form] = Form.useForm();
   const [imageBase64, setimageBase64] = useState();
-
+  console.log(categoryGroupEditModal)
+  useEffect(() => {
+    setimageBase64(categoryGroupEditModal.Image);
+    form.setFieldsValue({
+      CategoryGroupId: categoryGroupEditModal.CategoryGroupId,
+      CategoryGroupName: categoryGroupEditModal.CategoryGroupName,
+      Image: categoryGroupEditModal.Image,
+    });
+  }, [categoryGroupEditModal])
   return (
     <Modal
-      visible={visible}
-      title="Thêm lĩnh vực"
-      okText="Thêm"
+      visible={visibleModalEdit}
+      title="Sửa Lĩnh Vực"
+      okText="Sửa"
       cancelText="Đóng"
       onCancel={onCancel}
       onOk={() => {
@@ -18,7 +26,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            onEdit(values);
           })
           .catch((info) => {
             console.log("Validate Failed:", info);
@@ -34,7 +42,7 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
         }}
       >
         <Form.Item
-          name="CategoryGroupname"
+          name="CategoryGroupName"
           label="Tên Lĩnh Vực"
           rules={[
             {
@@ -64,6 +72,9 @@ const ModalForm = ({ visible, onCreate, onCancel }) => {
           }}
         />
         <Form.Item name="Image" style={{ display: "none" }}>
+          <Input type={"hidden"} />
+        </Form.Item>
+        <Form.Item name="CategoryGroupId" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
       </Form>

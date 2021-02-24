@@ -4,9 +4,20 @@ module.exports = {
   all() {
     return db("category").where("Isactive",true);
   },
+  allAdmin() {
+    // return db("category").leftJoin('categorygroup', 'categorygroup.CategoryGroupId', '=', 'category.CategoryId')
+    return db({ a: 'category', b: 'categorygroup', c: 'users' })
+    .select('a.*',{
+      categoryImage: 'a.Image',
+      categorygroupImage: 'b.Image',
+      NameTeacher: 'c.DislayName',
+      CategoryGroupName:'b.CategoryGroupName'
+    })
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
 
-  async single(Categoryid) {
-    const category = await db("category").where("Categoryid", Categoryid);
+  },
+  async single(CategoryId) {
+    const category = await db("category").where("CategoryId", CategoryId);
     if (category.length === 0) {
       return null;
     }
@@ -18,16 +29,16 @@ module.exports = {
     return ids[0];
   },
 
-  del(Categoryid) {
-    return db("category").where("Categoryid", Categoryid).del();
+  del(CategoryId) {
+    return db("category").where("CategoryId", CategoryId).del();
   },
 
   update(CategoryId, Category) {
-    return db("Category").where("CategoryId", id).update(Category);
+    return db("Category").where("CategoryId", CategoryId).update(Category);
   },
 
   async courses(CategoryGroupId) {
-    const category = await db("category").where("CategoryGroupid", CategoryGroupid);
+    const category = await db("category").where("CategoryGroupId", CategoryGroupId);
     if (category.length === 0) {
       return null;
     }
@@ -36,46 +47,46 @@ module.exports = {
 
   async yeuthich() {
     var date = new Date();
-    return db.select('category.*','categorygroup.CategorGroupname','users.Dislayname','discount.value')
+    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
     .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupid', 'categorygroup.CategoryGroupid')
-    .leftJoin('users','users.Usersid', 'category.Teacherid')
+    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
+    .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
-        this.on('discount.Categoryid', '=', 'category.Categoryid')
+        this.on('discount.CategoryId', '=', 'category.CategoryId')
         this.andOn('discount.Isactive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
     .where('category.Isactive',true)
     .limit(5)
-    .orderBy("Quanlike","desc");
+    .orderBy("Rate","desc");
   },
 
   async luotxem() {
     var date = new Date();
-    return db.select('category.*','categorygroup.CategorGroupname','users.Dislayname','discount.value')
+    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
     .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupid', 'categorygroup.CategoryGroupid')
-    .leftJoin('users','users.Usersid', 'category.Teacherid')
+    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
+    .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
-        this.on('discount.Categoryid', '=', 'category.Categoryid')
+        this.on('discount.CategoryId', '=', 'category.CategoryId')
         this.andOn('discount.Isactive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
     .where('category.Isactive',true)
     .limit(5)
-    .orderBy("Quanlike","desc");
+    .orderBy("Rate","desc");
   },
 
   async moinhat() {
     var date = new Date();
-    return db.select('category.*','categorygroup.CategorGroupname','users.Dislayname','discount.value')
+    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
     .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupid', 'categorygroup.CategoryGroupid')
-    .leftJoin('users','users.Usersid', 'category.Teacherid')
+    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
+    .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
-        this.on('discount.Categoryid', '=', 'category.Categoryid')
+        this.on('discount.CategoryId', '=', 'category.CategoryId')
         this.andOn('discount.Isactive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
@@ -87,12 +98,12 @@ module.exports = {
 
   async dangky() {
     var date = new Date();
-    return db.select('category.*','categorygroup.CategorGroupname','users.Dislayname','discount.value')
+    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
     .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupid', 'categorygroup.CategoryGroupid')
-    .leftJoin('users','users.Usersid', 'category.Teacherid')
+    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
+    .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
-        this.on('discount.Categoryid', '=', 'category.Categoryid')
+        this.on('discount.CategoryId', '=', 'category.CategoryId')
         this.andOn('discount.Isactive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')

@@ -20,9 +20,10 @@ import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
 import Category from "./containers/Category/Category";
+import Courses from "./containers/Courses/Courses";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
-import ManagerCategories from "./containers/Admin/Categories/ManagerCategories";
+import ManagerCategoriesGroup from "./containers/Admin/CategoriesGroup/ManagerCategoriesGroup";
 
 //layout
 import Default from "./containers/Layout/Default";
@@ -60,12 +61,12 @@ const App = () => {
     // dùng để lấy token trên local
     const tokenString = localStorage.getItem("AcademyOnline_Token");
     if (tokenString) {
-      const { OTP_Confim, Dislayname, Usersid,Image } = parseAccessToken(
+      const { OTP_Confim, DislayName, UsersId,Image } = parseAccessToken(
         tokenString
       ); // lấy trường accessToken đi mã hoá
-      setnameUser(Dislayname);
+      setnameUser(DislayName);
       setimageUser(Image);
-      setUserid(Usersid);
+      setUserid(UsersId);
       if (OTP_Confim.data[0] === 1) {
         setCheckOTPConfim(true);
       } else {
@@ -127,7 +128,7 @@ const App = () => {
             <AppRoute
               path="/admin/categories"
               layout={AdminBasic}
-              component={ManagerCategories}
+              component={ManagerCategoriesGroup}
               exact
             />
             <AppRoute
@@ -184,6 +185,13 @@ const App = () => {
               component={Category}
               exact
             />
+            <AppRoute
+              path="/courses"
+              layout={Default}
+              component={Courses}
+              exact
+            />
+
 
             <AppRoute path="/login" layout={Auth} component={Login} exact />
             <AppRoute

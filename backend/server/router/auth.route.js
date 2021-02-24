@@ -23,9 +23,9 @@ router.post("/log-in", async function (req, res) {
 
   const accessToken = jwt.sign(
     {
-      Usersid: user.Usersid,
+      UsersId: user.UsersId,
       Jobid: user.Jobid,
-      Dislayname: user.Dislayname,
+      DislayName: user.DislayName,
       Image: user.Image,
       OTP_Confim: user.OTP_Confim,
     },
@@ -36,7 +36,7 @@ router.post("/log-in", async function (req, res) {
   );
 
   const refreshToken = randomstring.generate();
-  await userModel.updateRefreshToken(user.Usersid, refreshToken);
+  await userModel.updateRefreshToken(user.UsersId, refreshToken);
 
   res.status(200).json({
     authenticated: true,
@@ -54,10 +54,10 @@ router.post("/log-in-with-google", async function (req, res) {
 
   const accessToken = jwt.sign(
     {
-      Usersid: user.Usersid,
+      UsersId: user.UsersId,
       Jobid: user.Jobid,
       Image: user.Image,
-      Dislayname: user.Dislayname,
+      DislayName: user.DislayName,
       OTP_Confim: user.OTP_Confim,
     },
     "SECRET_KEY",
@@ -67,7 +67,7 @@ router.post("/log-in-with-google", async function (req, res) {
   );
 
   const refreshToken = randomstring.generate();
-  await userModel.updateRefreshToken(user.Usersid, refreshToken);
+  await userModel.updateRefreshToken(user.UsersId, refreshToken);
 
   res.status(200).json({
     authenticated: true,
@@ -86,10 +86,10 @@ router.post("/check-otp-email", async function (req, res) {
 
   const accessToken = jwt.sign(
     {
-      Usersid: user.Usersid,
+      UsersId: user.UsersId,
       Jobid: user.Jobid,
       Image: user.Image,
-      Dislayname: user.Dislayname,
+      DislayName: user.DislayName,
       OTP_Confim: user.OTP_Confim,
     },
     "SECRET_KEY",
@@ -99,7 +99,7 @@ router.post("/check-otp-email", async function (req, res) {
   );
 
   const refreshToken = randomstring.generate();
-  await userModel.updateRefreshToken(user.Usersid, refreshToken);
+  await userModel.updateRefreshToken(user.UsersId, refreshToken);
 
   res.status(200).json({
     authenticated: true,
@@ -146,7 +146,7 @@ router.post("/edit-profile", async function (req, res) {
 
 router.post("/register", async function (req, res) {
   //  tao tai khoan
-  const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
+  const user_register = req.body; /// DislayName,   Email  Password,   Created_at
 
   const user = await userModel.singleByEmail(user_register.Email);
 
@@ -168,7 +168,7 @@ router.post("/register", async function (req, res) {
 
 router.post("/register-with-google", async function (req, res) {
   //  tao tai khoan
-  const user_register = req.body; /// Dislayname,   Email  Password,   Created_at
+  const user_register = req.body; /// DislayName,   Email  Password,   Created_at
 
   const user = await userModel.singleByEmail(user_register.Email);
 
@@ -206,10 +206,10 @@ router.get("/register/:id/:otp", async function (req, res) {
   } else {
     const accessToken = jwt.sign(
       {
-        Usersid: single.Usersid,
+        UsersId: single.UsersId,
         Jobid: single.Jobid,
         Image: single.Image,
-        Dislayname: single.Dislayname,
+        DislayName: single.DislayName,
         OTP_Confim: single.OTP_Confim,
       },
       "SECRET_KEY",
@@ -219,7 +219,7 @@ router.get("/register/:id/:otp", async function (req, res) {
     );
 
     const refreshToken = randomstring.generate();
-    await userModel.updateRefreshToken(single.Usersid, refreshToken);
+    await userModel.updateRefreshToken(single.UsersId, refreshToken);
 
     res.status(200).json({
       authenticated: true,
@@ -275,13 +275,13 @@ router.post("/refresh", async function (req, res) {
   // }
 
   const { accessToken, refreshToken } = req.body;
-  const { Usersid, Jobid } = jwt.verify(accessToken, "SECRET_KEY", {
+  const { UsersId, Jobid } = jwt.verify(accessToken, "SECRET_KEY", {
     ignoreExpiration: true,
   });
 
-  const ret = await userModel.isValidRefreshToken(Usersid, refreshToken);
+  const ret = await userModel.isValidRefreshToken(UsersId, refreshToken);
   if (ret === true) {
-    const newAccessToken = jwt.sign({ Usersid, Jobid }, "SECRET_KEY", {
+    const newAccessToken = jwt.sign({ UsersId, Jobid }, "SECRET_KEY", {
       expiresIn: 60 * 10,
     });
     return res.json({
@@ -293,20 +293,20 @@ router.post("/refresh", async function (req, res) {
     message: "Invalid refresh token.",
   });
 });
-router.post("/favorite-category", async function (req, res) {
-  console.log(req);
-  const id = req.body.userId;
-  const User = await userModel.favoriteCategory(id);
-  if (User == null) {
-    return res.status(200).json(false);
-  }
-  let temp = [];
-  User.forEach((e) => {
-    const category = userModel.categoryDetail(e.Categoryid);
-    temp.push(category);
-  });
-  res.status(200).json(temp);
-  // const listCategory = [];
-  // listCategory=   User.Categoryid;
-});
+// router.post("/favorite-category", async function (req, res) {
+//   console.log(req);
+//   const id = req.body.userId;
+//   const User = await userModel.favoriteCategory(id);
+//   if (User == null) {
+//     return res.status(200).json(false);
+//   }
+//   let temp = [];
+//   User.forEach((e) => {
+//     const category = userModel.categoryDetail(e.CategoryId);
+//     temp.push(category);
+//   });
+//   res.status(200).json(temp);
+//   // const listCategory = [];
+//   // listCategory=   User.CategoryId;
+// });
 module.exports = router;

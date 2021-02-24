@@ -4,23 +4,55 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
 import React, { useState, useEffect } from "react";
-import { Tabs } from "antd";
+import { Tabs, Spin } from "antd";
 
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Player, PosterImage } from "video-react";
-import Test from "./test";
+import Source from "./Source";
+import CategoryService from "../../../services/category.service";
+import './ManagerSource.scss'
 const { TabPane } = Tabs;
 
 const ManagetUser = () => {
   const [content, setContent] = useState();
   const [editorState, seteditorState] = useState();
   const [editorStateDraft, seteditorStateDraft] = useState();
+  const [datasource, setdatasource] = useState([])
+  const [timeLeft, setTimeLeft] = useState(1);
 
-  // lấy trường accessToken đi mã hoá và lấy ID
   useEffect(() => {
-
+    APIgetAllCategory();
   }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setTimeLeft(null);
+    }
+
+    if (!timeLeft) return;
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [timeLeft]);
+
+  const APIgetAllCategory = () => {
+    CategoryService().getAllCategory()
+      .then((response) => {
+        setdatasource(response.data)
+        // console.log(response.data) 
+
+      }, (error) => {
+        const _content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setContent(_content);
+      });
+  }
   const onEditorStateChange = (editorState) => {
     seteditorState(editorState);
     const contentBlock = htmlToDraft(
@@ -34,10 +66,20 @@ const ManagetUser = () => {
       seteditorStateDraft(editorState);
     }
   };
+
+  const renderSpin = () => {
+    return (<div className="example">
+      <Spin tip={`Loading ${timeLeft}s...`} />
+    </div>)
+  };
   return (
     <Tabs type="card">
       <TabPane tab="tab1" key="1">
-        <Test></Test>
+        {timeLeft
+          ? renderSpin()
+          :
+          <Source datasource={datasource} APIgetAllCategory={APIgetAllCategory}></Source>
+        }
       </TabPane>
       <TabPane tab="tab2" key="2">
         <Editor

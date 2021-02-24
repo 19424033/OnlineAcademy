@@ -70,7 +70,7 @@ const Profile = () => {
       .then((data) => {
         setProfile(data.data.user[0]);
         setUserEmail(data.data.user[0].Email);
-        setUserName(data.data.user[0].Dislayname);
+        setUserName(data.data.user[0].DislayName);
       });
   };
   const openCourses = () => {
@@ -175,7 +175,7 @@ const Profile = () => {
         .editProfile(data)
         .then((data) => {
           setProfile(data.data[0]);
-          setnameUser(data.data[0].Dislayname);
+          setnameUser(data.data[0].DislayName);
           if (data.data) {
             message.success("Cập nhập thông tin thành công");
           } else {

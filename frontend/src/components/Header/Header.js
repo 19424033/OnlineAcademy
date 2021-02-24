@@ -173,7 +173,7 @@ const HeaderCustomize = () => {
             <div className="topbar-right">
               <ul>
                 <li>
-                  <Link to="/category" className="text-white ">
+                  <Link to="/courses" className="text-white ">
                     <span className="h6">
                       <i
                         style={{ marginLeft: "20px" }}

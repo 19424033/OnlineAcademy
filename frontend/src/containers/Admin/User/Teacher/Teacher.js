@@ -7,7 +7,7 @@ import {
   ExclamationCircleOutlined
 } from "@ant-design/icons";
 
-import { Table, Button, notification, Input, Row, Col, Popover, Modal ,Tag} from "antd";
+import { Table, Button, notification, Input, Row, Col, Popover, Modal, Tag } from "antd";
 import Icon, { IconCustom } from "../../../../components/Icon";
 
 import ModalForm from "./Modal_Input_Teacher";
@@ -35,7 +35,7 @@ const Teacher = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "Usersid",
+      dataIndex: "UsersId",
       width: 50,
       align: "center",
     },
@@ -47,7 +47,7 @@ const Teacher = () => {
     },
     {
       title: "Display Name",
-      dataIndex: "Dislayname",
+      dataIndex: "DislayName",
       width: 50,
       align: "center",
     },
@@ -56,25 +56,25 @@ const Teacher = () => {
       dataIndex: "Telephone",
       width: 50,
       align: "center",
-      
+
     },
     {
       title: "Point",
       dataIndex: "Point",
       width: 50,
       align: "center",
-      
+
     },
     {
       title: "Khóa",
-      dataIndex: "Isactive",
+      dataIndex: "IsActive",
       width: 100,
       align: "center",
-      key: "Isactive",
+      key: "IsActive",
 
-      render: (Isactive, user) => (
+      render: (IsActive, user) => (
         <>
-          {Isactive.data[0] ? (
+          {IsActive ? (
             <Button
               type="primary"
               shape="round"
@@ -97,7 +97,7 @@ const Teacher = () => {
       dataIndex: "OTP",
       width: 50,
       align: "center",
-      
+
     },
     {
       title: "Xác nhận OTP",
@@ -107,13 +107,13 @@ const Teacher = () => {
       render: (OTP_Confim, user) => (
         <>
           {OTP_Confim.data[0] ? (
-           <Tag color="green" key={user.key}>
-           Đã xác thực
-         </Tag>
+            <Tag color="green" key={user.key}>
+              Đã xác thực
+            </Tag>
           ) : (
-            <Tag color="gold" key={user.key}>
-           Chưa xác thực
-         </Tag>
+              <Tag color="gold" key={user.key}>
+                Chưa xác thực
+              </Tag>
             )}
         </>
       ),
@@ -159,7 +159,7 @@ const Teacher = () => {
         </>
       ),
     },
- 
+
   ];
   function showDeleteConfirm(user) {
     confirm({
@@ -169,7 +169,7 @@ const Teacher = () => {
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        UserService().deleteSingleUser(user.Usersid)
+        UserService().deleteSingleUser(user.UsersId)
           .then((response) => {
             APIgetAllUser();
             notification["success"]({
@@ -185,16 +185,16 @@ const Teacher = () => {
     });
   }
   const onEdit = (values) => {
-   handleProduct(values, false, false, true);
-   setVisibleModalEdit(false);
+    handleProduct(values, false, false, true);
+    setVisibleModalEdit(false);
   };
   const handleProduct = (user, setEnable, setDisable, upDateUser) => {
     if (setEnable === true) {
       UserService()
-        .setSingleUser(user.Usersid, {
+        .setSingleUser(user.UsersId, {
           ...user,
-          Isactive: 1,
-          
+          IsActive: 1,
+
         })
         .then((response) => {
           APIgetAllUser();
@@ -209,9 +209,9 @@ const Teacher = () => {
     }
     if (setDisable === true) {
       UserService()
-        .setSingleUser(user.Usersid, {
+        .setSingleUser(user.UsersId, {
           ...user,
-          Isactive: 0,
+          IsActive: 0,
         })
         .then((response) => {
           APIgetAllUser();
@@ -225,23 +225,23 @@ const Teacher = () => {
         });
     }
     if (upDateUser === true) {
-      var id = user.Usersid;
-      delete user.Usersid;
+      var id = user.UsersId;
+      delete user.UsersId;
       UserService()
-      .setSingleUser(id, {
-        ...user
-      })
-      .then((response) => {
-        APIgetAllUser();
-        notification["success"]({
-          message: "Hoàn Tất",
-          description: "Bạn đã sửa thành công",
-        });
+        .setSingleUser(id, {
+          ...user
+        })
+        .then((response) => {
+          APIgetAllUser();
+          notification["success"]({
+            message: "Hoàn Tất",
+            description: "Bạn đã sửa thành công",
+          });
 
-      })
-      .catch(function (error) {
-        console.log("ERROR from server:", error);
-      });
+        })
+        .catch(function (error) {
+          console.log("ERROR from server:", error);
+        });
     }
   };
   const onCreate = (values) => {
@@ -325,7 +325,7 @@ const Teacher = () => {
         dataSource={data}
         scroll={{ x: 768 }}
       />
-      
+
     </>
   );
 };
