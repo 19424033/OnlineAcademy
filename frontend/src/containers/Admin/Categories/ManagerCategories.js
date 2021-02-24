@@ -47,7 +47,7 @@ const ManagetUser = () => {
   }
   const txt_Changed = function (e) {
     const temp = dataRespon.filter((item) =>
-      item.CategoryGroupname.toLowerCase().includes(e.target.value.toLowerCase())
+      item.CategoryGroupName.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setdataRespontemp(temp);
   };
@@ -65,7 +65,7 @@ const ManagetUser = () => {
 
   function showDeleteConfirm(item) {
     confirm({
-      title: `Bạn có chắc muốn xoá ${item.CategoryGroupname} ?`,
+      title: `Bạn có chắc muốn xoá ${item.CategoryGroupName} ?`,
       icon: <ExclamationCircleOutlined />,
       okText: "Delete",
       okType: "danger",
@@ -100,7 +100,7 @@ const ManagetUser = () => {
       CategorygroupService()
         .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
-          Isactive: 1,
+          IsActive: 1,
 
         })
         .then((response) => {
@@ -118,7 +118,7 @@ const ManagetUser = () => {
       CategorygroupService()
         .setSingleCategorygroup(categoryGroup.CategoryGroupId, {
           ...categoryGroup,
-          Isactive: 0,
+          IsActive: 0,
 
         })
         .then((response) => {
@@ -196,7 +196,7 @@ const ManagetUser = () => {
                   />
                 </div>
                 <div className="info-bx text-center">
-                  <h4><Link to="#">{item.CategoryGroupname}</Link></h4>
+                  <h4><Link to="#">{item.CategoryGroupName}</Link></h4>
                   <Link to="#" className="btn radius-xl">View More</Link>
                 </div>
                 <div className="handle-btn text-center">
@@ -206,7 +206,7 @@ const ManagetUser = () => {
                       setcategoryGroupEditModal(item);
                     }}
                     icon={<EditOutlined />} />
-                  {item.Isactive.data[0]
+                  {item.IsActive
                     ? <Button type="primary" className='mx-2' shape="round"
                       onClick={() => handleProduct(item, false, true, false)}
                       icon={<UnlockOutlined />} />

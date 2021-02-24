@@ -67,7 +67,7 @@ const Teacher = () => {
 
       render: (Isactive, user) => (
         <>
-          {Isactive.data[0] ? (
+          {Isactive ? (
             <Button
               type="primary"
               shape="round"
