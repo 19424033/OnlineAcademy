@@ -79,7 +79,7 @@ const Profile = () => {
                           </li>
                           <li className="nav-item">
                             <Link
-                              className="nav-link active"
+                              className="nav-link "
                               data-toggle="tab"
                               // onClick={openCourses}
                             >
