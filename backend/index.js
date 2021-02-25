@@ -12,9 +12,6 @@ const AUTH = require('./server/router/auth.route');
 const HOME = require('./server/router/home.route');
 
 
-
-
-
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
 // const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
@@ -53,6 +50,7 @@ app.get("/", (request, respond) => {
 app.use('/api/users',decentralization, USERS );
 app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
 app.use('/api/category',decentralization, CATEGORY );
+app.use('/api/courses', CATEGORY );
 
 app.use('/api/auth', AUTH );
 

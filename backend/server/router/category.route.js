@@ -30,6 +30,15 @@ router.get("/", async function (req, res) {
     }
 });
 
+router.get('/:id', async function (req, res) {
+    const id = req.params.id || 0;
+    const categories = await categoryModel.single(id);
+    if (categories === null) {
+      return res.status(204).end();
+    }
+    res.json(categories);
+  });
+
 router.put("/:id", async function (req, res) {
     const id = req.params.id;
     const values = req.body;
