@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 
 import ChangeProfileUser from "./Handle/ChangeProfileUser";
 import ChangePassword from "./Handle/ChangePassword";
 import FavorCourse from "./Handle/FavorCourse";
 import RegisteredCourse from "./Handle/RegisteredCourse";
 const Profile = () => {
-  const { userid, nameUser, imageUser, userJobId, } = useContext(AppContext);
+  const { userid, nameUser, imageUser, userJobId } = useContext(AppContext);
   const [userEmail, setUserEmail] = useState("");
   const [render, setRender] = useState("FavorCourse");
 
@@ -122,8 +123,12 @@ const Profile = () => {
                     {userJobId === 2 && render === "RegisteredCourse" && (
                       <RegisteredCourse />
                     )}
-                    {render === "ChangeProfileUser" && <ChangeProfileUser setUserEmail={setUserEmail} />}
-                    {render === "ChangePassword" && <ChangePassword userEmail={userEmail} />}
+                    {render === "ChangeProfileUser" && (
+                      <ChangeProfileUser setUserEmail={setUserEmail} />
+                    )}
+                    {render === "ChangePassword" && (
+                      <ChangePassword userEmail={userEmail} />
+                    )}
                   </div>
                 </div>
               </div>

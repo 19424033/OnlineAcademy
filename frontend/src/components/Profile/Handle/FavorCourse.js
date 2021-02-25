@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../utils/AppContext";
 import AuthService from "../../../services/auth.service";
+import UserService from "../../../services/user.service";
 
 const FavorCourse = () => {
   const { userid } = useContext(AppContext);
   const [favoriteCategory, setFavoriteCategory] = useState("");
   useEffect(() => {
-    AuthService()
-      .getAllFavoriteCategory({
-        userId: userid,
-      })
+    UserService()
+      .getAllFavoriteCategory(userid)
       .then((data) => {
+        debugger;
         if (data.data === false) {
           setFavoriteCategory("");
         } else {

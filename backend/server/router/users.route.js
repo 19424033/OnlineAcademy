@@ -82,5 +82,37 @@ router.delete("/:id", async function (req, res) {
       res.status(500).json(err);
     });
 });
+router.get("/favorite-category/:id", async function (req, res) {
+  const id = req.params.id;
+  const User = await usersModel.favoriteCategory(id);
+  if (User == null) {
+    return res.status(200).json(false);
+  }
 
+  let temp = [];
+  User.forEach((e) => {
+    const category = usersModel.categoryDetail(e.Categoryid);
+    temp.push(category);
+  });
+  res.status(200).json(temp);
+  // const listCategory = [];
+  // listCategory=   User.Categoryid;
+});
+
+router.get("/category-user/:id", async function (req, res) {
+  const id = req.params.id;
+  const User = await usersModel.CategoryUser(id);
+  if (User == null) {
+    return res.status(200).json(false);
+  }
+
+  let temp = [];
+  User.forEach((e) => {
+    const category = usersModel.categoryDetail(e.Categoryid);
+    temp.push(category);
+  });
+  res.status(200).json(temp);
+  // const listCategory = [];
+  // listCategory=   User.Categoryid;
+});
 module.exports = router;

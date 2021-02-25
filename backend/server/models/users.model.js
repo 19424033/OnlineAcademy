@@ -26,13 +26,20 @@ module.exports = {
     }
     return user[0];
   },
-  // async favoriteCategory(id) {
-  //   const user = await db("likedetail").where("UsersId", id);
-  //   if (user.length === 0) {
-  //     return null;
-  //   }
-  //   return user;
-  // },
+  async favoriteCategory(id) {
+    const user = await db("likedetail").where({ UsersId: id, istiactve: 1 });
+    if (user.length === 0) {
+      return null;
+    }
+    return user;
+  },
+  async CategoryUser(id) {
+    const user = await db("resdetail").where({ UsersId: id, istiactve: 1 });
+    if (user.length === 0) {
+      return null;
+    }
+    return user;
+  },
   async categoryDetail(id) {
     const user = await db("category").where("CategoryId", id);
     if (user.length === 0) {

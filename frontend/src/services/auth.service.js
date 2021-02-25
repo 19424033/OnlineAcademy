@@ -51,9 +51,6 @@ export default function AuthService() {
   const editProfile = async (values) => {
     return await axios.post(`${API_auth}/edit-profile`, values);
   };
-  const getAllFavoriteCategory = (id) => {
-    return axios.post(`${API_auth}/favorite-category`, id);
-  };
 
   const refresh = (values) => {
     return axios.post(`${API_auth}/refresh`, values);
@@ -72,7 +69,6 @@ export default function AuthService() {
     editProfile,
     registerWithGoogle,
     loginWithGoogle,
-    getAllFavoriteCategory,
     refresh,
   };
 }

@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../utils/AppContext";
+import AuthService from "../../../services/auth.service";
+import UserService from "../../../services/user.service";
 
 const RegisteredCourse = () => {
+  const { userid } = useContext(AppContext);
+  const [coursesUser, setCoursesUser] = useState("");
+  useEffect(() => {
+    UserService()
+      .getCategorysUser(userid)
+      .then((data) => {
+        debugger;
+        if (data.data === false) {
+          setCoursesUser("");
+        } else {
+          setCoursesUser(data.data);
+        }
+      });
+  }, []);
   return (
     <div>
       <div className="profile-head">
