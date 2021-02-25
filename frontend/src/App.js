@@ -19,8 +19,8 @@ import Error from "./components/Error/Error";
 import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
-import Category from "./containers/Category/Category";
 import Courses from "./containers/Courses/Courses";
+import CoursesDetail from "./containers/CoursesDetail/CoursesDetail";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
 import ManagerCategoriesGroup from "./containers/Admin/CategoriesGroup/ManagerCategoriesGroup";
@@ -122,12 +122,6 @@ const App = () => {
               component={Profile}
               exact
             />
-            <AppRoute
-              path="/category"
-              layout={Default}
-              component={Category}
-              exact
-            />
              <AppRoute
               path="/courses"
               layout={Default}
@@ -196,17 +190,18 @@ const App = () => {
               exact
             />
             <AppRoute
-              path="/category"
-              layout={Default}
-              component={Category}
-              exact
-            />
-            <AppRoute
               path="/courses"
               layout={Default}
               component={Courses}
               exact
             />
+            <AppRoute
+              path="/courses/:CategoryId"
+              layout={Default}
+              component={CoursesDetail}
+              exact
+            />
+
 
             <AppRoute path="/login" layout={Auth} component={Login} exact />
             <AppRoute
