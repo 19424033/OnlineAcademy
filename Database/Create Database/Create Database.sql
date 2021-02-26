@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS `Category` (
   `CategoryId` int(11) NOT NULL AUTO_INCREMENT,
   `CategoryName` varchar(255) DEFAULT NULL,
   `Note` varchar(10000) DEFAULT NULL,
+  `Remark` varchar(20000) DEFAULT NULL,
   `Rate` float(11) DEFAULT '0',
+  `QuanLike` int(11) DEFAULT '0',
   `QuanRes` int(11) DEFAULT '0',
   `TeacherID` int(11) DEFAULT NULL,
   `Image` longtext,
@@ -131,6 +133,18 @@ CREATE TABLE IF NOT EXISTS `CmtDetail` (
   PRIMARY KEY (`Id`) USING BTREE,
   KEY `CategoryId` (`UsersId`) USING BTREE,
   KEY `UsersId` (`Usersid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `LikeDetail`;
+CREATE TABLE `LikeDetail`  (
+  `Id` int(0) NOT NULL AUTO_INCREMENT,
+  `UsersId` int(0) NULL DEFAULT NULL,
+  `CategoryId` int(0) NULL DEFAULT NULL,
+  `LikeTime` timestamp(0) NULL DEFAULT NULL,
+  `IsActive` tinyint(1) NULL DEFAULT 1,
+  PRIMARY KEY (`Id`) USING BTREE,
+  KEY `CategoryId`(`CategoryId`) USING BTREE,
+  KEY `UsersId`(`UsersId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 
