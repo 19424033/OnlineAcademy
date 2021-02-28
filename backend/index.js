@@ -7,6 +7,7 @@ const app = express();
 const USERS = require('./server/router/users.route');
 const CATEGORYGROUP = require('./server/router/categorygroup.route');
 const CATEGORY = require('./server/router/category.route');
+const COURSES = require('./server/router/courses.route');
 
 const AUTH = require('./server/router/auth.route');
 const HOME = require('./server/router/home.route');
@@ -50,7 +51,7 @@ app.get("/", (request, respond) => {
 app.use('/api/users',decentralization, USERS );
 app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
 app.use('/api/category',decentralization, CATEGORY );
-app.use('/api/courses', CATEGORY );
+app.use('/api/courses', COURSES );
 
 app.use('/api/auth', AUTH );
 

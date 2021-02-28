@@ -111,5 +111,35 @@ module.exports = {
     .where('category.Isactive',true)
     .limit(10)
     .orderBy("Quanres","desc");
-  }
+  },
+
+  async getCategory(CategoryId) {
+    var date = new Date();
+    const category = await db.select('category.*'
+                                      ,'categorygroup.CategoryGroupName'
+                                      ,'users.Image as Ava'
+                                      , 'users.DislayName'
+                                      ,'discount.value')
+    .from('category')
+    .count('ratedetail.UsersId as TotalRate')
+    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
+    .leftJoin('users','users.UsersId', 'category.Teacherid')
+    .leftJoin('ratedetail','category.CategoryId', 'ratedetail.CategoryId')
+    .leftJoin('discount', function() {
+        this.on('discount.CategoryId', '=', 'category.CategoryId')
+        this.andOn('discount.Isactive', '=', 1)
+        this.andOn(date,'>=', 'discount.Fromdate')
+        this.andOn(date,'<=', 'discount.Todate')
+    })
+    .where('category.Isactive',true)
+    .andWhere("category.CategoryId", CategoryId);
+    
+
+    if (category.length === 0) {
+      return null;
+    }
+    return category[0];
+  },
+
+
 };
