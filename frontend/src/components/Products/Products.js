@@ -8,11 +8,11 @@ const Products = (props) => {
   return (
     <div className="item" style={{margin:'0 5px'}}>
       <div className="cours-bx">
-        <Link to = {"/courses/" +props.products.CategoryId} >
+        <Link to = {`/courses/${props.products.CategoryId}-${props.products.CategoryName}` } >
           <div className="action-box"  style={{ height:'200px', backgroundSize:'cover', backgroundImage: `url(${props.products.Image})` }} />
         </Link>
         <div className="info-bx text-center" style={{height:'100px'}}>
-            <h5><Link to = {"/courses/" +props.products.CategoryId} >{ props.products.CategoryName }</Link></h5>
+            <h5><Link to = {`/courses/${props.products.CategoryId}-${props.products.CategoryName}`} >{ props.products.CategoryName }</Link></h5>
             <span> { props.products.CategoryGroupName } </span>
         </div>
         <div className="info-bx">
