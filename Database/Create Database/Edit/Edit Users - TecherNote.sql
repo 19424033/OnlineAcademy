@@ -1,0 +1,3 @@
+
+
+ALTER TABLE `users`  ADD `TeacherNote` LONGTEXT DEFAULT NULL  AFTER `Image`;

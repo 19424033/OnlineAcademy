@@ -2,7 +2,7 @@ const db = require("../utils/db");
 
 module.exports = {
   all() {
-    return db("category").where("Isactive",true);
+    return db("category").where("isActive",true);
   },
   allAdmin() {
     // return db("category").leftJoin('categorygroup', 'categorygroup.CategoryGroupId', '=', 'category.CategoryId')
@@ -53,11 +53,11 @@ module.exports = {
     .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.Isactive', '=', 1)
+        this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.Isactive',true)
+    .where('category.isActive',true)
     .limit(5)
     .orderBy("Rate","desc");
   },
@@ -70,11 +70,11 @@ module.exports = {
     .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.Isactive', '=', 1)
+        this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.Isactive',true)
+    .where('category.isActive',true)
     .limit(5)
     .orderBy("Rate","desc");
   },
@@ -87,11 +87,11 @@ module.exports = {
     .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.Isactive', '=', 1)
+        this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.Isactive',true)
+    .where('category.isActive',true)
     .limit(10)
     .orderBy("Created_at","desc");
   },
@@ -104,11 +104,11 @@ module.exports = {
     .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.Isactive', '=', 1)
+        this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.Isactive',true)
+    .where('category.isActive',true)
     .limit(10)
     .orderBy("Quanres","desc");
   },
@@ -118,7 +118,8 @@ module.exports = {
     const category = await db.select('category.*'
                                       ,'categorygroup.CategoryGroupName'
                                       ,'users.Image as Ava'
-                                      , 'users.DislayName'
+                                      ,'users.DislayName'
+                                      ,'users.TeacherNote'
                                       ,'discount.value')
     .from('category')
     .count('ratedetail.UsersId as TotalRate')
@@ -127,11 +128,11 @@ module.exports = {
     .leftJoin('ratedetail','category.CategoryId', 'ratedetail.CategoryId')
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.Isactive', '=', 1)
+        this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.Isactive',true)
+    .where('category.isActive',true)
     .andWhere("category.CategoryId", CategoryId);
     
 
@@ -141,5 +142,34 @@ module.exports = {
     return category[0];
   },
 
+  async getQuanRateValue(CategoryId) {
+    const category = await db().select('R1.Rate1', 'R2.Rate2', 'R3.Rate3' , 'R4.Rate4' , 'R5.Rate5')
+    .from('ratedetail')   
+    .leftJoin(db('ratedetail')
+              .count('RateValue as Rate1')
+              .where('RateValue',1)
+              .andWhere('CategoryId',CategoryId).as('R1') ,0, 0 )
+    .leftJoin(db('ratedetail')
+              .count('RateValue as Rate2')
+              .where('RateValue',2)
+              .andWhere('CategoryId',CategoryId).as('R2') ,0, 0 )
+    .leftJoin(db('ratedetail')
+              .count('RateValue as Rate3')
+              .where('RateValue',3)
+              .andWhere('CategoryId',CategoryId).as('R3') ,0, 0 )
+    .leftJoin(db('ratedetail')
+              .count('RateValue as Rate4')
+              .where('RateValue',4)
+              .andWhere('CategoryId',CategoryId).as('R4') ,0, 0 )
+    .leftJoin(db('ratedetail')
+              .count('RateValue as Rate5')
+              .where('RateValue',5)
+              .andWhere('CategoryId',CategoryId).as('R5') ,0, 0 )
+    .groupBy('CategoryId')
+    if (category.length === 0) {
+      return null;
+    }
+    return category[0];
+  },
 
 };

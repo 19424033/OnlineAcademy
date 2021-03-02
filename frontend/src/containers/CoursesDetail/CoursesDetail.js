@@ -5,6 +5,7 @@ import {
 import axios from "axios";
 
 import BuyCourses from "./BuyCourses/BuyCourses"
+import Detail from "./Detail/Detail"
 
 const CoursesDetail = () => {
     let { CategoryId } = useParams();
@@ -18,17 +19,15 @@ const CoursesDetail = () => {
             setCategories(response.data);
         })
     },[]);
-
-    console.log(categories);
+    
     return (
       <div className="page-content bg-white">
         <div className="content-block">
           <div className="section-area section-sp1">
             <div className="container">
               <div className="row d-flex flex-row-reverse">
-                {
                   <BuyCourses categories={categories} />  
-                }
+                  <Detail id = {id} categories={categories} />  
               </div>
           </div>
         </div>

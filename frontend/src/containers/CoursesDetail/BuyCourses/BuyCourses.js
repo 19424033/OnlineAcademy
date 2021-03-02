@@ -13,10 +13,10 @@ const BuyCourses = (props) => {
           { props.categories.value != null
             ? <>
                 <del> { parseInt(props.categories.Price).toLocaleString() } đ </del>
-                <h5>{ (props.categories.Price * (100-props.categories.value) /100).toLocaleString()  } đ </h5> 
+                <h4>{ (props.categories.Price * (100-props.categories.value) /100).toLocaleString()  } đ </h4> 
               </>
             : <> 
-                <br></br><h5>{ parseInt(props.categories.Price).toLocaleString() } đ </h5> 
+                <br></br><h4>{ parseInt(props.categories.Price).toLocaleString() } đ </h4> 
               </> 
           }
         </div>	
@@ -42,7 +42,15 @@ const BuyCourses = (props) => {
             <h4> { props.categories.QuanRes } <i className="fa fa-user" /></h4>  
             <span>Đã đăng ký</span>
           </div>
-      </div>
+        </div>
+        {/* <div className="course-info-list scroll-page">
+          <ul className="navbar">
+            <li><a className="nav-link" href="#overview"><i className="ti-zip"></i>Overview</a></li>
+            <li><a className="nav-link" href="#curriculum"><i className="ti-bookmark-alt"></i>Curriculum</a></li>
+            <li><a className="nav-link" href="#instructor"><i className="ti-user"></i>Instructor</a></li>
+            <li><a className="nav-link" href="#reviews"><i className="ti-comments"></i>Reviews</a></li>
+          </ul>
+        </div> */}
       </div>
     </div>
     )

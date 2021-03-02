@@ -128,6 +128,14 @@ const App = () => {
               component={Courses}
               exact
             />
+
+            <AppRoute
+              path="/courses/:CategoryId"
+              layout={Default}
+              component={CoursesDetail}
+              exact
+            />
+            
             {userJobId === 1 && (
               <>
                 <AppRoute

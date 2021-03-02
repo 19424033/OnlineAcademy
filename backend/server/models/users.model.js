@@ -12,13 +12,6 @@ module.exports = {
     }
     return user[0];
   },
-  // async favoriteCategory(id) {
-  //   const user = await db("users");
-  //   if (user.length === 0) {
-  //     return null;
-  //   }
-  //   return user;
-  // },
   async DetailCategory(id) {
     const user = await db("category").where("CategoryId", id);
     if (user.length === 0) {
@@ -27,14 +20,14 @@ module.exports = {
     return user[0];
   },
   async favoriteCategory(id) {
-    const user = await db("likedetail").where({ UsersId: id, istiactve: 1 });
+    const user = await db("likedetail").where({ UsersId: id, isActive: 1 });
     if (user.length === 0) {
       return null;
     }
     return user;
   },
   async CategoryUser(id) {
-    const user = await db("resdetail").where({ UsersId: id, istiactve: 1 });
+    const user = await db("resdetail").where({ UsersId: id, isActive: 1 });
     if (user.length === 0) {
       return null;
     }

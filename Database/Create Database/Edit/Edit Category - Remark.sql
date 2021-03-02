@@ -1,3 +1,3 @@
 
 
-ALTER TABLE `Category` ADD `Remark` varchar(10000) DEFAULT NULL;
+ALTER TABLE `Category` ADD `Remark` LONGTEXT DEFAULT NULL AFTER `Note`;

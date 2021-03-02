@@ -44,7 +44,7 @@ router.post("/teacher", async function (req, res) {
   } else {
     addTeacher.Password = bcrypt.hashSync("123456", 3);
     addTeacher.Jobid = 3;
-    addTeacher.Isactive = 1;
+    addTeacher.isActive = 1;
     addTeacher.OTP_Confim = 1;
     const resual = await usersModel.add(addTeacher);
     delete addTeacher.Password;

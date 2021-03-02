@@ -9,7 +9,7 @@ router.get("/", async function (req, res) {
 
 router.post("/", async function (req, res) {
   const addCategoryGroup = req.body;
-  addCategoryGroup.Isactive = 1;
+  addCategoryGroup.isActive = 1;
   const resual = await categorygroupModel.add(addCategoryGroup);
   res.status(200).json(resual);
 });

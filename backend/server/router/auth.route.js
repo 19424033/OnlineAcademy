@@ -137,7 +137,7 @@ router.post("/register", async function (req, res) {
     user_register.OTP = Math.random().toString().substring(2, 8);
     user_register.Password = bcrypt.hashSync(user_register.Password, 3);
     user_register.JobId = 2;
-    user_register.Isactive = 1;
+    user_register.isActive = 1;
     user_register.Point = 0;
 
     user_register.Userid = await userModel.add(user_register);
@@ -159,7 +159,7 @@ router.post("/register-with-google", async function (req, res) {
     user_register.OTP = Math.random().toString().substring(2, 8);
     user_register.Password = bcrypt.hashSync("123456", 3);
     user_register.JobId = 2;
-    user_register.Isactive = 1;
+    user_register.isActive = 1;
     user_register.Point = 0;
 
     await imageToBase64(user_register.Image) // Image URL
