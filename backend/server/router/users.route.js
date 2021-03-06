@@ -53,7 +53,6 @@ router.post("/teacher", async function (req, res) {
 });
 
 router.put("/:id", async function (req, res) {
-  //  tao tai khoan
   const id = req.params.id;
   const user = req.body;
   delete user.key;

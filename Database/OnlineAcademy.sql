@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 25/02/2021 10:40:25
+ Date: 06/03/2021 10:56:36
 */
 
 SET NAMES utf8mb4;
@@ -22,60 +22,65 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `buypoint`;
 CREATE TABLE `buypoint`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `UsersId` int(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UsersId` int NULL DEFAULT NULL,
   `Point` decimal(18, 2) NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of buypoint
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
-  `CategoryId` int(0) NOT NULL AUTO_INCREMENT,
+  `CategoryId` int NOT NULL AUTO_INCREMENT,
   `CategoryName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Note` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Rate` float NULL DEFAULT 0,
-  `QuanRes` int(0) NULL DEFAULT 0,
-  `TeacherID` int(0) NULL DEFAULT NULL,
+  `QuanRes` int NULL DEFAULT 0,
+  `TeacherID` int NULL DEFAULT NULL,
   `Image` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `Price` decimal(18, 2) NULL DEFAULT NULL,
-  `CategoryGroupId` int(0) NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
-  `Update_At` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
+  `CategoryGroupId` int NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `Update_At` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `IsActive` tinyint(1) NULL DEFAULT 1,
-  `QuanLike` int(0) NULL DEFAULT 0,
+  `QuanLike` int NULL DEFAULT 0,
+  `Remark` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`CategoryId`) USING BTREE,
   INDEX `CategoryGroupId`(`CategoryGroupId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, 'Lập trình Java Android Cơ Bản', 'Note Lập trình Java Android Cơ Bản', 4, 52, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084980/Lap_trinh_Java_Android_Co_Ban_ojxpmt.jpg', 1200000.00, 1, '2021-02-23 07:56:42', '2021-02-23 07:56:42', 1, 0);
-INSERT INTO `category` VALUES (2, 'Lập trình Java Android Nâng Cao', 'Note Lập trình Java Android Nâng Cao', 3.7, 12, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_Java_Android_Nang_Cao_lzcpdy.png', 1500000.00, 1, '2021-02-23 07:58:04', '2021-02-23 07:58:04', 1, 0);
-INSERT INTO `category` VALUES (3, 'Lập trình di động với React Native cơ bản', 'Note Lập trình di động với React Native cơ bản', 2.7, 222, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_di_dong_voi_React_Native_co_ban_eqnnts.png', 1800000.00, 1, '2021-02-23 08:06:32', '2021-02-23 08:06:32', 1, 0);
-INSERT INTO `category` VALUES (4, 'Lập trình di động với React Native nâng cao', 'Note Lập trình di động với React Native nâng cao', 3, 21, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_di_dong_voi_React_Native_nang_cao_g3bdmn.png', 2000000.00, 1, '2021-02-23 08:07:37', '2021-02-23 08:07:37', 1, 0);
-INSERT INTO `category` VALUES (5, 'Illustrator CC 2018 Fundamentals For Beginners', 'Learn Illustrator CC 2018 Fundamentals and Enjoy Drawing with Adobe Illustrator CC the 5 Facebook Emoji Projects', 3.2, 55, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614042982/Illustrator_CC_2018_Fundamentals_For_Beginners/Illustrator_CC_2018_Fundamentals_For_Beginners_yi7oaq.jpg', 320000.00, 10, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0);
-INSERT INTO `category` VALUES (6, 'After Effects CC Masterclass', 'Learn After Effects CC to improve your videos with professional motion graphics and visual effects.', 5, 85, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614042773/After_Effects_CC_Masterclass/After_Effects_CC_Masterclass_alszvi.jpg', 350000.00, 10, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0);
-INSERT INTO `category` VALUES (7, '\r\n\r\nComplete Javascript Course for Beginners with jQuery AJAX', 'Learn Javascript from zero to advanced through challenges, exercises and real life projects! 85+ Lessons and 15+ hours!', 4.2, 76, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614073365/Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX/Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX_rblyog.jpg', 900000.00, 7, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0);
-INSERT INTO `category` VALUES (8, 'React basic in just 1 hour', 'The quick guide to learn basic concepts and workflow of how to build React app', 4.9, 632, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614073461/React_basic_in_just_1_hour/React_basic_in_just_1_hour_wcjn9f.jpg', 299000.00, 8, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0);
+INSERT INTO `category` VALUES (1, 'Lập trình Java Android Cơ Bản', 'Note Lập trình Java Android Cơ Bản', 4, 52, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084980/Lap_trinh_Java_Android_Co_Ban_ojxpmt.jpg', 1200000.00, 1, '2021-02-23 07:56:42', '2021-02-23 07:56:42', 1, 0, NULL);
+INSERT INTO `category` VALUES (2, 'Lập trình Java Android Nâng Cao', 'Note Lập trình Java Android Nâng Cao', 3.7, 12, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_Java_Android_Nang_Cao_lzcpdy.png', 1500000.00, 1, '2021-02-23 07:58:04', '2021-02-23 07:58:04', 1, 0, NULL);
+INSERT INTO `category` VALUES (3, 'Lập trình di động với React Native cơ bản', 'Note Lập trình di động với React Native cơ bản', 2.7, 222, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_di_dong_voi_React_Native_co_ban_eqnnts.png', 1800000.00, 1, '2021-02-23 08:06:32', '2021-02-23 08:06:32', 1, 0, NULL);
+INSERT INTO `category` VALUES (4, 'Lập trình di động với React Native nâng cao', 'Note Lập trình di động với React Native nâng cao', 3, 21, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614084979/Lap_trinh_di_dong_voi_React_Native_nang_cao_g3bdmn.png', 2000000.00, 1, '2021-02-23 08:07:37', '2021-02-23 08:07:37', 1, 0, NULL);
+INSERT INTO `category` VALUES (5, 'Illustrator CC 2018 Fundamentals For Beginners', 'Learn Illustrator CC 2018 Fundamentals and Enjoy Drawing with Adobe Illustrator CC the 5 Facebook Emoji Projects', 3.2, 55, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614042982/Illustrator_CC_2018_Fundamentals_For_Beginners/Illustrator_CC_2018_Fundamentals_For_Beginners_yi7oaq.jpg', 320000.00, 10, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0, NULL);
+INSERT INTO `category` VALUES (6, 'After Effects CC Masterclass', 'Learn After Effects CC to improve your videos with professional motion graphics and visual effects.', 5, 85, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614042773/After_Effects_CC_Masterclass/After_Effects_CC_Masterclass_alszvi.jpg', 350000.00, 10, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0, NULL);
+INSERT INTO `category` VALUES (7, '\r\n\r\nComplete Javascript Course for Beginners with jQuery AJAX', 'Learn Javascript from zero to advanced through challenges, exercises and real life projects! 85+ Lessons and 15+ hours!', 4.2, 76, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614073365/Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX/Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX_rblyog.jpg', 900000.00, 7, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0, NULL);
+INSERT INTO `category` VALUES (8, 'React basic in just 1 hour', 'The quick guide to learn basic concepts and workflow of how to build React app', 4.9, 632, 2, 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1614073461/React_basic_in_just_1_hour/React_basic_in_just_1_hour_wcjn9f.jpg', 299000.00, 8, '2021-02-23 00:00:00', '2021-02-23 00:00:00', 1, 0, NULL);
 
 -- ----------------------------
 -- Table structure for categorygroup
 -- ----------------------------
 DROP TABLE IF EXISTS `categorygroup`;
 CREATE TABLE `categorygroup`  (
-  `CategoryGroupId` int(0) NOT NULL AUTO_INCREMENT,
+  `CategoryGroupId` int NOT NULL AUTO_INCREMENT,
   `CategoryGroupName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT NULL,
   `Image` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`CategoryGroupId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of categorygroup
@@ -97,43 +102,51 @@ INSERT INTO `categorygroup` VALUES (14, '245', '2021-02-24 09:17:42', 'data:imag
 -- ----------------------------
 DROP TABLE IF EXISTS `cmtdetail`;
 CREATE TABLE `cmtdetail`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `UsersId` int(0) NULL DEFAULT NULL,
-  `CategoryId` int(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UsersId` int NULL DEFAULT NULL,
+  `CategoryId` int NULL DEFAULT NULL,
   `Cmt` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `CmtTime` timestamp(0) NULL DEFAULT NULL,
+  `CmtTime` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`UsersId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of cmtdetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for discount
 -- ----------------------------
 DROP TABLE IF EXISTS `discount`;
 CREATE TABLE `discount`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `CategoryId` int(0) NULL DEFAULT NULL,
-  `Value` int(0) NULL DEFAULT NULL,
-  `Fromdate` timestamp(0) NULL DEFAULT NULL,
-  `Enddate` timestamp(0) NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `CategoryId` int NULL DEFAULT NULL,
+  `Value` int NULL DEFAULT NULL,
+  `Fromdate` timestamp NULL DEFAULT NULL,
+  `Enddate` timestamp NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of discount
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for job
 -- ----------------------------
 DROP TABLE IF EXISTS `job`;
 CREATE TABLE `job`  (
-  `JobId` int(0) NOT NULL AUTO_INCREMENT,
+  `JobId` int NOT NULL AUTO_INCREMENT,
   `JobName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`JobId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job
@@ -147,77 +160,94 @@ INSERT INTO `job` VALUES (3, 'Giảng Viên', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `likedetail`;
 CREATE TABLE `likedetail`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `UsersId` int(0) NULL DEFAULT NULL,
-  `CategoryId` int(0) NULL DEFAULT NULL,
-  `LikeTime` timestamp(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UsersId` int NULL DEFAULT NULL,
+  `CategoryId` int NULL DEFAULT NULL,
+  `LikeTime` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of likedetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for product
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`  (
-  `ProductId` int(0) NOT NULL AUTO_INCREMENT,
-  `NumberNo` int(0) NULL DEFAULT NULL,
+  `ProductId` int NOT NULL AUTO_INCREMENT,
+  `NumberNo` int NULL DEFAULT NULL,
   `ProductName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Video` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `View` int(0) NULL DEFAULT 0,
+  `View` int NULL DEFAULT 0,
   `Public` bit(1) NULL DEFAULT NULL,
-  `CategoryId` int(0) NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT NULL,
+  `CategoryId` int NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`ProductId`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ratedetail
 -- ----------------------------
 DROP TABLE IF EXISTS `ratedetail`;
 CREATE TABLE `ratedetail`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `UsersId` int(0) NULL DEFAULT NULL,
-  `CategoryId` int(0) NULL DEFAULT NULL,
-  `RateValue` int(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UsersId` int NULL DEFAULT NULL,
+  `CategoryId` int NULL DEFAULT NULL,
+  `RateValue` int NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ratedetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for resdetail
 -- ----------------------------
 DROP TABLE IF EXISTS `resdetail`;
 CREATE TABLE `resdetail`  (
-  `Id` int(0) NOT NULL AUTO_INCREMENT,
-  `UsersId` int(0) NULL DEFAULT NULL,
-  `CategoryId` int(0) NULL DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UsersId` int NULL DEFAULT NULL,
+  `CategoryId` int NULL DEFAULT NULL,
   `CostEach` decimal(18, 2) NULL DEFAULT NULL,
-  `ResTime` timestamp(0) NULL DEFAULT NULL,
+  `ResTime` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`UsersId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of resdetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `UsersId` int(0) NOT NULL AUTO_INCREMENT,
+  `UsersId` int NOT NULL AUTO_INCREMENT,
   `Email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `DislayName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Image` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `TeacherNote` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `Point` decimal(18, 2) NULL DEFAULT NULL,
-  `JobId` int(0) NULL DEFAULT NULL,
-  `Created_At` timestamp(0) NULL DEFAULT NULL,
+  `JobId` int NULL DEFAULT NULL,
+  `Created_At` timestamp NULL DEFAULT NULL,
   `rfToken` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Telephone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `OTP` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -225,16 +255,16 @@ CREATE TABLE `users`  (
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`UsersId`) USING BTREE,
   INDEX `Jobid`(`JobId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'admin@gmail.com', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Admin', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 1, '2021-01-31 10:00:00', 'NeoElRW2FWPYvXqVoeIe3bZqPa1OR1cc', NULL, NULL, b'1', 1);
-INSERT INTO `users` VALUES (2, 'nndkhoa@fit.hcmus.edu.vn', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Ngô Ngọc Đăng Khoa', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 3, '2021-01-31 10:00:00', '0qKr4OrSkc7bGn2XXBSMo3v0XeIPQzuq', NULL, '985223', b'1', 1);
-INSERT INTO `users` VALUES (3, 'hmbt93@gmail.com', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Hà Minh Bảo Toàn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 3, '2021-01-31 10:00:00', 'N78VfiNDGnlCey1H8mvHzigPpjvx1Z5n', '0327247666', '173097', b'1', 1);
-INSERT INTO `users` VALUES (4, 'fenghuang140698@gmail.com', '$2a$04$Nc8gKRA3SN.Bpe7kU6CJuu1CGTbqXOMV6QLXZGCBqVL4nxvxKUKm6', 'Phong Huỳnh', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 2, '2021-02-23 11:11:35', 'XCbxPcSyoh7mkHU5FkUaT3Y9oscFOXvQ', '0458582446', '985223', b'1', 1);
-INSERT INTO `users` VALUES (5, 'nguyenoanh190598@gmail.com', '$2a$04$otACfO83i7G3DakZgKmbZOe0ftVx/uc4PlgYQUPCfjBpCIaCUnNmm', 'Oanh Nguyễn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 2, '2021-02-23 11:12:24', 'e3RbqqcmqgElX1qotb7Y8j8EidRl1LOx', '0324755444', '193611', b'1', 1);
-INSERT INTO `users` VALUES (7, 'hmbt9933@gmail.com', '$2a$04$TPZzJ/SxdXoJ/ONtm8l.jeF4mgaajkGzq1y/0aD7l8TvCFsESuRRq', 'Bảo Toàn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', 0.00, 2, '2021-02-24 19:28:26', 'zu3Rm6VBjUURqWz6g0QaY1uKol01pFax', NULL, '047525', b'1', 1);
+INSERT INTO `users` VALUES (1, 'admin@gmail.com', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Admin', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 1, '2021-01-31 10:00:00', 'NeoElRW2FWPYvXqVoeIe3bZqPa1OR1cc', NULL, NULL, b'1', 1);
+INSERT INTO `users` VALUES (2, 'nndkhoa@fit.hcmus.edu.vn', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Ngô Ngọc Đăng Khoa', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 3, '2021-01-31 10:00:00', '0qKr4OrSkc7bGn2XXBSMo3v0XeIPQzuq', NULL, '985223', b'1', 1);
+INSERT INTO `users` VALUES (3, 'hmbt93@gmail.com', '$2a$04$iKtF44brw0HVA19d9KsPh.lg3Ma4uv1jiV20Sr.r7VUmGMucaG8pa', 'Hà Minh Bảo Toàn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 3, '2021-01-31 10:00:00', 'xHSAfD9vqku2anT4Td3G2lckexngAKrW', '0327247666', '173097', b'1', 1);
+INSERT INTO `users` VALUES (4, 'fenghuang140698@gmail.com', '$2a$04$Nc8gKRA3SN.Bpe7kU6CJuu1CGTbqXOMV6QLXZGCBqVL4nxvxKUKm6', 'Phong Huỳnh', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 2, '2021-02-23 11:11:35', 'XCbxPcSyoh7mkHU5FkUaT3Y9oscFOXvQ', '0458582446', '985223', b'1', 1);
+INSERT INTO `users` VALUES (5, 'nguyenoanh190598@gmail.com', '$2a$04$otACfO83i7G3DakZgKmbZOe0ftVx/uc4PlgYQUPCfjBpCIaCUnNmm', 'Oanh Nguyễn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 2, '2021-02-23 11:12:24', 'e3RbqqcmqgElX1qotb7Y8j8EidRl1LOx', '0324755444', '193611', b'1', 1);
+INSERT INTO `users` VALUES (7, 'hmbt9933@gmail.com', '$2a$04$TPZzJ/SxdXoJ/ONtm8l.jeF4mgaajkGzq1y/0aD7l8TvCFsESuRRq', 'Bảo Toàn', 'iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAA3NCSVQICAjb4U/gAAAABmJLR0QAXABrAMDbRn/EAAACS0lEQVR4nO3csU8TYRjH8au11MNa2wZpSKpFA1oDBjYHHWAQFuKuYTFx8y8zOpjCAEwMDhpjooOb2FIwtYQA1gLh4Hou5M1BIL9J3tfk+9meu+XJN71rem2amH217OF8l2wv4DoCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgQQCCQQSCCQQSLhse4Fj4yOFdDppxtX1zq+NfYv7GK4EevHsbiGXNmN1sfFmrmZxH4NLTCCQQCCBQAKBBGvvYg/u56cnSmb0r5zYZLSSL5cyZvxea79bWL245WKsBerv88dGCuedvVO+Fh/DbvTvNzobl5hAIMHaJbZSb1cXG2aceDSQzaTM+OnLZrO1Z8b15u6FLhdjLVB9rVNf65jx8cNi/GyztcdHjf8DgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJDgSqAwPPHUOZVyZTFX9giCbnws3vBtbXKKK4G2fx/Ex8pQ7tQzRltc+XXHSv3PaCVvxl4/+fL5vadT5YMgzGV7Xld/vP/YsrKYK6+gt/O1nXYQP5JMJgaK/uDNTO56z9Bg1tZirgTyPG9uqXF42D3zlMVbkiuXmOd5S8s/wzCaeXKrr5COH48i7+jI2jerCQf/YGl6sjR8O5u5moqiaKcdfP229eHzhq1lXAzkFIfuQW4ikEAggUACgQQCCQQSCCQQSCCQQCCBQAKBBAIJBBIIJBBIIJBAIIFAAoEEAgkEEggkEEggkEAggUACgYS/npxtggFqo7oAAAAASUVORK5CYII=', NULL, 0.00, 2, '2021-02-24 19:28:26', '5B1fzXQteqKVJkNEDmcHTzgGrwZb18Gd', NULL, '047525', b'1', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -53,10 +53,10 @@ const HeaderCustomize = () => {
         </Menu.Item>
       )}
       {userJobId === 2 && (
-          <h6 className='text-center text-black-50' >Sinh Viên</h6>
+        <h6 className="text-center text-black-50 mt-2">Sinh Viên</h6>
       )}
-       {userJobId === 3 && (
-          <h6 className='text-center'>Giảng Viên</h6>
+      {userJobId === 3 && (
+        <h6 className="text-center text-black-50 mt-2">Giảng Viên</h6>
       )}
       <Menu.Item>
         <Link to="/profile">
@@ -66,6 +66,16 @@ const HeaderCustomize = () => {
           </h6>
         </Link>
       </Menu.Item>
+      {userJobId === 3 && (
+        <Menu.Item>
+          <Link to="/manager/course">
+            <h6>
+              <i className="fa fa-bars mr-1" />
+              Quản Lý 
+            </h6>
+          </Link>
+        </Menu.Item>
+      )}
       <Menu.Item>
         <Link to="/" onClick={logOut}>
           <h6>

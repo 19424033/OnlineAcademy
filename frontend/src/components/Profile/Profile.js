@@ -9,12 +9,23 @@ import ChangeProfileUser from "./Handle/ChangeProfileUser";
 import ChangePassword from "./Handle/ChangePassword";
 import FavorCourse from "./Handle/FavorCourse";
 import RegisteredCourse from "./Handle/RegisteredCourse";
+import InfoTeacher from "./Handle/InfoTeacher";
+
+
 const Profile = () => {
   const { userid, nameUser, imageUser, userJobId } = useContext(AppContext);
   const [userEmail, setUserEmail] = useState("");
-  const [render, setRender] = useState("FavorCourse");
+  const [render, setRender] = useState("");
 
   useEffect(() => {
+    if (userJobId === 2) {
+      setRender("FavorCourse");
+    } 
+    if (userJobId === 3) {
+      setRender("InfoTeacher");
+    } else {
+      setRender("ChangeProfileUser");
+    }
     AuthService()
       .getProfile({
         userId: userid,
@@ -28,7 +39,7 @@ const Profile = () => {
     <div class="page-content">
       <div className="content-block">
         <div className="section-area section-sp1">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="profile-bx text-center">
@@ -46,7 +57,11 @@ const Profile = () => {
                         <>
                           <li className="nav-item">
                             <Link
-                              className="nav-link active"
+                              className={
+                                render === "FavorCourse"
+                                  ? `nav-link active `
+                                  : `nav-link`
+                              }
                               data-toggle="tab"
                               onClick={() => setRender("FavorCourse")}
                             >
@@ -56,7 +71,11 @@ const Profile = () => {
                           </li>
                           <li className="nav-item">
                             <Link
-                              className="nav-link"
+                              className={
+                                render === "RegisteredCourse"
+                                  ? `nav-link active `
+                                  : `nav-link`
+                              }
                               data-toggle="tab"
                               onClick={() => setRender("RegisteredCourse")}
                             >
@@ -70,29 +89,27 @@ const Profile = () => {
                         <>
                           <li className="nav-item">
                             <Link
-                              className="nav-link active"
+                              className={
+                                render === "InfoTeacher"
+                                  ? `nav-link active `
+                                  : `nav-link`
+                              }
                               data-toggle="tab"
-                              // onClick={openCourses}
+                              onClick={() => setRender("InfoTeacher")}
                             >
                               <i className="ti-book"></i>
-                              Tạo khóa học
-                            </Link>
-                          </li>
-                          <li className="nav-item">
-                            <Link
-                              className="nav-link "
-                              data-toggle="tab"
-                              // onClick={openCourses}
-                            >
-                              <i className="ti-book"></i>
-                              Tạo khóa học
+                              Thông Tin Giảng Viên
                             </Link>
                           </li>
                         </>
                       )}
                       <li className="nav-item">
                         <Link
-                          className="nav-link"
+                          className={
+                            render === "ChangeProfileUser"
+                              ? `nav-link active `
+                              : `nav-link`
+                          }
                           data-toggle="tab"
                           onClick={() => setRender("ChangeProfileUser")}
                         >
@@ -102,7 +119,11 @@ const Profile = () => {
                       </li>
                       <li className="nav-item">
                         <Link
-                          className="nav-link"
+                          className={
+                            render === "ChangePassword"
+                              ? `nav-link active `
+                              : `nav-link`
+                          }
                           data-toggle="tab"
                           onClick={() => setRender("ChangePassword")}
                         >
@@ -122,6 +143,9 @@ const Profile = () => {
                     )}
                     {userJobId === 2 && render === "RegisteredCourse" && (
                       <RegisteredCourse />
+                    )}
+                     {userJobId === 3 && render === "InfoTeacher" && (
+                      <InfoTeacher />
                     )}
                     {render === "ChangeProfileUser" && (
                       <ChangeProfileUser setUserEmail={setUserEmail} />

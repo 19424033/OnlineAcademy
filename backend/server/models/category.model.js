@@ -23,7 +23,18 @@ module.exports = {
     }
     return category[0];
   },
-
+  async ByUserID(usersid) {
+      
+    return db({ a: 'category', b: 'categorygroup', c: 'users' })
+    .select('a.*',{
+      categoryImage: 'a.Image',
+      categorygroupImage: 'b.Image',
+      NameTeacher: 'c.DislayName',
+      CategoryGroupName:'b.CategoryGroupName'
+    })
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
+    .where('c.usersid', usersid);
+  },
   async add(category) {
     const ids = await db("category").insert(category);
     return ids[0];

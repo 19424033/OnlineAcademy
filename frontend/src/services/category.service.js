@@ -11,6 +11,9 @@ export default function UserService() {
 
   const getAllCategory = () => {
     return axios.get(`${API_URL}`, { headers: authHeader(accessToken) });
+  }; 
+  const getSingleCategory = (id) => {
+    return axios.get(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
   };
   const addCategory = (values) => {
     return axios.post(`${API_URL}`,values, { headers: authHeader(accessToken) });
@@ -21,11 +24,15 @@ export default function UserService() {
   const deleteSingleCatagory = (id) => {
     return axios.delete(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
   };
- 
+  const getCatagorybyUserID = (id) => {
+    return axios.get(`${API_URL}/byUser/${id}`, { headers: authHeader(accessToken) });
+  };
   return {
     getAllCategory,
     addCategory,
     deleteSingleCatagory,
     setSingleCategory,
+    getCatagorybyUserID,
+    getSingleCategory
   };
 }

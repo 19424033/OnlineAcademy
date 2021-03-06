@@ -19,12 +19,12 @@ import Error from "./components/Error/Error";
 import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
-import Courses from "./containers/Courses/Courses";
+import Courses from "./containers/User/Teacher/Category";
 import CoursesDetail from "./containers/CoursesDetail/CoursesDetail";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
 import ManagerCategoriesGroup from "./containers/Admin/CategoriesGroup/ManagerCategoriesGroup";
-
+import Detail from './containers/User/Teacher/Category_Detail/Detail'
 //layout
 import Default from "./containers/Layout/Default";
 import Auth from "./containers/Layout/Auth";
@@ -122,7 +122,7 @@ const App = () => {
               component={Profile}
               exact
             />
-             <AppRoute
+            <AppRoute
               path="/courses"
               layout={Default}
               component={Courses}
@@ -135,7 +135,16 @@ const App = () => {
               component={CoursesDetail}
               exact
             />
-            
+
+             {/* teacher */}
+            {userJobId === 3 && (
+              <AppRoute
+                path="/courses-edit/:CategoryID"
+                layout={Default}
+                component={Detail}
+                exact
+              />
+            )}
             {userJobId === 1 && (
               <>
                 <AppRoute
@@ -159,6 +168,16 @@ const App = () => {
               </>
             )}
 
+            {userJobId === 3 && (
+              <>
+                <AppRoute
+                  path="/manager/course"
+                  layout={Default}
+                  component={Courses}
+                  exact
+                />
+              </>
+            )}
             {/* <AppRoute path="/error" layout={Default} component={Error} exact />
             <Redirect to="/error" /> */}
           </Switch>
@@ -209,7 +228,6 @@ const App = () => {
               component={CoursesDetail}
               exact
             />
-
 
             <AppRoute path="/login" layout={Auth} component={Login} exact />
             <AppRoute
