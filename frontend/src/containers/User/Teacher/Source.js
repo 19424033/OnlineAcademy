@@ -1,50 +1,12 @@
-import { List, Rate, Button, notification } from "antd";
+import { List, Rate, Button, notification, Typography } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
-import { EyeInvisibleOutlined, EyeFilled } from "@ant-design/icons";
 import { formatMoney } from "../../../utils/utils";
-import CategoryService from "../../../services/category.service";
+const { Text } = Typography;
 
-const Source = ({ datasource, APIgetCategoryByUserID }) => {
-    console.log(datasource)
-  const handleProduct = (category, setEnable, setDisable, upDatecategory) => {
-    if (setEnable === true) {
-      CategoryService()
-        .setSingleCategory(category.CategoryId, {
-          IsActive: 1,
-        })
-        .then((response) => {
-          notification.success({
-            message: "Hoàn Tất",
-            description: "Bạn đã sửa thành công",
-            placement: "bottomLeft",
-          });
-          APIgetCategoryByUserID();
-        })
-        .catch(function (error) {
-          console.log("ERROR from server:", error);
-        });
-    }
-    if (setDisable === true) {
-      CategoryService()
-        .setSingleCategory(category.CategoryId, {
-          IsActive: 0,
-        })
-        .then((response) => {
-          notification.success({
-            message: "Hoàn Tất",
-            description: "Bạn đã sửa thành công",
-            placement: "bottomLeft",
-          });
-          APIgetCategoryByUserID();
-        })
-        .catch(function (error) {
-          console.log("ERROR from server:", error);
-        });
-    }
-    if (upDatecategory === true) {
-    }
-  };
+const Source = ({ datasource }) => {
+  console.log(datasource);
+
   return (
     <List
       itemLayout="vertical"
@@ -69,7 +31,17 @@ const Source = ({ datasource, APIgetCategoryByUserID }) => {
                 >
                   {item.CategoryName}
                 </Link>
+                
               </h4>
+              {item.Completed ? (
+                  <Text type="success" className="h4">
+                    Hoàn Tất
+                  </Text>
+                ) : (
+                  <Text type="warning" className="h4">
+                    Chưa Hoàn Tất
+                  </Text>
+                )}
             </div>
             <div className="card-courses-list-bx">
               <ul className="card-courses-view">
@@ -97,25 +69,6 @@ const Source = ({ datasource, APIgetCategoryByUserID }) => {
                 <li className="card-courses-price">
                   <del>{formatMoney(item.Price)}</del>
                   <h5 className="text-primary">{formatMoney(item.Price)}</h5>
-                </li>
-                <li>
-                  {item.IsActive ? (
-                    <Button
-                      type="primary"
-                      className="mx-2"
-                      shape="round"
-                      onClick={() => handleProduct(item, false, true, false)}
-                      icon={<EyeFilled />}
-                    />
-                  ) : (
-                    <Button
-                      type="default"
-                      className="mx-2"
-                      shape="round"
-                      onClick={() => handleProduct(item, true, false, false)}
-                      icon={<EyeInvisibleOutlined />}
-                    />
-                  )}
                 </li>
               </ul>
             </div>

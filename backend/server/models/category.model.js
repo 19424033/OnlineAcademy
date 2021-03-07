@@ -13,15 +13,24 @@ module.exports = {
       NameTeacher: 'c.DislayName',
       CategoryGroupName:'b.CategoryGroupName'
     })
-    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryGroupId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
 
   },
   async single(CategoryId) {
-    const category = await db("category").where("CategoryId", CategoryId);
+     const category = await db({ a: 'category', b: 'categorygroup'})
+    .select('a.*',{
+      categoryImage: 'a.Image',
+      categorygroupImage: 'b.Image',
+      CategoryGroupName:'b.CategoryGroupName'
+    })
+    .whereRaw('?? = ?? ', ['a.CategoryGroupId', 'b.CategoryGroupId'])
+    .where('a.CategoryId', CategoryId);
     if (category.length === 0) {
       return null;
     }
     return category[0];
+
+    return 
   },
   async ByUserID(usersid) {
       
@@ -32,7 +41,7 @@ module.exports = {
       NameTeacher: 'c.DislayName',
       CategoryGroupName:'b.CategoryGroupName'
     })
-    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryGroupId', 'b.CategoryGroupId','c.UsersID','a.TeacherID'])
     .where('c.usersid', usersid);
   },
   async add(category) {

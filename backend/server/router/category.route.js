@@ -51,7 +51,16 @@ router.get("/byUser/:id", async function (req, res) {
 router.put("/:id", async function (req, res) {
   const id = req.params.id;
   const values = req.body;
-
+  if (values.Image) {
+    if (values.Change === false) {
+    } else {
+      cloudinary.uploader.upload(values.Image, function (err, res) {
+        values.Image = res.url;
+      });
+    }
+  } else {
+  }
+  delete values.Change;
   await categoryModel.update(id, values);
   res.status(200).json({
     message: "update success",

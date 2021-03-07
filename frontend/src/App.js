@@ -24,7 +24,7 @@ import CoursesDetail from "./containers/CoursesDetail/CoursesDetail";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
 import ManagerCategoriesGroup from "./containers/Admin/CategoriesGroup/ManagerCategoriesGroup";
-import Detail from './containers/User/Teacher/Category_Detail/Detail'
+import Detail from "./containers/User/Teacher/Category_Detail/Detail";
 //layout
 import Default from "./containers/Layout/Default";
 import Auth from "./containers/Layout/Auth";
@@ -122,12 +122,6 @@ const App = () => {
               component={Profile}
               exact
             />
-            <AppRoute
-              path="/courses"
-              layout={Default}
-              component={Courses}
-              exact
-            />
 
             <AppRoute
               path="/courses/:CategoryId"
@@ -136,14 +130,23 @@ const App = () => {
               exact
             />
 
-             {/* teacher */}
+            {/* teacher */}
+
             {userJobId === 3 && (
-              <AppRoute
-                path="/courses-edit/:CategoryID"
-                layout={Default}
-                component={Detail}
-                exact
-              />
+              <>
+                <AppRoute
+                  path="/courses-edit/:CategoryID"
+                  layout={Default}
+                  component={Detail}
+                  exact
+                />
+                <AppRoute
+                  path="/manager/course"
+                  layout={Default}
+                  component={Courses}
+                  exact
+                />
+              </>
             )}
             {userJobId === 1 && (
               <>
@@ -168,16 +171,6 @@ const App = () => {
               </>
             )}
 
-            {userJobId === 3 && (
-              <>
-                <AppRoute
-                  path="/manager/course"
-                  layout={Default}
-                  component={Courses}
-                  exact
-                />
-              </>
-            )}
             {/* <AppRoute path="/error" layout={Default} component={Error} exact />
             <Redirect to="/error" /> */}
           </Switch>
@@ -216,12 +209,7 @@ const App = () => {
               component={HomePage}
               exact
             />
-            <AppRoute
-              path="/courses"
-              layout={Default}
-              component={Courses}
-              exact
-            />
+
             <AppRoute
               path="/courses/:CategoryId"
               layout={Default}

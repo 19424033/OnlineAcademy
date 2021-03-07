@@ -21,8 +21,8 @@ const Courses = () => {
       .getCatagorybyUserID(userid)
       .then(
         (response) => {
-          setdatasource(response.data);
-          console.log(response.data);
+          const temp = response.data.filter((item) => item.IsActive === 1);
+          setdatasource(temp);
         },
         (error) => {}
       );

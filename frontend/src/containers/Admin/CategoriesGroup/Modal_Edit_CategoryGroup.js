@@ -46,7 +46,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
           rules={[
             {
               required: true,
-              message: "Please input your E-mail!",
+              message: "Please input your ...",
             },
           ]}
         >
