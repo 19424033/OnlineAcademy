@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
+// UserService from "../../services/user.service";
 
 import ChangeProfileUser from "./Handle/ChangeProfileUser";
 import ChangePassword from "./Handle/ChangePassword";

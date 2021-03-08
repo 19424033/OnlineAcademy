@@ -1,26 +1,27 @@
 import { useContext } from "react";
-import { Input, Avatar, Dropdown, Menu, notification } from "antd";
+import { //Input,
+        Avatar, Dropdown, Menu, notification } from "antd";
 import { Link } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken } from "../../utils/utils";
 
-const { Search } = Input;
+//const { Search } = Input;
 
 const HeaderCustomize = () => {
   const {
     nameUser,
     imageUser,
-    setnameUser,
-    saveToken,
+    //setnameUser,
+    //saveToken,
     checkLocalStorage,
-    setCheckLocalStorage,
-    setCheckOTPConfim,
+    //setCheckLocalStorage,
+    //setCheckOTPConfim,
     logOut,
     userid,
     userJobId,
-    setUserJobId,
+    //setUserJobId,
     setProfile,
   } = useContext(AppContext);
   const profileUser = () => {
@@ -34,11 +35,11 @@ const HeaderCustomize = () => {
         setProfile(data.data.user[0]);
       });
   };
-  const onSearch = (value) => console.log(value);
-  const firstCharacter = (x) => {
-    if (x) return x[0].toUpperCase();
-    return x;
-  };
+  // const onSearch = (value) => console.log(value);
+  // const firstCharacter = (x) => {
+  //   if (x) return x[0].toUpperCase();
+  //   return x;
+  // };
 
   const menu = (
     <Menu style={{ width: 180 }} className="mt-3 px-2">

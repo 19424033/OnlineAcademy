@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect,
+  //Route,
+  //Redirect,
 } from "react-router-dom";
 
 import "antd/dist/antd.css";
@@ -15,11 +15,12 @@ import AppRoute from "./AppRoute";
 import HomePage from "./components/HomePage/Homepage";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import Error from "./components/Error/Error";
+//import Error from "./components/Error/Error";
 import OTP from "./components/OTPComfirm/OTP";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Profile from "./components/Profile/Profile";
 import Courses from "./containers/User/Teacher/Category";
+import Category from "./containers/Courses/Courses";
 import CoursesDetail from "./containers/CoursesDetail/CoursesDetail";
 import ManagerUser from "./containers/Admin/User/ManagerUser";
 import ManagerSource from "./containers/Admin/Source/ManagerSource";
@@ -40,7 +41,7 @@ const App = () => {
   const [imageUser, setimageUser] = useState(undefined);
 
   const [profile, setProfile] = useState(undefined);
-  const [userid, setUserid] = useState(undefined);
+  const [userid, setUserid] = useState(0);
   const [userJobId, setUserJobId] = useState(0);
 
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
@@ -57,6 +58,7 @@ const App = () => {
     setCheckOTPConfim();
     setUserJobId(0);
     AuthService().logout();
+    setUserid(0);
   };
 
   useEffect(() => {
@@ -127,6 +129,13 @@ const App = () => {
               path="/courses/:CategoryId"
               layout={Default}
               component={CoursesDetail}
+              exact
+            />
+
+            <AppRoute
+              path="/courses"
+              layout={Default}
+              component={Category}
               exact
             />
 
@@ -214,6 +223,13 @@ const App = () => {
               path="/courses/:CategoryId"
               layout={Default}
               component={CoursesDetail}
+              exact
+            />
+
+            <AppRoute
+              path="/courses"
+              layout={Default}
+              component={Category}
               exact
             />
 

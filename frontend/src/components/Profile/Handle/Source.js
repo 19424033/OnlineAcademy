@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import { List, Rate, Button } from "antd";
-import { EyeInvisibleOutlined, EyeFilled } from "@ant-design/icons";
+import { List, Rate } from "antd";
 import { formatMoney } from "../../../utils/utils";
 import CategoryService from "../../../services/category.service";
 import { AppContext } from "../../../utils/AppContext";

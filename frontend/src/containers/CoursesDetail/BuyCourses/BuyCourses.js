@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  Link
-} from "react-router-dom";
-import axios from "axios";
+import React from "react";
 
 const BuyCourses = (props) => {
 
@@ -21,7 +17,7 @@ const BuyCourses = (props) => {
           }
         </div>	
         <div className="course-buy-now text-center">
-          <a className="btn radius-xl text-uppercase">Đăng Ký Khóa Học</a>
+          <a className="btn radius-xl text-uppercase" >Đăng Ký Khóa Học</a>
         </div>
         <div className="teacher-bx">
           <div className="teacher-info">

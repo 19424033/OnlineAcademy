@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import Slide from "./Slide/Slide"
 import PageYTN from "./Page/PageYTN"
 import PageXNN from "./Page/PageXNN"

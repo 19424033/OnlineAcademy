@@ -1,35 +1,46 @@
 import React, { useState, useEffect } from "react";
-import {
-    useParams,
-    Link
-} from "react-router-dom";
 import axios from "axios";
-import { Rate } from 'antd';
 import ReactHtmlParser from 'react-html-parser';
+import { Player } from 'video-react';
+import Swal from  'sweetalert2'
 
 
 const Detail = (props) => {
         
-    let { CategoryId } = useParams();
-
     const [rate, setRate] = useState(0);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:4000/api/courses/ratedetail/${ props.id }`)
         .then((response) => {
             setRate(response.data);
         })
+        axios.get(`http://localhost:4000/api/courses/products/${ props.id }`)
+        .then((response) => {
+            setProducts(response.data);
+       })    
     },[]);
 
     const quanRate = [rate.Rate1, rate.Rate2, rate.Rate3, rate.Rate4, rate.Rate5];
 
+    function handleClickNumberNo(product) {
+        if(!product.Public) {
+            if(props.categories.IsRes == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Username hoặc mật khẩu chưa đúng !!!',
+                })
+            }
+        } 
+    }
+
     return (
-        <div className="col-lg-9 col-md-8 col-sm-12">
+        <div>
             {/* Image, Note, CategoryName */}
 
             <div className="courses-post">
                 <div className="ttr-post-media media-effect">
-                    <a href="#"><img src= { props.categories.Image } /></a>
+                    <img src= { props.categories.Image } />
                 </div>
                 <div className="ttr-post-info">
                     <div className="ttr-post-title ">
@@ -45,14 +56,33 @@ const Detail = (props) => {
 
             <div className="courese-overview m-b20" > 
                 <h4>Lợi ích từ khóa học</h4> 
-                { ReactHtmlParser( props.categories.Remark) }             
-                {/* <p> { props.categories.Remark } </p> */}
+                <ul className="list-checked primary">
+                    { ReactHtmlParser( props.categories.Remark) }   
+                </ul>          
             </div>
 
             {/* Nội dung bài học */}
 
             <div className="m-b20">
                 <h4>Bài học</h4>
+                {
+                    products.map( i => 
+                    <div className="panel">      
+                        <div className="ttr-sidebar-navi">
+                            <a onClick={ () => handleClickNumberNo(i)} data-toggle="collapse" href = {`#${i.ProductId}` } className="ttr-material-button" data-parent= {`#${i.ProductId}` }>
+                                <span className="ttr-icon"> { i.Public ? <i className="fa fa-book" /> : props.categories.IsRes ? <i className="fa fa-book" /> : <i className="fa fa-lock"  /> } </span>
+                                <span className="ttr-label">{ `Bài ${i.NumberNo < 10 ? '0'+i.NumberNo : i.NumberNo }: ${i.ProductName}` }</span>
+                                <span className="ttr-arrow-icon"><i className="fa fa-angle-down" /></span>
+                            </a>
+                        </div>
+                        <div id=  { i.Public ? i.ProductId : props.categories.IsRes ? i.ProductId : "lock" }  className="acod-body collapse">
+                            <Player>
+                                <source src= { i.Video }/>
+                            </Player>
+                        </div>
+                    </div>
+                    )
+                }
             </div>
 
             {/* Thông tin giảng viên */}

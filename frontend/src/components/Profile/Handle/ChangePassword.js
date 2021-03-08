@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Form, Input, Button, Alert, message } from "antd";
+import React, { useState, useContext } from "react";
+import { Form, Input, Alert } from "antd";
 
 import { AppContext } from "../../../utils/AppContext";
 
 import AuthService from "../../../services/auth.service";
 
 const ChangePassword = ({ userEmail }) => {
-  const { userid } = useContext(AppContext);
+  //const { userid } = useContext(AppContext);
   const [form] = Form.useForm();
   const [labelText, setLabelText] = useState("");
 
