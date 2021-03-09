@@ -5,22 +5,25 @@ const { cloudinary } = require('../../server/utils/cloudinary');
 const router = express.Router();
 
 
-router.get('/:id', async function (req, res) {
+router.get('/category/:id/:userid', async function (req, res) {
   const id = req.params.id || 0;
-  const categories = await categoryModel.getCategory(id);
+  const userid = parseInt(req.params.userid || 0);
+  const categories = await categoryModel.getCategory(id, userid);
   if (categories === null) {
     return res.status(204).end();
   }
   res.json(categories);
 }); 
 
-router.get('/ratedetail/:id', async function (req, res) {
+router.put('/products/:id/:quanview', async function (req, res) {
   const id = req.params.id || 0;
-  const categories = await categoryModel.getQuanRateValue(id);
-  if (categories === null) {
+  const quanview = req.params.quanview || 0;
+  const products = await categoryModel.updateProductView(id,quanview);
+  if (products === null) {
     return res.status(204).end();
   }
-  res.json(categories);
+  res.json(products);
 }); 
+
 
 module.exports = router;

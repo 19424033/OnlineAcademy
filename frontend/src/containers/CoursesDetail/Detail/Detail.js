@@ -7,29 +7,27 @@ import Swal from  'sweetalert2'
 
 const Detail = (props) => {
         
-    const [rate, setRate] = useState(0);
-    const [products, setProducts] = useState([]);
+    const productView = [];
+    const products = props.products;
 
-    useEffect(() => {
-        axios.get(`http://localhost:4000/api/courses/ratedetail/${ props.id }`)
-        .then((response) => {
-            setRate(response.data);
-        })
-        axios.get(`http://localhost:4000/api/courses/products/${ props.id }`)
-        .then((response) => {
-            setProducts(response.data);
-       })    
-    },[]);
-
-    const quanRate = [rate.Rate1, rate.Rate2, rate.Rate3, rate.Rate4, rate.Rate5];
+    const quanRate = [props.categories.Rate1, props.categories.Rate2, props.categories.Rate3, props.categories.Rate4, props.categories.Rate5];
 
     function handleClickNumberNo(product) {
         if(!product.Public) {
             if(props.categories.IsRes == 0) {
-                Swal.fire({
-                    icon: 'error',
-                    text: 'Username hoặc mật khẩu chưa đúng !!!',
-                })
+                Swal.fire(
+                    'Yêu cầu sở hữu khóa học',
+                    'Vui lòng sở hữu khóa học để xem nội này'
+                )
+            }
+        }
+        else {
+            console.log(product);
+            if(productView.indexOf(product.CategoryId) < 0 ) {
+                axios.put(`http://localhost:4000/api/courses/products/${ product.CategoryId }/${ product.Viewer + 1}`)
+                .then((response) => {
+                    productView.push(product.CategoryId);
+               })  
             }
         } 
     }

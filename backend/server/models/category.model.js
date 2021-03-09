@@ -93,10 +93,15 @@ module.exports = {
         this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
+
     })
+    .leftJoin(db('product')
+              .sum('Viewer as TotalView')
+              .where('CategoryId',CategoryId)
+              .andWhere('IsActive',true).as('Total') ,0, 0 )
     .where('category.isActive',true)
     .limit(5)
-    .orderBy("Rate","desc");
+    .orderBy("Total.TotalView","desc");
   },
 
   async moinhat() {
@@ -133,38 +138,34 @@ module.exports = {
     .orderBy("Quanres","desc");
   },
 
-  async getCategory(CategoryId) {
+  async getCategory(CategoryId, UsersId) {
     var date = new Date();
     const category = await db.select('category.*'
                                       ,'categorygroup.CategoryGroupName'
                                       ,'users.Image as Ava'
                                       ,'users.DislayName'
                                       ,'users.TeacherNote'
-                                      ,'discount.value')
+                                      ,'discount.value'
+                                      ,'R1.Rate1', 'R2.Rate2', 'R3.Rate3' , 'R4.Rate4' , 'R5.Rate5'
+                                      ,db.raw("R1.Rate1 + R2.Rate2 + R3.Rate3 + R4.Rate4 + R5.Rate5 AS TotalRate") 
+                                      ,db.raw("CASE WHEN resdetail.UsersId is null THEN 0 ELSE 1 END AS IsRes") 
+                                      ,'product.*'
+                                    )
     .from('category')
-    .count('ratedetail.UsersId as TotalRate')
     .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
     .leftJoin('users','users.UsersId', 'category.Teacherid')
     .leftJoin('ratedetail','category.CategoryId', 'ratedetail.CategoryId')
+    .leftJoin('resdetail', function() {
+        this.on('resdetail.CategoryId', '=' , 'category.CategoryId')
+        this.andOn('resdetail.UsersId', '=' , UsersId)
+        this.andOn('resdetail.IsActive', '=', 1)
+    })
     .leftJoin('discount', function() {
         this.on('discount.CategoryId', '=', 'category.CategoryId')
         this.andOn('discount.isActive', '=', 1)
         this.andOn(date,'>=', 'discount.Fromdate')
         this.andOn(date,'<=', 'discount.Todate')
     })
-    .where('category.isActive',true)
-    .andWhere("category.CategoryId", CategoryId);
-    
-
-    if (category.length === 0) {
-      return null;
-    }
-    return category[0];
-  },
-
-  async getQuanRateValue(CategoryId) {
-    const category = await db().select('R1.Rate1', 'R2.Rate2', 'R3.Rate3' , 'R4.Rate4' , 'R5.Rate5')
-    .from('ratedetail')   
     .leftJoin(db('ratedetail')
               .count('RateValue as Rate1')
               .where('RateValue',1)
@@ -185,11 +186,23 @@ module.exports = {
               .count('RateValue as Rate5')
               .where('RateValue',5)
               .andWhere('CategoryId',CategoryId).as('R5') ,0, 0 )
-    .groupBy('CategoryId')
+    .leftJoin('product', function() {
+        this.on('product.CategoryId', '=', 'category.CategoryId')
+        this.andOn('product.IsActive', '=', 1)
+    })
+    .where('category.isActive',true)
+    .andWhere("category.CategoryId", CategoryId)
+    .groupBy('category.CategoryId', 'product.ProductId');
+    
+
     if (category.length === 0) {
       return null;
     }
-    return category[0];
+    return category;
+  },
+
+  updateProductView(id, quanview) {
+    return db("product").where("ProductId", id).update('Viewer', quanview);
   },
 
 };
