@@ -25,16 +25,13 @@ const responsive = {
     }
 };
 
-const PageDK = () => {
+const PageDK = (props) => {
 
-    const [categories, setCategories] = useState([]);
+    const categories = props.categories.slice();
 
-    useEffect(() => {
-    let url = "http://localhost:4000/api/home/dangky";
-    axios.get(url).then((res) => {
-        setCategories(res.data);
-    })
-    }, []);
+    categories.sort((a, b) => (a.QuanRes < b.QuanRes) ? 1 : -1)
+    categories.length = Math.min(categories.length, 10);
+
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

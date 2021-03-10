@@ -24,16 +24,12 @@ const responsive = {
     }
 };
 
-const PageYTN = (  ) => {
+const PageYTN = ( props ) => {
 
-    const [categories, setCategories] = useState([]);
+    const categories = props.categories.slice();
 
-    useEffect(() => {
-    let url = "http://localhost:4000/api/home/yeuthich";
-    axios.get(url).then((res) => {
-        setCategories(res.data);
-    })
-    }, []);
+    categories.sort((a, b) => (a.QuanLike < b.QuanLike) ? 1 : -1)
+    categories.length = Math.min(categories.length, 5);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

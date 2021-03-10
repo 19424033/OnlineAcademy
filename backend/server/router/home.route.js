@@ -3,23 +3,8 @@ const express = require("express");
 const categoryModel = require("../models/category.model");
 const router = express.Router();
 
-router.get("/yeuthich", async function (req, res) {
-    const list = await categoryModel.yeuthich();
-    res.json(list);
-});
-
-router.get("/luotxem", async function (req, res) {
-    const list = await categoryModel.luotxem();
-    res.json(list);
-});
-
-router.get("/dangky", async function (req, res) {
-    const list = await categoryModel.dangky();
-    res.json(list);
-});
-
-router.get("/moinhat", async function (req, res) {
-    const list = await categoryModel.moinhat();
+router.get("/showCategory", async function (req, res) {
+    const list = await categoryModel.showCategory();
     res.json(list);
 });
 

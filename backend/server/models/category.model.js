@@ -65,26 +65,11 @@ module.exports = {
     return category;
   },
 
-  async yeuthich() {
+  async showCategory() {
     var date = new Date();
-    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
-    .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
-    .leftJoin('users','users.UsersId', 'category.Teacherid')
-    .leftJoin('discount', function() {
-        this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.isActive', '=', 1)
-        this.andOn(date,'>=', 'discount.Fromdate')
-        this.andOn(date,'<=', 'discount.Todate')
-    })
-    .where('category.isActive',true)
-    .limit(5)
-    .orderBy("Rate","desc");
-  },
-
-  async luotxem() {
-    var date = new Date();
-    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
+    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value'
+                      , db.raw(`(SELECT CASE WHEN SUM(VIEWER) IS NULL THEN 0 ELSE SUM(VIEWER) END
+                                 From product Where product.CategoryId = category.CategoryId AND PRODUCT.ISACTIVE = 1) AS TotalView`)) 
     .from('category')
     .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
     .leftJoin('users','users.UsersId', 'category.Teacherid')
@@ -95,47 +80,7 @@ module.exports = {
         this.andOn(date,'<=', 'discount.Todate')
 
     })
-    .leftJoin(db('product')
-              .sum('Viewer as TotalView')
-              .where('CategoryId',CategoryId)
-              .andWhere('IsActive',true).as('Total') ,0, 0 )
-    .where('category.isActive',true)
-    .limit(5)
-    .orderBy("Total.TotalView","desc");
-  },
-
-  async moinhat() {
-    var date = new Date();
-    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
-    .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
-    .leftJoin('users','users.UsersId', 'category.Teacherid')
-    .leftJoin('discount', function() {
-        this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.isActive', '=', 1)
-        this.andOn(date,'>=', 'discount.Fromdate')
-        this.andOn(date,'<=', 'discount.Todate')
-    })
-    .where('category.isActive',true)
-    .limit(10)
-    .orderBy("Created_at","desc");
-  },
-
-  async dangky() {
-    var date = new Date();
-    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value')
-    .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
-    .leftJoin('users','users.UsersId', 'category.Teacherid')
-    .leftJoin('discount', function() {
-        this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.isActive', '=', 1)
-        this.andOn(date,'>=', 'discount.Fromdate')
-        this.andOn(date,'<=', 'discount.Todate')
-    })
-    .where('category.isActive',true)
-    .limit(10)
-    .orderBy("Quanres","desc");
+    .where('category.isActive',true);
   },
 
   async getCategory(CategoryId, UsersId) {

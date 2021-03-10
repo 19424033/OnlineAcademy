@@ -24,16 +24,14 @@ const responsive = {
     }
 };
 
-const PageXNN = ( ) => {
+const PageXNN = (props) => {
 
-    const [categories, setCategories] = useState([]);
+    const categories = props.categories.slice();
 
-    useEffect(() => {
-    let url = "http://localhost:4000/api/home/luotxem";
-    axios.get(url).then((res) => {
-        setCategories(res.data);
-    })
-    }, []);
+    categories.sort((a, b) => (a.TotalView < b.TotalView) ? 1 : -1)
+    categories.length = Math.min(categories.length, 10);
+
+    console.log(props.categories);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

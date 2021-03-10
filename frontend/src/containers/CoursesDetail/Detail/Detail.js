@@ -37,7 +37,8 @@ const Detail = (props) => {
             {/* Image, Note, CategoryName */}
 
             <div className="courses-post">
-                <div className="ttr-post-media media-effect">
+                {/* <div style={{ height: window.innerHeight-70, backgroundSize:'cover', backgroundImage:'URL('+ process.env.PUBLIC_URL + '/assets/images/slider/slide1.jpg)'}}/> */}
+                <div className="ttr-post-media media-effect" style={{}}>
                     <img src= { props.categories.Image } />
                 </div>
                 <div className="ttr-post-info">

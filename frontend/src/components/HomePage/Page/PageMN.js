@@ -24,16 +24,12 @@ const responsive = {
     }
 };
 
-const PageMN = ( ) => {
+const PageMN = ( props ) => {
+    
+    const categories = props.categories.slice();
 
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-    let url = "http://localhost:4000/api/home/moinhat";
-    axios.get(url).then((res) => {
-        setCategories(res.data);
-    })
-    }, []);
+    categories.sort((a, b) => (a.Created_At < b.Created_At) ? 1 : -1)
+    categories.length = Math.min(categories.length, 10);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

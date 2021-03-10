@@ -20,12 +20,13 @@ const Products = (props) => {
             <li><i className="fa fa-calendar" />: {moment(props.products.Create_At).format('DD/MM/yyyy') }</li>
             <li><i className="fa fa-user" />: {props.products.DislayName}</li>
           </ul>
-
         </div>
         
         <div className="cours-more-info" style={{background:'white'}}>
             <div style={{width:'50%', padding:'0px 5px'}}>
-            <span>Đăng Ký: { props.products.QuanRes } <i className="fa fa-user" /> </span> <br></br>
+              <span > <i className="fa fa-user" /> : { props.products.QuanRes } . </span> 
+              <span > <i className="fa fa-heart" /> : { props.products.QuanLike } . </span> 
+              <span > <i className="fa fa-eye" /> : { props.products.TotalView }  </span> 
               <Rate allowHalf disabled defaultValue={ props.products.Rate} /> { props.products.Rate }/5
             </div>
             <div className="price">
