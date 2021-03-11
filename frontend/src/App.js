@@ -126,14 +126,14 @@ const App = () => {
             />
 
             <AppRoute
-              path="/courses/:CategoryId"
+              path="courses/:CategoryGroup/:CategoryId"
               layout={Default}
               component={CoursesDetail}
               exact
             />
 
             <AppRoute
-              path="/courses"
+              path= {["/courses", "/courses/:CategoryGroup" ] }
               layout={Default}
               component={Category}
               exact
@@ -220,14 +220,14 @@ const App = () => {
             />
 
             <AppRoute
-              path="/courses/:CategoryId"
+              path="/courses/:CategoryGroup/:CategoryId"
               layout={Default}
               component={CoursesDetail}
               exact
             />
 
             <AppRoute
-              path="/courses"
+              path={["/courses", "/courses/:CategoryGroup" ] }
               layout={Default}
               component={Category}
               exact

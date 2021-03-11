@@ -1,5 +1,6 @@
 const express = require("express");
 const categoryModel = require("../models/category.model");
+const categorygroupModel = require("../models/categorygroup.model");
 const { cloudinary } = require('../../server/utils/cloudinary');
 
 const router = express.Router();
@@ -25,5 +26,13 @@ router.put('/products/:id/:quanview', async function (req, res) {
   res.json(products);
 }); 
 
+router.get('/categorygroup', async function (req, res) {
+  const id = req.params.id || 0;
+  const categorygroup = await categorygroupModel.all();
+  if (categorygroup === null) {
+    return res.status(204).end();
+  }
+  res.json(categorygroup);
+}); 
 
 module.exports = router;

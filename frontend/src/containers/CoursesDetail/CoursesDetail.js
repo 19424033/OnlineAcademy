@@ -4,7 +4,7 @@ import {
   useParams, Link
 } from "react-router-dom";
 import axios from "axios";
-
+import { Breadcrumb } from 'antd';
 import BuyCourses from "./BuyCourses/BuyCourses"
 import Detail from "./Detail/Detail"
 
@@ -29,17 +29,24 @@ const CoursesDetail = () => {
     },[]);
     return (
       <div className="page-content bg-white">
-        
         <div className="content-block">
           <div className="section-area section-sp1">
             <div className="container">
               <div className="breadcrumb-row">
                 <div className="container">
-                  <ul className="list-inline">
-                    <li><Link to ="/"> Trang Chủ </Link></li>
-                    <li><Link to ="/courses"> { categories.CategoryGroupName } </Link> </li>
-                    <li> { categories.CategoryName }</li>
-                  </ul>
+                  <div className="m-b20">
+                        <Breadcrumb>
+                            <Breadcrumb.Item>
+                                <Link to="/">Trang Chủ</Link>
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                              <Link to= {`/courses/${categories.CategoryGroupId}-${categories.CategoryGroupName}` }> { categories.CategoryGroupName } </Link>
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                              { categories.CategoryName } 
+                            </Breadcrumb.Item>
+                        </Breadcrumb>   
+                    </div>
                 </div>
               </div>
               <div className="row d-flex flex-row-reverse">

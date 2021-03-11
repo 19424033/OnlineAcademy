@@ -3,7 +3,8 @@ const db = require("../utils/db");
 module.exports = {
 
   all() {
-    return db("categorygroup");
+    return db("categorygroup")
+    .where('IsActive',true);
   },
   add(category) {
     return db("categorygroup").insert(category);
