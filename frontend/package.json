@@ -27,7 +27,9 @@
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
     "video-react": "^0.14.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "react-html-parser": "^2.0.2",
+    "sweetalert2": "^10.15.5"
   },
   "scripts": {
     "start": "react-scripts start",
