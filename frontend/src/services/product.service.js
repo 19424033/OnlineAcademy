@@ -16,9 +16,13 @@ export default function UserService() {
   const getProductByCategoryID = (id) => {
     return axios.get(`${API_URL}/byCategory/${id}`, { headers: authHeader(accessToken) });
   };
+
+  const setSingleProduct = (id, values) => {
+    return axios.put(`${API_URL}/${id}`, values, { headers: authHeader(accessToken) });
+  };
   return {
     getAllProduct,
     getProductByCategoryID,
-   
+    setSingleProduct,
   };
 }

@@ -293,7 +293,7 @@ const Teacher = () => {
         <Col span={12}>
           <Button
             className="float-right"
-            type="primary"
+            type="success"
             onClick={() => {
               setVisible(true);
             }}
