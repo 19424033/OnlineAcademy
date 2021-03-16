@@ -28,9 +28,7 @@ module.exports = {
     if (category.length === 0) {
       return null;
     }
-    return category[0];
-
-    return 
+    return category[0]; 
   },
   async ByUserID(usersid) {
       
@@ -65,89 +63,118 @@ module.exports = {
     return category;
   },
 
-  async showCategory() {
-    var date = new Date();
-    return db.select('category.*','categorygroup.CategoryGroupName','users.DislayName','discount.value'
-                      , db.raw(`(SELECT CASE WHEN SUM(VIEWER) IS NULL THEN 0 ELSE SUM(VIEWER) END
-                                 From product Where product.CategoryId = category.CategoryId AND PRODUCT.ISACTIVE = 1) AS TotalView`)) 
-    .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
-    .leftJoin('users','users.UsersId', 'category.Teacherid')
-    .leftJoin('discount', function() {
-        this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.isActive', '=', 1)
-        this.andOn(date,'>=', 'discount.Fromdate')
-        this.andOn(date,'<=', 'discount.Todate')
-
-    })
-    .where('category.isActive',true);
+  updateProductView(id, quanview) {
+    return db("product").where("ProductId", id).update('Viewer', quanview);
   },
 
+  // Chi tiết từng khóa học
   async getCategory(CategoryId, UsersId) {
     var date = new Date();
-    const category = await db.select('category.*'
-                                      ,'categorygroup.CategoryGroupName'
-                                      ,'users.Image as Ava'
-                                      ,'users.DislayName'
-                                      ,'users.TeacherNote'
-                                      ,'discount.value'
-                                      ,'R1.Rate1', 'R2.Rate2', 'R3.Rate3' , 'R4.Rate4' , 'R5.Rate5'
-                                      ,db.raw("R1.Rate1 + R2.Rate2 + R3.Rate3 + R4.Rate4 + R5.Rate5 AS TotalRate") 
-                                      ,db.raw("CASE WHEN resdetail.UsersId is null THEN 0 ELSE 1 END AS IsRes") 
-                                      ,'product.*'
-                                    )
-    .from('category')
-    .leftJoin('categorygroup','category.CategoryGroupId', 'categorygroup.CategoryGroupId')
-    .leftJoin('users','users.UsersId', 'category.Teacherid')
-    .leftJoin('ratedetail','category.CategoryId', 'ratedetail.CategoryId')
-    .leftJoin('resdetail', function() {
-        this.on('resdetail.CategoryId', '=' , 'category.CategoryId')
-        this.andOn('resdetail.UsersId', '=' , UsersId)
-        this.andOn('resdetail.IsActive', '=', 1)
-    })
-    .leftJoin('discount', function() {
-        this.on('discount.CategoryId', '=', 'category.CategoryId')
-        this.andOn('discount.isActive', '=', 1)
-        this.andOn(date,'>=', 'discount.Fromdate')
-        this.andOn(date,'<=', 'discount.Todate')
-    })
-    .leftJoin(db('ratedetail')
-              .count('RateValue as Rate1')
-              .where('RateValue',1)
-              .andWhere('CategoryId',CategoryId).as('R1') ,0, 0 )
-    .leftJoin(db('ratedetail')
-              .count('RateValue as Rate2')
-              .where('RateValue',2)
-              .andWhere('CategoryId',CategoryId).as('R2') ,0, 0 )
-    .leftJoin(db('ratedetail')
-              .count('RateValue as Rate3')
-              .where('RateValue',3)
-              .andWhere('CategoryId',CategoryId).as('R3') ,0, 0 )
-    .leftJoin(db('ratedetail')
-              .count('RateValue as Rate4')
-              .where('RateValue',4)
-              .andWhere('CategoryId',CategoryId).as('R4') ,0, 0 )
-    .leftJoin(db('ratedetail')
-              .count('RateValue as Rate5')
-              .where('RateValue',5)
-              .andWhere('CategoryId',CategoryId).as('R5') ,0, 0 )
-    .leftJoin('product', function() {
-        this.on('product.CategoryId', '=', 'category.CategoryId')
-        this.andOn('product.IsActive', '=', 1)
-    })
-    .where('category.isActive',true)
-    .andWhere("category.CategoryId", CategoryId)
-    .groupBy('category.CategoryId', 'product.ProductId');
-    
-
+    const category = await db.select(db.raw(` C.*
+                                            , P.*
+                                            , CG.CategoryGroupName
+                                            , U.Image AS Ava
+                                            , U.DislayName
+                                            , D.Value
+                                            , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
+                                            , SUM(CASE WHEN RAD.RATEVALUE = 1 THEN 1 ELSE 0 END) AS Rate1
+                                            , SUM(CASE WHEN RAD.RATEVALUE = 2 THEN 1 ELSE 0 END) AS Rate2
+                                            , SUM(CASE WHEN RAD.RATEVALUE = 3 THEN 1 ELSE 0 END) AS Rate3
+                                            , SUM(CASE WHEN RAD.RATEVALUE = 4 THEN 1 ELSE 0 END) AS Rate4
+                                            , SUM(CASE WHEN RAD.RATEVALUE = 5 THEN 1 ELSE 0 END) AS Rate5
+                                            , COUNT(RAD.ID) AS TotalRate
+                                            `))
+                              .from('CATEGORY AS C')
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (C.CATEGORYID = D.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .leftJoin(db.raw(`RESDETAIL AS RD ON C.CATEGORYID = RD.CATEGORYID
+                                                                AND RD.USERSID = ?
+                                                                AND RD.ISACTIVE = TRUE`, [ UsersId]))
+                              .leftJoin(db.raw(`PRODUCT AS P ON C.CATEGORYID = P.CATEGORYID
+                                                              AND P.ISACTIVE = TRUE`))
+                              .leftJoin(db.raw(`RATEDETAIL AS RAD ON RAD.CATEGORYID = P.CATEGORYID`))
+                              .whereRaw('C.ISACTIVE = TRUE')
+                              .andWhereRaw(`C.CATEGORYID = ?`, [CategoryId] )
+                              .groupBy(`C.CATEGORYID`, `P.PRODUCTID`)
+                              .orderBy(`P.NUMBERNO`)    
     if (category.length === 0) {
       return null;
     }
     return category;
   },
 
-  updateProductView(id, quanview) {
-    return db("product").where("ProductId", id).update('Viewer', quanview);
+  // Hàm truy vấn tìm kiếm khóa học có sắp xếp. //Home
+  async showCategoryOrderBy(orderbyType, limit) {
+    var date = new Date();
+    const categoryList =  db.select(db.raw(`C.*
+                                      , CG.CategoryGroupName
+                                      , U.DislayName
+                                      , D.Value
+                                      , CASE WHEN V.TOTALVIEW IS NULL THEN 0 ELSE V.TOTALVIEW END AS TotalView`))
+                        .from('CATEGORY AS C')
+                        .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                        .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                        .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                        AND D.ISACTIVE = TRUE
+                                                        AND D.FROMDATE <= ?
+                                                        AND D.ENDDATE >= ?)`,  [date,date] ))
+                        .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
+                                           FROM PRODUCT
+                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                        .whereRaw('C.ISACTIVE = ?', true)
+                        .orderBy(orderbyType, 'DESC')
+                        .limit(limit);
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+  // Hàm truy vấn các khóa học thuộc lĩnh vực //Courses
+  async getCategoryByGroupId(CategoryGroupId) {
+    var date = new Date();
+    const categoryList = await db.select(db.raw(`C.*
+                                          ,CG.CategoryGroupName
+                                          ,U.DislayName
+                                          ,D.Value`))
+                              .from('CATEGORY AS C')
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('C.ISACTIVE = ?', true)
+                              .andWhereRaw('C.CATEGORYGROUPID = ?', CategoryGroupId)
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+    // Hàm truy vấn các khóa học thuộc lĩnh vực //Courses
+  async getCategoryAllGroup() {
+    var date = new Date();
+    const categoryList = await db.select(db.raw(`C.*
+                                          ,CG.CategoryGroupName
+                                          ,U.DislayName
+                                          ,D.Value`))
+                              .from('CATEGORY AS C')
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('C.ISACTIVE = ?', true)
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
   },
 
 };

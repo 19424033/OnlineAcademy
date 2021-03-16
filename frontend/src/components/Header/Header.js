@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { //Input,
         Avatar, Dropdown, Menu, notification } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken } from "../../utils/utils";
+
+import Swal from  'sweetalert2'
 
 //const { Search } = Input;
 
@@ -40,6 +42,8 @@ const HeaderCustomize = () => {
   //   if (x) return x[0].toUpperCase();
   //   return x;
   // };
+
+  const [textSearch, setTextSearch] = useState('');
 
   const menu = (
     <Menu style={{ width: 180 }} className="mt-3 px-2">
@@ -107,6 +111,23 @@ const HeaderCustomize = () => {
         </li>
       </>
     );
+  };
+
+  const changeSearch = event => {
+    setTextSearch(event.target.value);
+  }
+
+  const history = useHistory();
+  const handleOnClick = () => {
+    if(textSearch == '') { 
+      Swal.fire(
+        'Tìm Kiếm',
+        'Vui lòng nhập thông tin cần tìm kiếm'
+      )
+    } else {
+      history.push(`/courses/search?keyword=${textSearch}`);
+      setTextSearch('');
+    }
   };
 
   const islogin = () => {
@@ -177,17 +198,20 @@ const HeaderCustomize = () => {
               <div className="ttr-search-input-wrapper">
                 <input
                   type="text"
-                  name="qq"
-                  placeholder="Tìm kiếm khóa học..."
+                  name="search"
+                  placeholder="Tìm kiếm khóa học, lĩnh vực, ..."
                   className="ttr-search-input"
+                  value={textSearch}
+                  onChange={changeSearch}
                 />
                 <button
                   type="submit"
                   name="search"
                   className="ttr-search-submit"
-                >
-                  <i className="fa fa-search" />
+                  onClick={ () => handleOnClick() }>
+                    <i className="fa fa-search" />
                 </button>
+
               </div>
             </div>
             <div className="topbar-right">

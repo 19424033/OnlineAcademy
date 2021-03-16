@@ -1,51 +1,59 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import CoursesServices from "../../services/courses.service";
 import {
     useParams, Link
   } from "react-router-dom";
 import CoursesList from './CoursesList/CoursesList'
 import { Breadcrumb, Menu } from 'antd';
-import _ from "lodash";
 
-
-const Courses = () => {
+const Courses = (props) => {
 
     let { CategoryGroup } = useParams();
     
-    const key = String(CategoryGroup === undefined ? '0' : CategoryGroup.indexOf('search=') > - 1 ? '' : CategoryGroup.split("-")[0]);
-    const defaultName = CategoryGroup === undefined ? '' : CategoryGroup.indexOf('search=') > - 1 ? '' : ` > ${CategoryGroup.split("-")[1]} `
-    
+    const keyId = String(CategoryGroup === undefined ? '0' : CategoryGroup.indexOf('search') > - 1 ? '0' : CategoryGroup.split("-")[0]);
+    const defaultName = CategoryGroup === undefined ? '' : CategoryGroup.indexOf('search') > - 1 ? '' : ` > ${CategoryGroup.split("-")[1]}`;
+
     const [categoryGroup, setCategoryGroup] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [CategoryGroupName, setCategoryGroupName] = useState(defaultName);
-    const [item, setCoursesList] = useState(<CoursesList categories = {categories} />)
- 
+    const [categories, setCategories] = useState([]);
+    const [coursesList, setCoursesList] = useState(<CoursesList  categories = {categories} />)
+    const [valueInputSearch, setValueInputSearch] = useState('');
+
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/courses/categorygroup`)
+        //Lọc List ALL CategoryGroup
+
+        CoursesServices().CategoryGroup()
         .then((response) => {
             setCategoryGroup(response.data);
         });
+        //Lọc List Category
+        if(keyId > 0) {
+            CoursesServices().getCategoryByGroupId(keyId)
+            .then((response) => {
+                setCategories(response.data);
+                setCategoryGroupName(defaultName);
+                setCoursesList(<CoursesList   categories = {response.data} />);
+            });
+        }
+        else {
+            CoursesServices().getCategoryAllGroup()
+            .then((response) => {
+                const searchkey = new URLSearchParams(props.location.search).get('keyword');
+                const keyword = searchkey == null ? '' : searchkey;
+                setCategoryGroupName('');
+                setValueInputSearch(keyword);
+                setCategories(response.data);
+                setCoursesList(<CoursesList  categories = { 
+                    response.data.filter(data => (
+                        xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
+                        || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
+                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1 ) ) } />);
+            });
+        }
 
-        axios.get(`http://localhost:4000/api/home/showCategory`)
-        .then((response) => {
-            if(CategoryGroup === undefined) {
-                console.log(0);
-                setCoursesList(<CoursesList categories = { response.data } />);
-            }
-            else {
-                console.log(CategoryGroup);
-                if(String(CategoryGroup).indexOf('search=') > - 1) {
-                    setCoursesList(<CoursesList categories = { response.data.filter(data => 
-                                                                xoa_dau(data.CategoryName).indexOf(xoa_dau(CategoryGroup.replace('search=','')))  > -1 ) } />);
-                }
-                else {
-                    setCoursesList(<CoursesList categories = { response.data.filter(data => data.CategoryGroupId == key ) } />);
-                }
-            }
-            setCategories(response.data);
-        });
-    },[]);
+       
+    },[props.location.search]);
 
     function xoa_dau(str) {
         str = str.toLowerCase(str);
@@ -58,18 +66,42 @@ const Courses = () => {
         str = str.replace(/đ/g, "d");
         return str;
     }
-    
 
     const handleClickCategoryGroupName = (val) => {
-        if(val === 0) {
-            setCoursesList(<CoursesList categories = { categories } />)
-            setCategoryGroupName('');
+        const id = val == 0 ? 0 : val.CategoryGroupId;
+        setValueInputSearch('');
+        if(id > 0) {
+            CoursesServices().getCategoryByGroupId(id)
+            .then((response) => {
+                setCategories(response.data);
+                setCategoryGroupName(`> ${val.CategoryGroupName}`);
+                setCoursesList(<CoursesList  categories = {response.data} />);
+            });
         }
+        
         else {
-            const list = categories.filter(data => data.CategoryGroupId == val.CategoryGroupId);
-            setCoursesList(<CoursesList categories = { list } />)
-            setCategoryGroupName(`> ${val.CategoryGroupName}`);
+            CoursesServices().getCategoryAllGroup()
+            .then((response) => {
+                const searchkey = new URLSearchParams(props.location.search).get('keyword');
+                const keyword = searchkey == null ? '' : searchkey;
+                setValueInputSearch(keyword);
+                setCategoryGroupName('');
+                setCategories(response.data);
+                setCoursesList(<CoursesList  categories = { 
+                    response.data.filter(data => (
+                        xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
+                        || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
+                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1 ) ) } />);
+            });
         }
+    }
+
+    const changeSearch = event => {
+        setValueInputSearch(event.target.value);
+        if(categories.length > 0) {
+        setCoursesList(<CoursesList  categories = { categories.filter(data => 
+            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
+      }
     }
 
     return (
@@ -91,14 +123,13 @@ const Courses = () => {
                             <div className="widget courses-search-bx placeani">
                                 <div className="form-group">
                                 <div className="input-group">
-                                    <label>Tìm kiếm khóa học</label>
-                                    <input name="dzName" type="text" required className="form-control" />
+                                    <input name="dzName" placeholder="Tìm kiếm khóa học..." value= {valueInputSearch} type="text" required className="form-control" onChange={changeSearch}  />
                                 </div>
                                 </div>
                             </div>
                             <div className="widget widget_archive">
                                 <h5 className="widget-title style-1">Lĩnh Vực</h5>
-                                <Menu  defaultSelectedKeys={[ key ]}  theme="dark">
+                                <Menu  defaultSelectedKeys=  { [ keyId ] }  theme="dark">
                                     <Menu.Item key="0" onClick={ () => handleClickCategoryGroupName(0) }>
                                     <Link to= {`/courses`} >
                                         Tất cả Lĩnh vực
@@ -116,7 +147,7 @@ const Courses = () => {
                                 </Menu>
                             </div>
                         </div>
-                        { item }
+                        { coursesList }
                     </div>
                 </div>
             </div>

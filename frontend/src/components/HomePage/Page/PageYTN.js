@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Products from "../../Products/Products"
+import HomeServices from "../../../services/home.service"
 
 const responsive = {
     superLargeDesktop: {
@@ -24,12 +24,16 @@ const responsive = {
     }
 };
 
-const PageYTN = ( props ) => {
+const PageYTN = () => {
 
-    const categories = props.categories.slice();
+    const [categories, setCategories] = useState([]);
+    const quanlimit = 5;
 
-    categories.sort((a, b) => (a.QuanLike < b.QuanLike) ? 1 : -1)
-    categories.length = Math.min(categories.length, 5);
+    useEffect(() => {
+        HomeServices().showCategoryOrderBy("QuanLike", quanlimit).then((res) => {
+        setCategories(res.data);
+    })
+    }, []);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

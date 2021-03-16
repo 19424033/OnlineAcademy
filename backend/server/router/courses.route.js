@@ -1,7 +1,6 @@
 const express = require("express");
 const categoryModel = require("../models/category.model");
 const categorygroupModel = require("../models/categorygroup.model");
-const { cloudinary } = require('../../server/utils/cloudinary');
 
 const router = express.Router();
 
@@ -16,7 +15,7 @@ router.get('/category/:id/:userid', async function (req, res) {
   res.json(categories);
 }); 
 
-router.put('/products/:id/:quanview', async function (req, res) {
+router.put('/products/updateViewer/:id/:quanview', async function (req, res) {
   const id = req.params.id || 0;
   const quanview = req.params.quanview || 0;
   const products = await categoryModel.updateProductView(id,quanview);
@@ -33,6 +32,24 @@ router.get('/categorygroup', async function (req, res) {
     return res.status(204).end();
   }
   res.json(categorygroup);
+}); 
+
+router.get('/getCategoryByGroupId/:id', async function (req, res) {
+  const id = req.params.id || 0;
+  const categorygroup = await categoryModel.getCategoryByGroupId(id);
+  if (categorygroup === null) {
+    return res.status(204).end();
+  }
+  res.json(categorygroup);
+}); 
+
+router.get('/getCategoryAllGroup', async function (req, res) {
+  const keyword = req.params.keyword || '';
+  const categoryList = await categoryModel.getCategoryAllGroup();
+  if (categoryList === null) {
+    return res.status(204).end();
+  }
+  res.json(categoryList);
 }); 
 
 module.exports = router;

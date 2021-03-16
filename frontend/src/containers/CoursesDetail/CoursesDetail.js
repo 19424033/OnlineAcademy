@@ -3,7 +3,7 @@ import { AppContext } from "../../utils/AppContext";
 import {
   useParams, Link
 } from "react-router-dom";
-import axios from "axios";
+import CoursesServices from "../../services/courses.service";
 import { Breadcrumb } from 'antd';
 import BuyCourses from "./BuyCourses/BuyCourses"
 import Detail from "./Detail/Detail"
@@ -21,7 +21,7 @@ const CoursesDetail = () => {
     const id = CategoryId.split("-",1);
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/courses/category/${id}/${userid}`)
+      CoursesServices().CoursesDetail(id, userid)
         .then((response) => {
           setCategories(response.data[0]);
           setProducts(response.data);

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import ReactHtmlParser from 'react-html-parser';
 import { Player } from 'video-react';
 import Swal from  'sweetalert2'
+import CoursesServices from "../../../services/courses.service";
+
 
 
 const Detail = (props) => {
@@ -22,10 +23,9 @@ const Detail = (props) => {
             }
         }
         else {
-            console.log(product);
             if(productView.indexOf(product.CategoryId) < 0 ) {
-                axios.put(`http://localhost:4000/api/courses/products/${ product.CategoryId }/${ product.Viewer + 1}`)
-                .then((response) => {
+                CoursesServices().updateViewVideo(product.CategoryId, product.Viewer + 1)
+                .then(() => {
                     productView.push(product.CategoryId);
                })  
             }
