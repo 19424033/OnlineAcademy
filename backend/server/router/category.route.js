@@ -19,6 +19,25 @@ const someFunction = (myArray) => {
   return Promise.all(promises);
 };
 
+router.post("/", async function (req, res) {
+  const addCategory = req.body;
+  // console.log(addCategory)
+  if (req.body.Image) {
+    console.log("image");
+    cloudinary.uploader.upload(addCategory.Image, function (err, res) {
+      addCategory.Image = res.url;
+    });
+    const resual = await categoryModel.add(addCategory);
+
+    res.status(200).json(resual);
+  } else {
+    console.log("no img");
+    const resual = await categoryModel.add(addCategory);
+    res.status(200).json(resual);
+  }
+
+});
+
 router.get("/", async function (req, res) {
   const list = await categoryModel.allAdmin();
   if (list.length !== 0) {

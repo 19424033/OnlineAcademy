@@ -51,7 +51,6 @@ const Detail = () => {
             .getProductByCategoryID(CategoryID.split("-", 1))
             .then((res) => {
               console.log(res.data);
-
               setlistProduct(res.data);
               setvSumvideo(res.data.length);
             })

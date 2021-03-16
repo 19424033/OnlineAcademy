@@ -31,17 +31,16 @@ const Source = ({ datasource }) => {
                 >
                   {item.CategoryName}
                 </Link>
-                
               </h4>
               {item.Completed ? (
-                  <Text type="success" className="h4">
-                    Hoàn Tất
-                  </Text>
-                ) : (
-                  <Text type="warning" className="h4">
-                    Chưa Hoàn Tất
-                  </Text>
-                )}
+                <Text type="success" className="h4">
+                  Hoàn Tất
+                </Text>
+              ) : (
+                <Text type="warning" className="h4">
+                  Chưa Hoàn Tất
+                </Text>
+              )}
             </div>
             <div className="card-courses-list-bx">
               <ul className="card-courses-view">
@@ -77,10 +76,12 @@ const Source = ({ datasource }) => {
                 <h6 className="m-b10">Course Description</h6>
                 <p>{item.Note}</p>
               </div>
-              {/* <div className="col-md-12">
-                                <a href="#" className="btn green radius-xl outline">Approve</a>
-                                <a href="#" className="btn red outline radius-xl ">Cancel</a>
-                            </div> */}
+
+              <div className="col-md-12 text-right">
+                <Button shape="round" type="danger">
+                  Xóa Khóa học
+                </Button>
+              </div>
             </div>
           </div>
         </div>

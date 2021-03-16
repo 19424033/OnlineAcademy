@@ -4,64 +4,26 @@ import { convertToRaw, EditorState, ContentState } from "draft-js";
 import { Modal, Form, Input, Image, Radio, InputNumber, Select } from "antd";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
+import CategorygroupService from "../../../services/categorygroup.service";
 
-import CategorygroupService from "../../../../services/categorygroup.service";
 const { Option } = Select;
 
-const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
+const ModalAddCategory = ({ visible, onEdit, onCancel }) => {
+  const [form] = Form.useForm();
   const [editorState, seteditorState] = useState();
   const [listCategoryGroup, setlistCategoryGroup] = useState([]);
 
   const [imageBase64, setimageBase64] = useState();
   const [changeIMG, setchangeIMG] = useState(false);
 
-  function toDataURL(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      var reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  }
-
-  const [form] = Form.useForm();
-
   useEffect(() => {
-    // toDataURL(categories.categoryImage, function (dataUrl) {
-    //     setimageBase64(dataUrl);
-    //   });
-    const contentBlock = htmlToDraft(categories.Remark);
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(
-        contentBlock.contentBlocks
-      );
-      const editorStatetemp = EditorState.createWithContent(contentState);
-      seteditorState(editorStatetemp);
-    }
     CategorygroupService()
       .getAllCategorygroup()
       .then((res) => {
         setlistCategoryGroup(res.data);
       })
       .catch((err) => {});
-    form.setFieldsValue({
-      CategoryId: categories.CategoryId,
-      CategoryName: categories.CategoryName,
-      Note: categories.Note,
-      Remark: categories.Remark,
-      Completed: categories.Completed,
-      VideoQuantity: categories.VideoQuantity,
-      Price: categories.Price,
-      CategoryGroupId: [categories.CategoryGroupId],
-      Image: categories.categoryImage,
-      Change: false,
-    });
-  }, [categories]);
+  }, []);
 
   const onEditorStateChange = (editorState) => {
     seteditorState(editorState);
@@ -89,10 +51,6 @@ const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
       }}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
-        <Form.Item name="CategoryId" style={{ display: "none" }}>
-          <Input type={"hidden"} />
-        </Form.Item>
-
         <Form.Item
           name="CategoryName"
           label="Tên Khóa Học"
@@ -181,11 +139,7 @@ const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
           editorClassName="editorClassName bg-light "
           onEditorStateChange={onEditorStateChange}
         />
-        {!changeIMG ? (
-          <Image width={400} src={categories.categoryImage} />
-        ) : (
-          <Image width={400} src={imageBase64} />
-        )}
+        {changeIMG ? <Image width={400} src={imageBase64} /> : ""}
 
         <input
           className="inputFile"
@@ -209,12 +163,9 @@ const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
         <Form.Item name="Image" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
-        <Form.Item name="Change" style={{ display: "none" }}>
-          <Input type={"hidden"} />
-        </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default ModalEdit;
+export default ModalAddCategory;
