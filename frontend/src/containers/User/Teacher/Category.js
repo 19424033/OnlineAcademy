@@ -15,7 +15,6 @@ import ModalAddCategory from "./ModalAddCategory";
 const Courses = () => {
   const { userid } = useContext(AppContext);
 
-  let { CategoryId } = useParams();
   const [datasource, setdatasource] = useState([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,22 +40,24 @@ const Courses = () => {
         CategoryService()
           .addCategory(values)
           .then((res) => {
-            console.log(res.data);
-            setVisible(false);
-            setLoading(false);
-            APIgetCategoryByUserID();
+            if (res.data) {
+              setVisible(false);
+              setLoading(false);
+              APIgetCategoryByUserID();
+            }
           })
           .catch((err) => {});
-      }, 1000);
+      }, 5000);
     } else {
       setTimeout(() => {
         CategoryService()
           .addCategory(values)
           .then((res) => {
-            console.log(res.data);
-            setVisible(false);
-            setLoading(false);
-            APIgetCategoryByUserID();
+            if (res.data) {
+              setVisible(false);
+              setLoading(false);
+              APIgetCategoryByUserID();
+            }
           })
           .catch((err) => {});
       }, 2000);
@@ -136,6 +137,7 @@ const Courses = () => {
       <ModalAddCategory
         visible={visible}
         onEdit={onEdit}
+        loading={loading}
         onCancel={() => {
           setVisible(false);
         }}

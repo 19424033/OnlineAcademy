@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
-import { Modal, Form, Input, Image, Radio, InputNumber, Select } from "antd";
+import { Modal, Form, Input, Image, Radio, InputNumber, Select,Button } from "antd";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
 import CategorygroupService from "../../../../services/categorygroup.service";
 const { Option } = Select;
 
-const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
+const ModalEdit = ({
+  visible,
+  categories,
+  onEdit,
+  onCancel,
+  loadingEditCategory,
+}) => {
   const [editorState, seteditorState] = useState();
   const [listCategoryGroup, setlistCategoryGroup] = useState([]);
 
@@ -87,6 +93,28 @@ const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
             console.log("Validate Failed:", info);
           });
       }}
+      footer={[
+        <Button key="back" onClick={onCancel}>
+          Hủy
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          loading={loadingEditCategory}
+          onClick={() => {
+            form
+              .validateFields()
+              .then((values) => {
+                onEdit(values);
+              })
+              .catch((info) => {
+                console.log("Validate Failed:", info);
+              });
+          }}
+        >
+          {loadingEditCategory ? "Vui lòng đợi trong giây lát" : "Chỉnh sửa"}
+        </Button>,
+      ]}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
         <Form.Item name="CategoryId" style={{ display: "none" }}>
@@ -196,7 +224,6 @@ const ModalEdit = ({ visible, categories, onEdit, onCancel }) => {
             reader.readAsDataURL(e.target.files[0]);
             reader.onloadend = function (event) {
               var base64Data = event.target.result;
-              console.log(base64Data);
               setimageBase64(base64Data);
               setchangeIMG(true);
               form.setFieldsValue({

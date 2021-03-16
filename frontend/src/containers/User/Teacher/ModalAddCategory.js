@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
-import { Modal, Form, Input, Image, Radio, InputNumber, Select } from "antd";
+import { Modal, Form, Input, Image, Radio, InputNumber, Select,Button } from "antd";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import CategorygroupService from "../../../services/categorygroup.service";
 
 const { Option } = Select;
 
-const ModalAddCategory = ({ visible, onEdit, onCancel }) => {
+const ModalAddCategory = ({ visible, onEdit, onCancel,loading }) => {
   const [form] = Form.useForm();
   const [editorState, seteditorState] = useState();
   const [listCategoryGroup, setlistCategoryGroup] = useState([]);
@@ -35,20 +35,32 @@ const ModalAddCategory = ({ visible, onEdit, onCancel }) => {
     <Modal
       width={1000}
       visible={visible}
-      title="Sửa Thông Tin Khóa Học"
-      okText="Sửa"
+      title="Thêm Khóa Học"
+      okText="Thêm"
       cancelText="Đóng"
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            onEdit(values);
-          })
-          .catch((info) => {
-            console.log("Validate Failed:", info);
-          });
-      }}
+      footer={[
+        <Button key="back" onClick={onCancel}>
+          Hủy
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          loading={loading}
+          onClick={() => {
+            form
+              .validateFields()
+              .then((values) => {
+                onEdit(values);
+              })
+              .catch((info) => {
+                console.log("Validate Failed:", info);
+              });
+          }}
+        >
+          {loading ? "Vui lòng đợi trong giây lát" : "Thêm"}
+        </Button>,
+      ]}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
         <Form.Item

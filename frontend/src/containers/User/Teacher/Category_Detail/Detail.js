@@ -36,6 +36,7 @@ const Detail = () => {
   const [listProduct, setlistProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingAdd, setLoadingAdd] = useState(false);
+  const [loadingEditCategory, setLoadingEditCategory] = useState(false);
 
   useEffect(() => {
     getInfoCategoryByID();
@@ -46,11 +47,13 @@ const Detail = () => {
       .getSingleCategory(CategoryID.split("-", 1))
       .then(
         (response) => {
+          console.log(response.data);
           setCategories(response.data);
           ProductService()
             .getProductByCategoryID(CategoryID.split("-", 1))
             .then((res) => {
               console.log(res.data);
+
               setlistProduct(res.data);
               setvSumvideo(res.data.length);
             })
@@ -61,17 +64,24 @@ const Detail = () => {
   };
 
   const onEdit = (values) => {
-    console.log(values);
+    setLoadingEditCategory(true);
     const id = values.CategoryId;
     delete values.CategoryId;
-    CategoryService()
-      .setSingleCategory(id, values)
-      .then((res) => {
-        console.log(res.data);
-        getInfoCategoryByID();
-      })
-      .catch((err) => {});
-    setVisible(false);
+
+    setTimeout(() => {
+      CategoryService()
+        .setSingleCategory(id, values)
+        .then((res) => {
+          if (res.data);
+          {
+            getInfoCategoryByID();
+            setVisible(false);
+    setLoadingEditCategory(false);
+
+          }
+        })
+        .catch((err) => {});
+    }, 10000);
   };
   const onEditProduct = (values) => {
     const id = values.ProductId;
@@ -83,7 +93,6 @@ const Detail = () => {
         ProductService()
           .setSingleProduct(id, parseForm(values))
           .then((result) => {
-            console.log(result.data.message);
             if (result.data.message) {
               getInfoCategoryByID();
               setLoading(false);
@@ -99,7 +108,6 @@ const Detail = () => {
         ProductService()
           .setSingleProduct(id, parseForm(values))
           .then((result) => {
-            console.log(result.data.message);
             if (result.data.message) {
               getInfoCategoryByID();
               setLoading(false);
@@ -118,7 +126,6 @@ const Detail = () => {
         ProductService()
           .addProduct(parseForm(values))
           .then((result) => {
-            console.log(result.data);
             getInfoCategoryByID();
             setLoadingAdd(false);
             setvisibleModalAddProduct(false);
@@ -136,7 +143,6 @@ const Detail = () => {
         ProductService()
           .addProduct(parseForm(values))
           .then((result) => {
-            console.log(result.data);
             getInfoCategoryByID();
             setLoadingAdd(false);
             setvisibleModalAddProduct(false);
@@ -383,6 +389,7 @@ const Detail = () => {
                 visible={visible}
                 categories={categories}
                 onEdit={onEdit}
+                loadingEditCategory={loadingEditCategory}
                 onCancel={() => {
                   setVisible(false);
                 }}
