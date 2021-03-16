@@ -10,6 +10,11 @@ module.exports = {
   update(id, product) {
     return db("product").where("ProductId", id).update(product);
   },
+  delete(id) {
+    return db('product')
+      .where('ProductId', id)
+      .del();
+  },
   GetProductByCategoryId(id) {
     return db({ a: "product", b: "category" })
       .whereRaw("?? = ?? ", ["a.CategoryId", "b.CategoryId"])

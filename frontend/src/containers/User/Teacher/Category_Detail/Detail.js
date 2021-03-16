@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Breadcrumb, Modal, Typography, Button, Spin } from "antd";
+import {
+  Breadcrumb,
+  Modal,
+  Typography,
+  Button,
+  Popover,
+  notification,
+} from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Player } from "video-react";
 
 import ReactHtmlParser from "react-html-parser";
@@ -10,18 +18,24 @@ import CategoryService from "../../../../services/category.service";
 import ProductService from "../../../../services/product.service";
 import ModalEdit from "./ModalEdit";
 import ModalEditProduct from "./ModalEditProduct";
+import ModalAddProduct from "./ModalAddProduct";
+
 import { changeTailURL, parseForm } from "../../../../utils/utils";
 const { Text } = Typography;
+const { confirm } = Modal;
 
 const Detail = () => {
   let { CategoryID } = useParams();
   const [categories, setCategories] = useState();
   const [sumvideo, setvSumvideo] = useState(0);
   const [visible, setVisible] = useState(false);
-  const [visibleModalProduct, setVisibleModalProduct] = useState(false);
+  const [visibleModalEditProduct, setvisibleModalEditProduct] = useState(false);
+  const [visibleModalAddProduct, setvisibleModalAddProduct] = useState(false);
+
   const [ProductEdit, setProductEdit] = useState();
   const [listProduct, setlistProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingAdd, setLoadingAdd] = useState(false);
 
   useEffect(() => {
     getInfoCategoryByID();
@@ -34,7 +48,7 @@ const Detail = () => {
         (response) => {
           setCategories(response.data);
           ProductService()
-            .getProductByCategoryID(response.data.CategoryId)
+            .getProductByCategoryID(CategoryID.split("-", 1))
             .then((res) => {
               console.log(res.data);
 
@@ -74,7 +88,7 @@ const Detail = () => {
             if (result.data.message) {
               getInfoCategoryByID();
               setLoading(false);
-              setVisibleModalProduct(false);
+              setvisibleModalEditProduct(false);
             }
           })
           .catch((err) => {});
@@ -90,14 +104,78 @@ const Detail = () => {
             if (result.data.message) {
               getInfoCategoryByID();
               setLoading(false);
-              setVisibleModalProduct(false);
+              setvisibleModalEditProduct(false);
             }
           })
           .catch((err) => {});
       }, 2000);
     }
   };
+  const onAddProduct = (values, form, setshowVideo, previewVideo) => {
+    if (values.File) {
+      setLoadingAdd(true);
+      values.CategoryID = CategoryID.split("-", 1);
+      setTimeout(() => {
+        ProductService()
+          .addProduct(parseForm(values))
+          .then((result) => {
+            console.log(result.data);
+            getInfoCategoryByID();
+            setLoadingAdd(false);
+            setvisibleModalAddProduct(false);
+            form.resetFields();
 
+            setshowVideo(false);
+            previewVideo();
+          })
+          .catch((err) => {});
+      }, 10000);
+    } else {
+      setLoadingAdd(true);
+      values.CategoryID = CategoryID.split("-", 1);
+      setTimeout(() => {
+        ProductService()
+          .addProduct(parseForm(values))
+          .then((result) => {
+            console.log(result.data);
+            getInfoCategoryByID();
+            setLoadingAdd(false);
+            setvisibleModalAddProduct(false);
+            form.resetFields();
+
+            setshowVideo(false);
+            previewVideo();
+          })
+          .catch((err) => {});
+      }, 2000);
+    }
+  };
+
+  function showDeleteConfirm(product) {
+    confirm({
+      title: `Bạn có chắc muốn xoá BÀI: ${product.ProductName} ?`,
+      icon: <ExclamationCircleOutlined />,
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk() {
+        ProductService()
+          .deleteSingleProduct(product.ProductId)
+          .then((response) => {
+            getInfoCategoryByID();
+            notification["success"]({
+              message: "Hoàn Tất",
+              description: "bạn đã xoá thành công",
+              placement: "bottomRight",
+            });
+          })
+          .catch(function (error) {
+            console.log("ERROR from server:", error);
+          });
+      },
+      onCancel() {},
+    });
+  }
   return (
     <>
       <div className="page-content bg-white">
@@ -152,8 +230,16 @@ const Detail = () => {
                     </Button>
                   </div>
                   <div class="teacher-bx  text-center">
-                  <Button shape="round" type="success"> + Thêm video</Button>
-                 
+                    <Button
+                      shape="round"
+                      type="success"
+                      onClick={() => {
+                        setvisibleModalAddProduct(true);
+                      }}
+                    >
+                      {" "}
+                      + Thêm video
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -210,6 +296,14 @@ const Detail = () => {
                             {`Bài ${
                               i.NumberNo < 10 ? "0" + i.NumberNo : i.NumberNo
                             }: ${i.ProductName}`}
+
+                            {i.Video ? (
+                              ""
+                            ) : (
+                              <span className="text-danger">
+                                ( Bài học này chưa có video )
+                              </span>
+                            )}
                           </span>
                           <span className="ttr-arrow-icon">
                             <i className="fa fa-angle-down" />
@@ -220,21 +314,66 @@ const Detail = () => {
                         className="col-1 ttr-label "
                         style={{ alignSelf: "center" }}
                       >
-                        <Button
+                        {/* <Button
                           onClick={() => {
                             setProductEdit(i);
-                            setVisibleModalProduct(true);
+                            setvisibleModalEditProduct(true);
                           }}
                         >
                           <Icon component={IconCustom.Edit} />
                           Edit
-                        </Button>
+                        </Button> */}
+                        <Popover
+                          placement="bottomRight"
+                          content={
+                            <div className="my-popover-container">
+                              <Button
+                                className="my-btn-no-style my-popover-item"
+                                onClick={() => {
+                                  setProductEdit(i);
+                                  setvisibleModalEditProduct(true);
+                                }}
+                              >
+                                <Icon
+                                  component={IconCustom.Edit}
+                                  className="my-icon-md"
+                                />
+                                Sửa video
+                              </Button>
+                              <Button
+                                className="my-btn-no-style my-popover-item"
+                                onClick={() => showDeleteConfirm(i)}
+                              >
+                                <Icon
+                                  component={IconCustom.Trash}
+                                  className="my-icon-md"
+                                />
+                                Xóa video
+                              </Button>
+                            </div>
+                          }
+                          trigger="focus"
+                        >
+                          <Button className="my-btn-no-style btn-icon text-dark-gray">
+                            <Icon component={IconCustom.MoreHorizontal} />
+                          </Button>
+                        </Popover>
                       </div>
                       <div
                         id={i.ProductId}
                         className="acod-body collapse col-12"
                       >
-                        <Player poster={changeTailURL(i.Video)} src={i.Video} />
+                        {i.Video ? (
+                          <Player
+                            poster={changeTailURL(i.Video)}
+                            src={i.Video}
+                          />
+                        ) : (
+                          <h5 className="text-danger">
+                            {" "}
+                            Bài học này chưa có video
+                          </h5>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -251,12 +390,20 @@ const Detail = () => {
               />
 
               <ModalEditProduct
-                visibleModalProduct={visibleModalProduct}
+                visibleModalEditProduct={visibleModalEditProduct}
                 onEditProduct={onEditProduct}
                 ProductEdit={ProductEdit}
                 loading={loading}
                 onCancel={() => {
-                  setVisibleModalProduct(false);
+                  setvisibleModalEditProduct(false);
+                }}
+              />
+              <ModalAddProduct
+                visibleModalAddProduct={visibleModalAddProduct}
+                onAddProduct={onAddProduct}
+                loadingAdd={loadingAdd}
+                onCancel={() => {
+                  setvisibleModalAddProduct(false);
                 }}
               />
             </div>

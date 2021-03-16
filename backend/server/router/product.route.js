@@ -29,7 +29,24 @@ const uploadbybuff = (file, type) => {
     }
   });
 };
-
+router.post("/", upload.fields([{ name: "File" }]), async function (req, res) {
+  const addProduct = req.body;
+  addProduct.Public = 0;
+  if (req.files.File) {
+    const upload = await uploadbybuff(req.files.File[0], "video");
+    console.log(upload.url);
+    addProduct.Video = upload.url;
+    const resual = await productModel.add(addProduct);
+    res.status(200).json(resual);
+  } else {
+    console.log(addProduct);
+    delete addProduct.File;
+    const resual = await productModel.add(addProduct);
+    res.status(200).json(resual);
+  }
+  // const resual = await productModel.add(addProduct);
+  // res.status(200).json(resual);
+});
 router.get("/byCategory/:id", async function (req, res) {
   const id = req.params.id;
 
@@ -93,4 +110,20 @@ router.put(
     // });
   }
 );
+
+router.delete("/:id", async function (req, res) {
+  const id = req.params.id || 0;
+  if (id === 0) {
+    return res.status(304).end();
+  }
+
+  await productModel
+    .delete(id)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
 module.exports = router;

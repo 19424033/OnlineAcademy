@@ -20,9 +20,17 @@ export default function UserService() {
   const setSingleProduct = (id, values) => {
     return axios.put(`${API_URL}/${id}`, values, { headers: authHeader(accessToken) });
   };
+  const addProduct = (values) => {
+    return axios.post(`${API_URL}`,values, { headers: authHeader(accessToken) });
+  };
+  const deleteSingleProduct = (id) => {
+    return axios.delete(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
+  };
   return {
     getAllProduct,
     getProductByCategoryID,
     setSingleProduct,
+    addProduct,
+    deleteSingleProduct
   };
 }

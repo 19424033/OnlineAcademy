@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, InputNumber, Button } from "antd";
 import { Player } from "video-react";
-import { changeTailURL } from "../../../../utils/utils";
 
-const ModalEditProduct = ({
-  visibleModalEditProduct,
-  ProductEdit,
-  onEditProduct,
+const ModalAddProduct = ({
+  visibleModalAddProduct,
+  onAddProduct,
+  loadingAdd,
   onCancel,
-  loading,
 }) => {
   const [form] = Form.useForm();
 
   const [previewVideo, setpreviewVideo] = useState();
-  const [showVideo, setshowVideo] = useState(true);
+  const [showVideo, setshowVideo] = useState(false);
   const [messError, setmessError] = useState("");
-  const openfile = async (e) => {
-    var reader = new FileReader();
-    return await new Promise((solve) => {
-      reader.onloadend = function (event) {
-        const dataURL = reader.result;
-        solve(dataURL);
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
-    });
-  };
+
 
   const uploadFile = async (e) => {
     if (e.target.files[0]) {
@@ -41,39 +30,27 @@ const ModalEditProduct = ({
         setshowVideo(false);
       } else {
         console.log("file ok");
-        setshowVideo(true);
 
         var reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onloadend = function (event) {
           const dataURL = event.target.result;
           setpreviewVideo(dataURL); // preview
+        setshowVideo(true);
+
         };
 
         form.setFieldsValue({
           File: e.target.files[0],
-          ChangeFile: true,
+         
         });
       }
     }
-   
   };
-  useEffect(() => {
-    if (ProductEdit) {
-      setpreviewVideo(ProductEdit.Video); // preview
-      setshowVideo(true);
-      form.setFieldsValue({
-        ProductName: ProductEdit.ProductName,
-        ProductId: ProductEdit.ProductId,
-        NumberNo: ProductEdit.NumberNo,
-        ChangeFile: false,
-      });
-    }
-  }, [ProductEdit]);
   return (
     <Modal
       width={1000}
-      visible={visibleModalEditProduct}
+      visible={visibleModalAddProduct}
       title="Sửa Thông Tin Khóa Học"
       okText="Sửa"
       cancelText="Đóng"
@@ -85,13 +62,13 @@ const ModalEditProduct = ({
         <Button
           key="submit"
           type="primary"
-          loading={loading}
+          loading={loadingAdd}
           onClick={() => {
             form
               .validateFields()
               .then((values) => {
-                onEditProduct(values);
-            // form.resetFields();
+                  onAddProduct(values,form,setshowVideo,
+                    previewVideo);
 
               })
               .catch((info) => {
@@ -99,7 +76,7 @@ const ModalEditProduct = ({
               });
           }}
         >
-          {loading ? "Vui lòng đợi trong giây lát" : "Chỉnh sửa"}
+          {loadingAdd ? "Vui lòng đợi trong giây lát" : "Chỉnh sửa"}
         </Button>,
       ]}
       // onOk={() => {
@@ -114,9 +91,7 @@ const ModalEditProduct = ({
       // }}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
-        <Form.Item name="ProductId" style={{ display: "none" }}>
-          <Input type={"hidden"} />
-        </Form.Item>
+      
         <Form.Item
           name="NumberNo"
           label="Bài số: "
@@ -149,10 +124,7 @@ const ModalEditProduct = ({
         />
 
         {showVideo ? (
-          <Player
-            poster={previewVideo && changeTailURL(previewVideo)}
-            src={previewVideo}
-          />
+          <Player poster={previewVideo} src={previewVideo} />
         ) : (
           <h5 className="text-danger">{messError}</h5>
         )}
@@ -160,12 +132,9 @@ const ModalEditProduct = ({
         <Form.Item name="File" style={{ display: "none" }}>
           <Input type={"hidden"} />
         </Form.Item>
-        <Form.Item name="ChangeFile" style={{ display: "none" }}>
-          <Input type={"hidden"} />
-        </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default ModalEditProduct;
+export default ModalAddProduct;

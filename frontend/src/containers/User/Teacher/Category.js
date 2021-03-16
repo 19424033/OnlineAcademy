@@ -50,7 +50,7 @@ const Courses = () => {
                           Quản Lý Khóa Học
                         </Link>
                       </li>
-                      <li className="nav-item">
+                      {/* <li className="nav-item">
                         <Link
                           className="nav-link "
                           data-toggle="tab"
@@ -59,7 +59,7 @@ const Courses = () => {
                           <i className="ti-bookmark-alt"></i>
                           Quản Lý Video Khóa Học
                         </Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                 </div>
