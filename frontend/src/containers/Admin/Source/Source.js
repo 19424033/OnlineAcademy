@@ -7,6 +7,7 @@ import CategoryService from "../../../services/category.service";
 
 const Source = ({ datasource, APIgetAllCategory }) => {
     const handleProduct = (category, setEnable, setDisable, upDatecategory) => {
+        // console.log(category,setEnable,setDisable)
         if (setEnable === true) {
             CategoryService()
             .setSingleCategory(category.CategoryId, {

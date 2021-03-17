@@ -19,7 +19,7 @@ export default function UserService() {
     return axios.post(`${API_URL}`,values, { headers: authHeader(accessToken) });
   };
   const setSingleCategory = (id, values) => {
-    return axios.put(`${API_URL}/${id}`, values, { headers: authHeader(accessToken) });
+    return axios.put(`${API_URL}/setIsActive/${id}`, values, { headers: authHeader(accessToken) });
   };
   const deleteSingleCatagory = (id) => {
     return axios.delete(`${API_URL}/${id}`, { headers: authHeader(accessToken) });

@@ -84,6 +84,16 @@ router.put("/:id", async function (req, res) {
   } else {
   }
 });
+
+router.put("/setIsActive/:id", async function (req, res) {
+  const id = req.params.id;
+  const values = req.body;
+  await categoryModel.update(id, values);
+  res.status(200).json({
+    message: "update success",
+  });
+});
+
 router.delete("/:id", async function (req, res) {
   const id = req.params.id || 0;
   if (id === 0) {
