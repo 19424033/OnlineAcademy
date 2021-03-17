@@ -126,7 +126,7 @@ const App = () => {
             />
 
             <AppRoute
-              path="courses/:CategoryGroup/:CategoryId"
+              path="/courses/:CategoryGroup/:CategoryId"
               layout={Default}
               component={CoursesDetail}
               exact
