@@ -32,7 +32,7 @@ const Detail = (props) => {
     }
 
     return (
-        <div>
+        <div className='col-lg-9 col-md-8 col-sm-12'>
             {/* Image, Note, CategoryName */}
             
             <div className="courses-post">
