@@ -12,6 +12,7 @@ const USERS = require("./server/router/users.route");
 const CATEGORYGROUP = require("./server/router/categorygroup.route");
 const CATEGORY = require("./server/router/category.route");
 const COURSES = require("./server/router/courses.route");
+const COURSESTOKEN = require("./server/router/coursesToken.route");
 const PRODUCT = require("./server/router/product.route");
 
 const AUTH = require("./server/router/auth.route");
@@ -41,7 +42,7 @@ app.use("/api/users", decentralization, USERS);
 app.use("/api/categorygroup", decentralization, CATEGORYGROUP);
 app.use("/api/category", decentralization, CATEGORY);
 app.use("/api/product", decentralization, PRODUCT);
-
+app.use("/api/coursesToken", decentralization , COURSESTOKEN);
 app.use("/api/courses", COURSES);
 
 app.use("/api/auth", AUTH);
