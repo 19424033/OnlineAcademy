@@ -105,7 +105,7 @@ const Source = ({ datasource, APIgetAllCategory }) => {
                         <div className="row card-courses-dec">
                             <div className="col-md-12">
                                 <h6 className="m-b10">Course Description</h6>
-                                <p>{item.Note}</p>
+                                <p>{item.Note }</p>
                             </div>
                             {/* <div className="col-md-12">
                                 <a href="#" className="btn green radius-xl outline">Approve</a>

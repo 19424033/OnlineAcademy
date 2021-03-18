@@ -237,6 +237,32 @@ const ManagetUser = () => {
             ></Source>
           )}
         </Col>
+
+        <Col span={24}>
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            onEditorStateChange={onEditorStateChange}
+          />
+          <textarea
+            disabled
+            style={{ width: "100%" }}
+            value={
+              editorState &&
+              draftToHtml(convertToRaw(editorState.getCurrentContent()))
+            }
+          />
+          <Editor
+            editorState={editorStateDraft}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+          />
+
+          
+        </Col>
       </Row>
     </>
     // <Tabs type="card">
@@ -244,32 +270,7 @@ const ManagetUser = () => {
 
     //   </TabPane>
     //   <TabPane tab="tab2" key="2">
-    //     <Editor
-    //       editorState={editorState}
-    //       toolbarClassName="toolbarClassName"
-    //       wrapperClassName="wrapperClassName"
-    //       editorClassName="editorClassName"
-    //       onEditorStateChange={onEditorStateChange}
-    //     />
-    //     <textarea
-    //       disabled
-    //       style={{ width: "100%" }}
-    //       value={
-    //         editorState &&
-    //         draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    //       }
-    //     />
-    //     <Editor
-    //       editorState={editorStateDraft}
-    //       toolbarClassName="toolbarClassName"
-    //       wrapperClassName="wrapperClassName"
-    //       editorClassName="editorClassName"
-    //     />
 
-    //     <Player
-    //       poster="http://res.cloudinary.com/dzyfkhpce/video/upload/v1613474027/Illustrator_CC_2018_Fundamentals_For_Beginners/01._Introduction_ixunyw.jpg"
-    //       src="http://res.cloudinary.com/dzyfkhpce/video/upload/v1613474027/Illustrator_CC_2018_Fundamentals_For_Beginners/01._Introduction_ixunyw.mp4"
-    //     />
     //   </TabPane>
     // </Tabs>
   );
