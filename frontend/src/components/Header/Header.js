@@ -46,7 +46,7 @@ const HeaderCustomize = () => {
   const [textSearch, setTextSearch] = useState('');
 
   const menu = (
-    <Menu style={{ width: 180 }} className="mt-3 px-2">
+    <Menu style={{ width: 200 }} className="mt-3 px-2">
       {userJobId === 1 && (
         <Menu.Item>
           <Link to="/admin/user">
