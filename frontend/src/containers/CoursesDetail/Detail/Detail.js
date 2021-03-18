@@ -10,7 +10,6 @@ const Detail = (props) => {
     const productView = [];
     const products = props.products;
 
-    console.log(props);
     const quanRate = [props.categories.Rate1, props.categories.Rate2, props.categories.Rate3, props.categories.Rate4, props.categories.Rate5];
 
     function handleClickNumberNo(product) {
@@ -98,7 +97,6 @@ const Detail = (props) => {
                 </div>
             </div>
             {/* Đánh giá */}
-            { console.log(props.categories) }
             <CommentCourses quanRate = { quanRate } categories = { props.categories } />
         </div>
     )

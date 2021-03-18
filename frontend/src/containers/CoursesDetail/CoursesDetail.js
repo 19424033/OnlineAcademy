@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import CoursesServices from "../../services/courses.service";
 import { Breadcrumb, Button } from 'antd';
-import BuyCourses from "./BuyCourses/BuyCourses"
 import Detail from "./Detail/Detail"
 
 const CoursesDetail = () => {
@@ -18,10 +17,8 @@ const CoursesDetail = () => {
     const [hide, setHide] = useState(0);
     const [products, setProducts] = useState([]);
     const id = CategoryId.split("-",1);
-  
-
     useEffect(() => {
-      CoursesServices().CoursesDetail(id, localStorage.length > 0 ? userid : 0)
+      CoursesServices().CoursesDetail(id, localStorage.getItem("AcademyOnline_Token") != null ? userid : 0)
         .then((response) => {
           setCategories(response.data[0]);
           setHide(response.data[0].IsRes);
