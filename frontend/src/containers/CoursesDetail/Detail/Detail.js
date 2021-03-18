@@ -10,7 +10,6 @@ const Detail = (props) => {
     const productView = [];
     const products = props.products;
 
-    console.log(props);
     const quanRate = [props.categories.Rate1, props.categories.Rate2, props.categories.Rate3, props.categories.Rate4, props.categories.Rate5];
 
     function handleClickNumberNo(product) {
@@ -33,11 +32,11 @@ const Detail = (props) => {
     }
 
     return (
-        <div>
+        <div className='col-lg-9 col-md-8 col-sm-12'>
             {/* Image, Note, CategoryName */}
             
-            <div className="courses-post" >
-                <div className="ttr-post-media media-effect" >
+            <div className="courses-post">
+                <div className="ttr-post-media media-effect" style={{}}>
                     <img src= { props.categories.Image } />
                 </div>
                 <div className="ttr-post-info">
@@ -98,7 +97,6 @@ const Detail = (props) => {
                 </div>
             </div>
             {/* Đánh giá */}
-            { console.log(props.categories) }
             <CommentCourses quanRate = { quanRate } categories = { props.categories } />
         </div>
     )
