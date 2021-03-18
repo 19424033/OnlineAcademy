@@ -9,24 +9,23 @@ import BuyCourses from "./BuyCourses/BuyCourses"
 import Detail from "./Detail/Detail"
 
 const CoursesDetail = () => {
-  
-    const {
-      userid
-    } = useContext(AppContext); 
 
     let { CategoryId } = useParams();
-
-    const [categories, setCategories] = useState(0);
+    let {
+      userid
+    } = useContext(AppContext); 
+    const [categories, setCategories] = useState('');
     const [products, setProducts] = useState([]);
     const id = CategoryId.split("-",1);
 
+
     useEffect(() => {
-      CoursesServices().CoursesDetail(id, userid)
+      CoursesServices().CoursesDetail(id, localStorage.length > 0 ? userid : 0)
         .then((response) => {
           setCategories(response.data[0]);
           setProducts(response.data);
-        })
-    },[]);
+        }) 
+    },[userid]);
     return (
       <div className="page-content bg-white">
         <div className="content-block">
@@ -51,14 +50,13 @@ const CoursesDetail = () => {
               </div>
               <div className="row d-flex flex-row-reverse">
                   {
-                    
                     categories.IsRes 
                     ? 
                       <></>
                     :
                       <BuyCourses categories={categories} /> 
                   }   
-                  <Detail key ={id}  id = {id} categories={categories} products={products} />  
+                  <Detail  id = { id } categories={categories} products={products} />
               </div>
           </div>
         </div>

@@ -52,4 +52,14 @@ router.get('/getCategoryAllGroup', async function (req, res) {
   res.json(categoryList);
 }); 
 
+router.get('/getRateDetailByCategoryId/:id', async function (req, res) {
+  const id = req.params.id || 0;
+  const categoryList = await categoryModel.getRateDetailByCategoryId(id);
+  if (categoryList === null) {
+    return res.status(204).end();
+  }
+  res.json(categoryList);
+}); 
+
+
 module.exports = router;

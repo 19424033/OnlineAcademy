@@ -77,12 +77,14 @@ module.exports = {
                                             , U.DislayName
                                             , D.Value
                                             , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
-                                            , SUM(CASE WHEN RAD.RATEVALUE = 1 THEN 1 ELSE 0 END) AS Rate1
-                                            , SUM(CASE WHEN RAD.RATEVALUE = 2 THEN 1 ELSE 0 END) AS Rate2
-                                            , SUM(CASE WHEN RAD.RATEVALUE = 3 THEN 1 ELSE 0 END) AS Rate3
-                                            , SUM(CASE WHEN RAD.RATEVALUE = 4 THEN 1 ELSE 0 END) AS Rate4
-                                            , SUM(CASE WHEN RAD.RATEVALUE = 5 THEN 1 ELSE 0 END) AS Rate5
-                                            , COUNT(RAD.ID) AS TotalRate
+                                            , CASE WHEN CMT.USERSID IS NULL THEN 0 ELSE 1 END AS IsCmt
+                                            , CASE WHEN CMT.USERSID IS NULL THEN 0 ELSE CMT.RateValue END AS RateValue
+                                            , R1.Rate1
+                                            , R2.Rate2
+                                            , R3.Rate3
+                                            , R4.Rate4
+                                            , R5.Rate5
+                                            , R1.Rate1 + R2.Rate2 + R3.Rate3 + R4.Rate4 + R5.Rate5 AS TotalRate
                                             `))
                               .from('CATEGORY AS C')
                               .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
@@ -96,7 +98,28 @@ module.exports = {
                                                                 AND RD.ISACTIVE = TRUE`, [ UsersId]))
                               .leftJoin(db.raw(`PRODUCT AS P ON C.CATEGORYID = P.CATEGORYID
                                                               AND P.ISACTIVE = TRUE`))
-                              .leftJoin(db.raw(`RATEDETAIL AS RAD ON RAD.CATEGORYID = P.CATEGORYID`))
+                              .leftJoin(db('ratedetail')
+                                        .count('RateValue as Rate1')
+                                        .where('RateValue',1)
+                                        .andWhere('CategoryId',CategoryId).as('R1') ,0, 0 )
+                              .leftJoin(db('ratedetail')
+                                        .count('RateValue as Rate2')
+                                        .where('RateValue',2)
+                                        .andWhere('CategoryId',CategoryId).as('R2') ,0, 0 )
+                              .leftJoin(db('ratedetail')
+                                        .count('RateValue as Rate3')
+                                        .where('RateValue',3)
+                                        .andWhere('CategoryId',CategoryId).as('R3') ,0, 0 )
+                              .leftJoin(db('ratedetail')
+                                        .count('RateValue as Rate4')
+                                        .where('RateValue',4)
+                                        .andWhere('CategoryId',CategoryId).as('R4') ,0, 0 )
+                              .leftJoin(db('ratedetail')
+                                        .count('RateValue as Rate5')
+                                        .where('RateValue',5)
+                                        .andWhere('CategoryId',CategoryId).as('R5') ,0, 0 )
+                              .leftJoin(db.raw(`RATEDETAIL AS CMT ON CMT.CATEGORYID = C.CATEGORYID
+                                                                    AND CMT.USERSID = ?`, [ UsersId] ))
                               .whereRaw('C.ISACTIVE = TRUE')
                               .andWhereRaw(`C.CATEGORYID = ?`, [CategoryId] )
                               .groupBy(`C.CATEGORYID`, `P.PRODUCTID`)
@@ -176,5 +199,29 @@ module.exports = {
     }
     return categoryList;
   },
+
+  async getRateDetailByCategoryId(CategoryId) {
+    const categoryList = await db.select(db.raw(`U.DislayName
+                                                ,U.Image
+                                                ,R.RateValue
+                                                ,R.Cmt
+                                                ,R.RateTime`))
+                                .from('RATEDETAIL AS R')
+                                .leftJoin(db.raw(`USERS AS U ON R.USERSID = U.USERSID`))
+                                .whereRaw(`R.CATEGORYID = ?`,  [CategoryId])
+                                .orderBy(`R.RateTime`);
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+  async addRateCmt(ratedetail) {
+    console.log(ratedetail);
+    const ids = await db("RateDetail").insert(ratedetail);
+    return ids[0];
+  },
+
+
 
 };

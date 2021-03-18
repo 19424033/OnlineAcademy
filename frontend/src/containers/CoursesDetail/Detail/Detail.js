@@ -1,13 +1,12 @@
-import React from "react";
+import React  from "react";
 import ReactHtmlParser from 'react-html-parser';
 import { Player } from 'video-react';
 import Swal from  'sweetalert2'
 import CoursesServices from "../../../services/courses.service";
-
+import CommentCourses from "../CommentCourses/CommentCourses";
 
 
 const Detail = (props) => {
-        
     const productView = [];
     const products = props.products;
 
@@ -35,9 +34,8 @@ const Detail = (props) => {
     return (
         <div>
             {/* Image, Note, CategoryName */}
-
+            
             <div className="courses-post">
-                {/* <div style={{ height: window.innerHeight-70, backgroundSize:'cover', backgroundImage:'URL('+ process.env.PUBLIC_URL + '/assets/images/slider/slide1.jpg)'}}/> */}
                 <div className="ttr-post-media media-effect" style={{}}>
                     <img src= { props.categories.Image } />
                 </div>
@@ -65,8 +63,8 @@ const Detail = (props) => {
             <div className="m-b20">
                 <h4>Bài học</h4>
                 {
-                    products.map( i => 
-                    <div className="panel">      
+                    products.map( (i, index) => 
+                    <div key = { index } className="panel">      
                         <div className="ttr-sidebar-navi">
                             <a onClick={ () => handleClickNumberNo(i)} data-toggle="collapse" href = {`#${i.ProductId}` } className="ttr-material-button" data-parent= {`#${i.ProductId}` }>
                                 <span className="ttr-icon"> { i.Public ? <i className="fa fa-book" /> : props.categories.IsRes ? <i className="fa fa-book" /> : <i className="fa fa-lock"  /> } </span>
@@ -99,38 +97,7 @@ const Detail = (props) => {
                 </div>
             </div>
             {/* Đánh giá */}
-
-            <div className="">    
-                <h4>Đánh giá</h4>
-                <div className="review-bx">
-                    <div className="all-review">
-                        <h2 className="rating-type"> 
-                            { props.categories.Rate }/5 <i className="fa fa-star" style={{color:'#FFFF33'}} />
-                        </h2>   
-                        <span>{ props.categories.TotalRate } Đánh giá </span>          
-                    </div>
-                    <div className="review-bar">
-                    {
-                        quanRate.map( (i , index) => 
-                            <div className="bar-bx">
-                                <div className="side">
-                                    <div>{ index + 1} star</div>
-                                </div>
-                                <div className="middle">
-                                    <div className="bar-container">
-                                        <div className="bar-5" style={{width: props.categories.TotalRate == 0 ? 0 : ( i * 100/ props.categories.TotalRate) + '%'}} />
-                                    </div>
-                                </div>
-                                <div className="side right">
-                                    <div> { i }</div>
-                                </div>
-                            </div>
-                        )
-                    }
-                    </div>
-                </div>
-                
-            </div>
+            <CommentCourses quanRate = { quanRate } categories = { props.categories } />
         </div>
     )
 }

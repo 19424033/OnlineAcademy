@@ -25,11 +25,16 @@ export default function CoursesServices() {
     return axios.put(`${API_URL}/products/updateViewer/${ProductId}/${Viewer}`);
   }
 
+  const getRateDetailByCategoryId = (CategoryId) => {
+    return axios.get(`${API_URL}/getRateDetailByCategoryId/${CategoryId}`);
+  }
+
   return {
     CategoryGroup,
     getCategoryAllGroup,
     getCategoryByGroupId,
     CoursesDetail,
-    updateViewVideo
+    updateViewVideo,
+    getRateDetailByCategoryId
   };
 }
