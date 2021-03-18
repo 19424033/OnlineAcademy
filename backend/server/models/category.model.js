@@ -71,7 +71,12 @@ module.exports = {
   async getCategory(CategoryId, UsersId) {
     var date = new Date();
     const category = await db.select(db.raw(` C.*
-                                            , P.*
+                                            , P.ProductId
+                                            , P.NumberNo
+                                            , P.ProductName
+                                            , P.Video
+                                            , P.Public
+                                            , P.Viewer
                                             , CG.CategoryGroupName
                                             , U.Image AS Ava
                                             , U.DislayName
