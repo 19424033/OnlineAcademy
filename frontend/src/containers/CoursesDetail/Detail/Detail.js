@@ -23,9 +23,7 @@ const Detail = (props) => {
 
     useEffect(() => {
         setIconLike(props.categories.IsLike);
-    },[props.categories])
-    console.log(props.categories);
-
+    },[props.categories]);
 
     function handleClickNumberNo(product) {
         if(!product.Public) {
@@ -37,10 +35,10 @@ const Detail = (props) => {
             }
         }
         else {
-            if(productView.indexOf(product.CategoryId) < 0 ) {
-                CoursesServices().updateViewVideo(product.CategoryId, product.Viewer + 1)
+            if(productView.indexOf(product.ProductId) < 0 ) {
+                CoursesServices().updateViewVideo(product.ProductId, product.Viewer + 1)
                 .then(() => {
-                    productView.push(product.CategoryId);
+                    productView.push(product.ProductId);
                })  
             }
         } 
@@ -84,7 +82,6 @@ const Detail = (props) => {
     return (
         <div>
             {/* Image, Note, CategoryName */}
-            
             <div className="courses-post" >
                 <div className="ttr-post-media media-effect" >
                     <img src= { props.categories.Image } />

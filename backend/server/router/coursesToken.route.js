@@ -23,4 +23,10 @@ router.put("/delLike", async function (req, res) {
     res.status(200).json(resual);
 });
 
+router.post("/addRes", async function (req, res) {
+    const addRes = req.body;
+    const resual = await categoryModel.addRes(addRes);
+    res.status(200).json(resual);
+});
+
 module.exports = router;

@@ -80,7 +80,7 @@ module.exports = {
                                             , CG.CategoryGroupName
                                             , U.Image AS Ava
                                             , U.DislayName
-                                            , D.Value
+                                            , CASE WHEN D.Value IS NULL THEN 0 ELSE D.Value END AS Value
                                             , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
                                             , CASE WHEN LD.USERSID IS NULL THEN 0 ELSE 1 END AS IsLike
                                             , CASE WHEN CMT.USERSID IS NULL THEN 0 ELSE 1 END AS IsCmt
@@ -250,6 +250,11 @@ module.exports = {
                     .update(likedetail)
                     .whereRaw(`USERSID = ?
                               AND CATEGORYID = ?` , [likedetail.UsersId, likedetail.CategoryId]);
+    return ids[0];
+  },
+
+  async addRes(ResDetail) {
+    const ids = await db("ResDetail").insert(ResDetail);
     return ids[0];
   },
 

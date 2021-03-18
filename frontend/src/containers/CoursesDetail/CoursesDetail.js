@@ -4,8 +4,11 @@ import {
   useParams, Link
 } from "react-router-dom";
 import CoursesServices from "../../services/courses.service";
+import CoursesTokenServices from "../../services/coursesToken.service";
+import UserService from "../../services/user.service";
 import { Breadcrumb, Button } from 'antd';
 import Detail from "./Detail/Detail"
+import Swal from  'sweetalert2'
 
 const CoursesDetail = () => {
 
@@ -18,16 +21,61 @@ const CoursesDetail = () => {
     const [products, setProducts] = useState([]);
     const id = CategoryId.split("-",1);
     useEffect(() => {
-      CoursesServices().CoursesDetail(id, localStorage.getItem("AcademyOnline_Token") != null ? userid : 0)
+
+      CoursesServices().CoursesDetail(id, userid != undefined ? userid : 0)
         .then((response) => {
           setCategories(response.data[0]);
           setHide(response.data[0].IsRes);
           setProducts(response.data);
         }) 
-    },[userid]);
+    },[userid, hide]);
 
     function handleClickRes() {
-      setHide(1);
+      if(userid == undefined) {
+        Swal.fire(
+          'Vui lòng đăng nhập'
+        )
+      }
+      else {
+        UserService().getUserByID(userid).
+        then((response) => {
+          if( (categories.Price * (100-categories.Value) /100) > response.data.Point ) {
+            Swal.fire(
+              `Bạn cần nạp thêm học phí   (${ ((categories.Price * (100-categories.Value) /100) - response.data.Point).toLocaleString() }đ) để đăng ký khóa học`
+            )
+          }
+          else {
+            Swal.fire({
+              title: 'Bạn đồng ý đăng ký khóa học',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Đồng ý',
+              cancelButtonText: 'Hủy'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const values = {
+                  UsersId: userid,
+                  CategoryId: categories.CategoryId,
+                  CostEach : categories.Price * (100-categories.Value) /100
+                };
+                CoursesTokenServices().addRes(values).
+                  then((response) => {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Bạn đăng ký khóa học thành công',
+                      showConfirmButton: false,
+                      timer: 1000
+                    })
+                  setHide(1);
+                }) 
+              }
+            })
+          }
+            
+        })
+      }
     }
     return (
       <div className="page-content bg-white">
@@ -57,10 +105,11 @@ const CoursesDetail = () => {
                    <div className="col-lg-3 col-md-4 col-sm-12 m-b30" >
                     <div className="course-detail-bx" >
                       <div className="course-price">
-                        { categories.value != null
-                          ? <>
+                        { categories.Value > 0
+                          ? 
+                          <> 
                               <del> { parseInt(categories.Price).toLocaleString() } đ </del>
-                              <h4>{ (categories.Price * (100-categories.value) /100).toLocaleString()  } đ </h4> 
+                              <h4>{ (categories.Price * (100-categories.Value) /100).toLocaleString()  } đ </h4> 
                             </>
                           : <> 
                               <br></br><h4>{ parseInt(categories.Price).toLocaleString() } đ </h4> 
