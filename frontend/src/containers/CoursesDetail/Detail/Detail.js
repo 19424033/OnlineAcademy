@@ -1,16 +1,31 @@
-import React  from "react";
+import React , { useState, useContext, useEffect } from "react";
 import ReactHtmlParser from 'react-html-parser';
+import { AppContext } from "../../../utils/AppContext";
 import { Player } from 'video-react';
 import Swal from  'sweetalert2'
 import CoursesServices from "../../../services/courses.service";
+import CoursesTokenServices from "../../../services/coursesToken.service";
 import CommentCourses from "../CommentCourses/CommentCourses";
 
+var dateFormat = require("dateformat");
 
 const Detail = (props) => {
+
+    let {
+        userid 
+    } = useContext(AppContext); 
+    
+    const [iconLike, setIconLike] = useState(0);
     const productView = [];
     const products = props.products;
 
     const quanRate = [props.categories.Rate1, props.categories.Rate2, props.categories.Rate3, props.categories.Rate4, props.categories.Rate5];
+
+    useEffect(() => {
+        setIconLike(props.categories.IsLike);
+    },[props.categories])
+    console.log(props.categories);
+
 
     function handleClickNumberNo(product) {
         if(!product.Public) {
@@ -31,6 +46,41 @@ const Detail = (props) => {
         } 
     }
 
+    function handleClickLike() {
+        if(userid == undefined) {
+            Swal.fire(
+                'Vui lòng đăng nhập'
+              )
+        }
+        else {
+            if(iconLike == 0) {
+                const values = {
+                    UsersId: userid,
+                    CategoryId: props.categories.CategoryId,
+                    LikeTime : dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+                    IsActive : true
+                };
+                CoursesTokenServices().addLike(values).
+                then((response) => {
+                    setIconLike(1);
+                })
+            }
+            else {
+                const values = {
+                    UsersId: userid,
+                    CategoryId: props.categories.CategoryId,
+                    LikeTime : dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+                    IsActive : false
+                };
+                CoursesTokenServices().delLike(values).
+                then((response) => {
+                    setIconLike(0);
+                })
+            }
+        }
+    }
+
+
     return (
         <div>
             {/* Image, Note, CategoryName */}
@@ -38,6 +88,17 @@ const Detail = (props) => {
             <div className="courses-post" >
                 <div className="ttr-post-media media-effect" >
                     <img src= { props.categories.Image } />
+                    <h6 style={{margin:10}} >
+                        <a className="m-r10" onClick = { () => handleClickLike() } >
+                            {
+                                iconLike == 0 ?
+                                    <i className= "fa fa-heart-o" />
+                                :
+                                    <i className= "fa fa-heart" />
+                            }
+                        </a>
+                        Thêm vào danh sách yêu thích
+                    </h6>
                 </div>
                 <div className="ttr-post-info">
                     <div className="ttr-post-title ">

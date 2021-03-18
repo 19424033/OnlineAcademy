@@ -11,4 +11,16 @@ router.post("/addCmt", async function (req, res) {
     res.status(200).json(resual);
 });
 
+router.post("/addLike", async function (req, res) {
+    const addLike = req.body;
+    const resual = await categoryModel.addLike(addLike);
+    res.status(200).json(resual);
+});
+
+router.put("/delLike", async function (req, res) {
+    const delLike = req.body;
+    const resual = await categoryModel.delLike(delLike);
+    res.status(200).json(resual);
+});
+
 module.exports = router;
