@@ -41,7 +41,7 @@ const App = () => {
   const [imageUser, setimageUser] = useState(undefined);
 
   const [profile, setProfile] = useState(undefined);
-  const [userid, setUserid] = useState(0);
+  const [userid, setUserid] = useState(undefined);
   const [userJobId, setUserJobId] = useState(0);
 
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
