@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 import { localparseJson } from "../utils/utils";
-import Serivces from "./serivces"
+import Serivces from "./serivces";
 
 export default function UserService() {
   const tokenString = localStorage.getItem("AcademyOnline_Token");
@@ -27,12 +27,13 @@ export default function UserService() {
     });
   };
   const getAllFavoriteCategory = (id) => {
+    console.log(authHeader(accessToken));
+    debugger;
     return axios.get(`${API_URL}/favorite-category/${id}`, {
       headers: authHeader(accessToken),
     });
   };
   const getCategorysUser = (id) => {
-    debugger;
     return axios.get(`${API_URL}/category-user/${id}`, {
       headers: authHeader(accessToken),
     });

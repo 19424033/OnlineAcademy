@@ -11,7 +11,6 @@ import FavorCourse from "./Handle/FavorCourse";
 import RegisteredCourse from "./Handle/RegisteredCourse";
 import InfoTeacher from "./Handle/InfoTeacher";
 
-
 const Profile = () => {
   const { userid, nameUser, imageUser, userJobId } = useContext(AppContext);
   const [userEmail, setUserEmail] = useState("");
@@ -20,7 +19,7 @@ const Profile = () => {
   useEffect(() => {
     if (userJobId === 2) {
       setRender("FavorCourse");
-    } 
+    }
     if (userJobId === 3) {
       setRender("InfoTeacher");
     } else {
@@ -36,7 +35,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <div class="page-content">
+    <div className="page-content">
       <div className="content-block">
         <div className="section-area section-sp1">
           <div className="container-fluid">
@@ -144,7 +143,7 @@ const Profile = () => {
                     {userJobId === 2 && render === "RegisteredCourse" && (
                       <RegisteredCourse />
                     )}
-                     {userJobId === 3 && render === "InfoTeacher" && (
+                    {userJobId === 3 && render === "InfoTeacher" && (
                       <InfoTeacher />
                     )}
                     {render === "ChangeProfileUser" && (
