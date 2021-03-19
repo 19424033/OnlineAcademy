@@ -28,9 +28,9 @@ const RegisteredCourse = () => {
           {coursesUser.length <= 0 ? (
             <p className="mt-3 text-center">Bạn chưa đăng kí khóa học nào</p>
           ) : (
-            <div>
+            <div className="row">
               {coursesUser.map((item, index) => {
-                return <Products key={index} products={item} />;
+                return <div style={{marginBottom: "10px", width: "300px"}}><Products key={index} products={item} /></div>;
               })}
             </div>
           )}

@@ -27,8 +27,6 @@ export default function UserService() {
     });
   };
   const getAllFavoriteCategory = (id) => {
-    console.log(authHeader(accessToken));
-    debugger;
     return axios.get(`${API_URL}/favorite-category/${id}`, {
       headers: authHeader(accessToken),
     });

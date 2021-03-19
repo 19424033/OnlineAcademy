@@ -20,25 +20,22 @@ module.exports = {
     return user[0];
   },
   async favoriteCategory(id) {
-    const user = await db("likedetail").where({ UsersId: id, isActive: 1 });
-    if (user.length === 0) {
-      return null;
-    }
-    return user;
+    
+    const category = await db.select(db.raw('*')).from(`likedetail as ld`).join(db.raw(`category as ct on ct.CategoryId = ld.CategoryId and ld.IsActive = 1`)).where('UsersId',id)
+    
+    return category
   },
   async CategoryUser(id) {
-    const user = await db("resdetail").where({ UsersId: id, isActive: 1 });
-    if (user.length === 0) {
-      return null;
-    }
-    return user;
+    const category = await db.select(db.raw('*')).from(`resdetail as ld`).join(db.raw(`category as ct on ct.CategoryId = ld.CategoryId`)).where('UsersId',id)
+    
+    return category
   },
   async categoryDetail(id) {
-    const user = await db("category").where("CategoryId", id);
-    if (user.length === 0) {
+    const category = await db("category").where("CategoryId", id);
+    if (category.length <= 0) {
       return null;
     }
-    return user;
+    return category;
   },
 
   async add(user) {

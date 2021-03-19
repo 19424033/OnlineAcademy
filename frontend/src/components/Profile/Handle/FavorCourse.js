@@ -28,9 +28,9 @@ const FavorCourse = () => {
           {favoriteCategory.length <= 0 ? (
             <p className="mt-3 text-center">Không có khóa học yêu thích nào</p>
           ) : (
-            <div>
+            <div className="row">
               {favoriteCategory.map((item, index) => {
-                return <Products key={index} products={item} />;
+                return <div style={{marginBottom: "10px", width: "300px"}}><Products key={index} products={item} /></div>;
               })}
             </div>
           )}
