@@ -80,8 +80,9 @@ module.exports = {
                                             , CG.CategoryGroupName
                                             , U.Image AS Ava
                                             , U.DislayName
-                                            , D.Value
+                                            , CASE WHEN D.Value IS NULL THEN 0 ELSE D.Value END AS Value
                                             , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
+                                            , CASE WHEN LD.USERSID IS NULL THEN 0 ELSE 1 END AS IsLike
                                             , CASE WHEN CMT.USERSID IS NULL THEN 0 ELSE 1 END AS IsCmt
                                             , CASE WHEN CMT.USERSID IS NULL THEN 0 ELSE CMT.RateValue END AS RateValue
                                             , R1.Rate1
@@ -101,6 +102,9 @@ module.exports = {
                               .leftJoin(db.raw(`RESDETAIL AS RD ON C.CATEGORYID = RD.CATEGORYID
                                                                 AND RD.USERSID = ?
                                                                 AND RD.ISACTIVE = TRUE`, [ UsersId]))
+                              .leftJoin(db.raw(`LIKEDETAIL AS LD ON C.CATEGORYID = LD.CATEGORYID
+                                                                AND LD.USERSID = ?
+                                                                AND LD.ISACTIVE = TRUE`, [ UsersId]))
                               .leftJoin(db.raw(`PRODUCT AS P ON C.CATEGORYID = P.CATEGORYID
                                                               AND P.ISACTIVE = TRUE`))
                               .leftJoin(db('ratedetail')
@@ -222,11 +226,36 @@ module.exports = {
   },
 
   async addRateCmt(ratedetail) {
-    console.log(ratedetail);
     const ids = await db("RateDetail").insert(ratedetail);
     return ids[0];
   },
 
+  async addLike(likedetail) {
+    const id = await db("LikeDetail").whereRaw(`USERSID = ?
+                                              AND CATEGORYID = ?`, [likedetail.UsersId, likedetail.CategoryId]);
+                                              console.log(id.length);
+    if(id.length > 0) {
+      return await db("likedetail")
+                      .update(likedetail)
+                      .whereRaw(`USERSID = ?
+                                AND CATEGORYID = ?` , [likedetail.UsersId, likedetail.CategoryId]);
+    }  
+    else {
+      return await db("likedetail").insert(likedetail);
+    }                                  
+  },
 
+  async delLike(likedetail) {
+    const ids = await db("likedetail")
+                    .update(likedetail)
+                    .whereRaw(`USERSID = ?
+                              AND CATEGORYID = ?` , [likedetail.UsersId, likedetail.CategoryId]);
+    return ids[0];
+  },
+
+  async addRes(ResDetail) {
+    const ids = await db("ResDetail").insert(ResDetail);
+    return ids[0];
+  },
 
 };

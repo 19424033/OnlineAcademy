@@ -27,7 +27,7 @@ const Products = (props) => {
         
         <div className="cours-more-info" style={{background:'white'}}>
             <div style={{width:'50%', padding:'0px 5px'}}>
-              <span style={{ fontSize: 20 }}> <i className="fa fa-user" /> { props.products.QuanRes } </span> 
+              <h6 style={{ margin:'5px 5px' }}> <i className="fa fa-user" /> { props.products.QuanRes } </h6> 
               <Rate allowHalf disabled defaultValue={ props.products.Rate} /> { props.products.Rate }/5
             </div>
             <div className="price">
