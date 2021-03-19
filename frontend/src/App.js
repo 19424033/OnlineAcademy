@@ -58,7 +58,7 @@ const App = () => {
     setCheckOTPConfim();
     setUserJobId(0);
     AuthService().logout();
-    setUserid(0);
+    setUserid(undefined);
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const App = () => {
               exact
             />
             <AppRoute
-              path="/profile"
+              path={["/profile" , "/profile/:profileTitlle"]}
               layout={Default}
               component={Profile}
               exact

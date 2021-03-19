@@ -26,8 +26,8 @@ const Detail = (props) => {
     },[props.categories]);
 
     function handleClickNumberNo(product) {
-        if(!product.Public) {
-            if(props.categories.IsRes == 0) {
+        if(props.categories.IsRes == 0) {
+            if(!product.Public) {
                 Swal.fire(
                     'Yêu cầu sở hữu khóa học',
                     'Vui lòng sở hữu khóa học để xem nội này'
@@ -102,7 +102,7 @@ const Detail = (props) => {
                         <h2 className="post-title"> { props.categories.CategoryName } </h2>
                     </div>
                     <div className="ttr-post-text">
-                        <p>{ props.categories.Note }</p>
+                        <p style={{textAlign:"justif"}} > { ReactHtmlParser(props.categories.Note) }</p>
                     </div>
                 </div>
             </div>
@@ -146,11 +146,11 @@ const Detail = (props) => {
                 <h4>Thông tin giảng viên</h4>
                 <div className="instructor-bx">
                     <div className="instructor-author"  >
-                        <img src={`data:image/jpg;base64,${props.categories.Ava}`} />
+                        <img src= { props.categories.Ava } />
                     </div>
                     <div className="instructor-info">  
                         <h3 className = "m-t30"> { props.categories.DislayName } </h3>
-                        { ReactHtmlParser( props.categories.TeacherNote) }
+                        {  ReactHtmlParser( props.categories.TeacherNote) }
                     </div>
                 </div>
             </div>

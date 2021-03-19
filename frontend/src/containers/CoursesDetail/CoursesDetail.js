@@ -124,7 +124,7 @@ const CoursesDetail = () => {
                       <div className="teacher-bx">
                         <div className="teacher-info">
                           <div className="teacher-thumb">
-                            <img src={`data:image/jpg;base64,${categories.Ava}`} />
+                            <img src= { categories.Ava } />
                           </div>
                           <div className="teacher-name">
                             <h5>{ categories.DislayName }</h5>

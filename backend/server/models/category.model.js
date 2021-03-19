@@ -80,6 +80,7 @@ module.exports = {
                                             , CG.CategoryGroupName
                                             , U.Image AS Ava
                                             , U.DislayName
+                                            , U.TeacherNote
                                             , CASE WHEN D.Value IS NULL THEN 0 ELSE D.Value END AS Value
                                             , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
                                             , CASE WHEN LD.USERSID IS NULL THEN 0 ELSE 1 END AS IsLike

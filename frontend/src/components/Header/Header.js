@@ -145,16 +145,21 @@ const HeaderCustomize = () => {
 
     return (
       <>
+      { userJobId == 2 ?
+      <>
         <li>
-          <Link to="/" className="text-white">
+          <Link to="/profile/FavorCourse" className="text-white">
             <span className="h6">
               <i style={{ marginLeft: "20px" }} className="fa fa-heart-o" /> Yêu
               thích
             </span>
           </Link>
         </li>
+      </>      
+      : <></>  
+      }
         <li>
-          <Link to="/" className="text-white">
+          <Link to="/profile/RegisteredCourse" className="text-white">
             <span className="h6">
               <i
                 style={{ marginLeft: "20px" }}
@@ -171,7 +176,7 @@ const HeaderCustomize = () => {
               to="/profile"
               onClick={profileUser}
             >
-              <Avatar size="large" src={`data:image/jpg;base64,${imageUser}`} />
+              <Avatar size="large" src= { imageUser } />
             </Link>
           </Dropdown>
         </li>
@@ -227,7 +232,7 @@ const HeaderCustomize = () => {
                     </span>
                   </Link>
                 </li>
-                {checkLocalStorage ? islogin() : login_register()}
+                {checkLocalStorage  ? islogin() : login_register()}
               </ul>
             </div>
           </div>

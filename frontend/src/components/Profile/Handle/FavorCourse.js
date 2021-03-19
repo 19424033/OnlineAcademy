@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../utils/AppContext";
-import AuthService from "../../../services/auth.service";
 import UserService from "../../../services/user.service";
-import Products from "../../Products/Products";
+import CoursesList from "../../../containers/Courses/CoursesList/CoursesList"
+
 const FavorCourse = () => {
   const { userid } = useContext(AppContext);
   const [favoriteCategory, setFavoriteCategory] = useState([]);
@@ -14,6 +14,7 @@ const FavorCourse = () => {
           setFavoriteCategory([]);
         } else {
           setFavoriteCategory(data.data);
+          console.log(data.data);
         }
       });
   }, []);
@@ -28,10 +29,10 @@ const FavorCourse = () => {
           {favoriteCategory.length <= 0 ? (
             <p className="mt-3 text-center">Không có khóa học yêu thích nào</p>
           ) : (
-            <div className="row">
-              {favoriteCategory.map((item, index) => {
-                return <div style={{marginBottom: "10px", width: "300px"}}><Products key={index} products={item} /></div>;
-              })}
+            <div className="row" >
+              <div className="col-lg-10 col-md-12 col-sm-8" style={{margin:'0px auto'}}>
+                <CoursesList unlikeUserId = { userid } categories = {favoriteCategory} />
+              </div>
             </div>
           )}
         </div>

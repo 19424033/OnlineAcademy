@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { AppContext } from "../../utils/AppContext";
 import "./Profile.scss";
 import AuthService from "../../services/auth.service";
@@ -16,14 +16,31 @@ const Profile = () => {
   const [userEmail, setUserEmail] = useState("");
   const [render, setRender] = useState("");
 
+  let { profileTitlle } = useParams();
+  const history = useHistory();
+
   useEffect(() => {
-    if (userJobId === 2) {
-      setRender("FavorCourse");
-    }
     if (userJobId === 3) {
-      setRender("InfoTeacher");
+      if(profileTitlle != "ChangeProfileUser" 
+          && profileTitlle != "InfoTeacher" 
+          && profileTitlle != "ChangePassword" ) {
+            history.push(`/profile/InfoTeacher`);
+          }
+          setRender(profileTitlle != null ? profileTitlle : "InfoTeacher");
+    } else if(userJobId === 2){
+      if(profileTitlle != "FavorCourse" 
+          && profileTitlle != "RegisteredCourse" 
+          && profileTitlle != "ChangeProfileUser" 
+          && profileTitlle != "ChangePassword" ) {
+            history.push(`/profile/ChangeProfileUser`);
+          }
+      setRender(profileTitlle != null ? profileTitlle : "ChangeProfileUser");
     } else {
-      setRender("ChangeProfileUser");
+      if(profileTitlle != "ChangeProfileUser" 
+          && profileTitlle != "ChangePassword" ) {
+            history.push(`/profile/ChangeProfileUser`);
+          }
+          setRender(profileTitlle != null ? profileTitlle : "ChangeProfileUser");
     }
     AuthService()
       .getProfile({
@@ -32,7 +49,7 @@ const Profile = () => {
       .then((data) => {
         setUserEmail(data.data.user[0].Email);
       });
-  }, []);
+  }, [profileTitlle]);
 
   return (
     <div className="page-content">
@@ -43,7 +60,7 @@ const Profile = () => {
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="profile-bx text-center">
                   <div className="user-profile-thumb">
-                    <img src={`data:image/jpg;base64,${imageUser}`} alt="" />
+                    <img src= { imageUser } />
                   </div>
                   <div className="profile-info">
                     <h4>{nameUser}</h4>
@@ -55,7 +72,7 @@ const Profile = () => {
                       {userJobId === 2 && (
                         <>
                           <li className="nav-item">
-                            <Link
+                            <Link to ="/profile/FavorCourse"
                               className={
                                 render === "FavorCourse"
                                   ? `nav-link active `
@@ -69,7 +86,7 @@ const Profile = () => {
                             </Link>
                           </li>
                           <li className="nav-item">
-                            <Link
+                            <Link to ="/profile/RegisteredCourse"
                               className={
                                 render === "RegisteredCourse"
                                   ? `nav-link active `
@@ -87,7 +104,7 @@ const Profile = () => {
                       {userJobId === 3 && (
                         <>
                           <li className="nav-item">
-                            <Link
+                            <Link to="/profile/InfoTeacher"
                               className={
                                 render === "InfoTeacher"
                                   ? `nav-link active `
@@ -103,7 +120,7 @@ const Profile = () => {
                         </>
                       )}
                       <li className="nav-item">
-                        <Link
+                        <Link to ="/profile/ChangeProfileUser"
                           className={
                             render === "ChangeProfileUser"
                               ? `nav-link active `
@@ -117,7 +134,7 @@ const Profile = () => {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <Link
+                        <Link to ="/profile/ChangePassword"
                           className={
                             render === "ChangePassword"
                               ? `nav-link active `

@@ -20,13 +20,40 @@ module.exports = {
     return user[0];
   },
   async favoriteCategory(id) {
-    
-    const category = await db.select(db.raw('*')).from(`likedetail as ld`).join(db.raw(`category as ct on ct.CategoryId = ld.CategoryId and ld.IsActive = 1`)).where('UsersId',id)
+    var date = new Date();
+    const category = await db.select(db.raw(`C.*
+                                            ,CG.CategoryGroupName
+                                            ,U.DislayName
+                                            ,D.Value`))
+                              .from(`LIKEDETAIL AS LD`)
+                              .leftJoin(db.raw(`CATEGORY AS C ON C.CATEGORYID = LD.CATEGORYID`))
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('LD.ISACTIVE = TRUE')
+                              .andWhereRaw(`LD.USERSID = ?`, [id])
     
     return category
   },
   async CategoryUser(id) {
-    const category = await db.select(db.raw('*')).from(`resdetail as ld`).join(db.raw(`category as ct on ct.CategoryId = ld.CategoryId`)).where('UsersId',id)
+    var date = new Date();
+    const category = await db.select(db.raw(`C.*
+                                            ,CG.CategoryGroupName
+                                            ,U.DislayName
+                                            ,D.Value`))
+                              .from(`RESDETAIL AS RD`)
+                              .leftJoin(db.raw(`CATEGORY AS C ON C.CATEGORYID = RD.CATEGORYID`))
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('RD.ISACTIVE = TRUE')
+                              .andWhereRaw(`RD.USERSID = ?`, [id])
     
     return category
   },

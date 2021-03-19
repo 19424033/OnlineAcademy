@@ -147,7 +147,9 @@ const Courses = (props) => {
                                 </Menu>
                             </div>
                         </div>
-                        { coursesList }
+                        <div className="col-lg-9 col-md-8 col-sm-12">
+                            { coursesList }
+                        </div>
                     </div>
                 </div>
             </div>

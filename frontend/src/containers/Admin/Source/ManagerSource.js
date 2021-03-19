@@ -175,7 +175,7 @@ const ManagetUser = () => {
         </Col>
         <Col span={10}>
           <Input
-            placeholder="Tên sản phẩm"
+            placeholder="Tên khóa học"
             // size="large"
             onChange={(e) => txt_Changed(e)}
             prefix={

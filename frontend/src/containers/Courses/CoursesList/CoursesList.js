@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import { useEffect } from "react";
+import CoursesTokenServices from "../../../services/coursesToken.service";
+import Swal from  'sweetalert2'
+var dateFormat = require("dateformat");
 
 const CoursesList = (props) => { 
 
     const numEachPage = 6;
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(numEachPage);
+    const [categories, setCategories] = useState(props.categories.slice());
 
     useEffect(()  => {
         setMinValue(0);
         setMaxValue(numEachPage);
+        setCategories(props.categories.slice());
     },[props.categories])
 
     const handleChange = (value) => {
@@ -19,11 +24,26 @@ const CoursesList = (props) => {
         setMaxValue(value * numEachPage);
     };
 
-    return (
-                
-        <div className="col-lg-9 col-md-8 col-sm-12">
+    const handleClickUnlike = (CategoryId) =>    {
+        const values = {
+            UsersId: props.unlikeUserId,
+            CategoryId: CategoryId,
+            LikeTime : dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+            IsActive : false
+        };
+        CoursesTokenServices().delLike(values).
+        then((response) => {
+            setCategories(categories.filter(data => (
+                        data.CategoryId == CategoryId )))
+            setMinValue(0);
+            setMaxValue(numEachPage);
+        })  
+    }
+
+    return (    
+        <>
             {
-                props.categories.length == 0 
+                categories.length == 0 
                 ?
                     <div style={{ fontSize:'50px', textAlign:'center'}}>
                         <i className="fa fa-search" />
@@ -32,7 +52,7 @@ const CoursesList = (props) => {
                 :
                    <div className="row">
                     {
-                        props.categories.slice(minValue, maxValue).map( (val) => 
+                        categories.slice(minValue, maxValue).map( (val) => 
                             <div key={ val.CategoryId } className="col-md-6 col-lg-4 col-sm-6 m-b30">
                             <div className="cours-bx">
                                 <div className="action-box">
@@ -43,7 +63,16 @@ const CoursesList = (props) => {
                                 <div className="info-bx text-center" style={{height:'125px'}}>
                                     <h5><Link to = {`/courses/${val.CategoryGroupId}-${val.CategoryGroupName}/${val.CategoryId}-${val.CategoryName}`} >{ val.CategoryName }</Link></h5>
                                     <span> { val.CategoryGroupName } </span>
-                                    <span style={{color:'red', fontWeight:'bold', bottom: 0, position: 'absolute', right:5}} > <i className="fa fa-user" /> : { val.DislayName } </span>
+                                    { props.unlikeUserId ?
+                                        <span style={{color:'red', fontWeight:'bold', bottom: 5, position: 'absolute', left:5}} > 
+                                            <Button type="primary" shape="round"  onClick={() => handleClickUnlike(val.CategoryId)}>
+                                                Gỡ yêu thích
+                                            </Button>
+                                        </span>
+                                        :
+                                        <></>
+                                    }
+                                    <span style={{color:'red', fontWeight:'bold', bottom: 5, position: 'absolute', right:5}} > <i className="fa fa-user" /> : { val.DislayName } </span>
                                 </div>
                                 <div className="cours-more-info">
                                     <div className="review">
@@ -66,7 +95,7 @@ const CoursesList = (props) => {
                         )
                     }
                     {
-                        props.categories.length == 0
+                        categories.length == 0
                         ?
                             <></>
                         :
@@ -75,13 +104,13 @@ const CoursesList = (props) => {
                             <Pagination  defaultCurrent={ 1 } 
                                                     style={{ textAlign:'center'}}
                                                     defaultPageSize={numEachPage}
-                                                    onChange={handleChange}  total={ props.categories.length } />
+                                                    onChange={handleChange}  total={ categories.length } />
                             </div>
                         </div> 
                     }  
                     </div>
                 }
-        </div>
+        </>
     )
 }
 
