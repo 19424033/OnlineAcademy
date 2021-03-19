@@ -4,7 +4,7 @@ import {
     useParams, Link
   } from "react-router-dom";
 import CoursesList from './CoursesList/CoursesList'
-import { Breadcrumb, Menu } from 'antd';
+import { Breadcrumb, Menu, Dropdown } from 'antd';
 
 const Courses = (props) => {
 
@@ -16,9 +16,10 @@ const Courses = (props) => {
     const [categoryGroup, setCategoryGroup] = useState([]);
     const [CategoryGroupName, setCategoryGroupName] = useState(defaultName);
     const [categories, setCategories] = useState([]);
+    const [categoriesTemp, setCategoriesTemp] = useState([]);
     const [coursesList, setCoursesList] = useState(<CoursesList  categories = {categories} />)
     const [valueInputSearch, setValueInputSearch] = useState('');
-
+    const [textSort, SetTextSort] = useState(''); 
 
     useEffect(() => {
         //Lọc List ALL CategoryGroup
@@ -27,6 +28,7 @@ const Courses = (props) => {
         .then((response) => {
             setCategoryGroup(response.data);
         });
+        SetTextSort('');
         //Lọc List Category
         if(keyId > 0) {
             CoursesServices().getCategoryByGroupId(keyId)
@@ -69,6 +71,7 @@ const Courses = (props) => {
 
     const handleClickCategoryGroupName = (val) => {
         const id = val == 0 ? 0 : val.CategoryGroupId;
+        SetTextSort('');
         setValueInputSearch('');
         if(id > 0) {
             CoursesServices().getCategoryByGroupId(id)
@@ -98,11 +101,49 @@ const Courses = (props) => {
 
     const changeSearch = event => {
         setValueInputSearch(event.target.value);
-        if(categories.length > 0) {
-        setCoursesList(<CoursesList  categories = { categories.filter(data => 
-            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
-      }
+        if(event.target.value.length == 0 ) {
+            setCategories(categoriesTemp);
+            setCategoriesTemp(categories.slice());
+        }
+        else {
+            if(categories.length > 0) {
+                
+                setCategories(categories.filter(data => 
+                            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 ));
+
+                setCoursesList(<CoursesList  categories = { categories.filter(data => 
+                            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
+            }
+        }
+        
     }
+
+    const menu = (
+        <Menu >
+            <Menu.Item onClick = {() => handClickSortPriceCT() } > Giá cao đến thấp </Menu.Item>
+            <Menu.Item onClick = {() => handClickSortPriceTC() }>Giá thấp đến cao</Menu.Item>
+            <Menu.Item onClick = {() => handClickSortLike() }>Yêu thích nhất</Menu.Item>
+            <Menu.Item onClick = {() => handClickSortRate() }>Đánh giá cao nhất</Menu.Item>
+        </Menu>
+    )
+    
+    const handClickSortPriceCT = () => {
+        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Price >  b.Price ?  -1 : a.Price < b.Price ? 1 : 0 }) } />);
+        SetTextSort(': Giá cao đến thấp')
+    }
+    const handClickSortPriceTC = () => {
+        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Price <  b.Price ?  -1 : a.Price > b.Price ? 1 : 0 }) } />);
+        SetTextSort(': Giá thấp đến cao')
+    }
+    const handClickSortLike = () => {
+        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.QuanLike >  b.QuanLike ?  -1 : a.QuanLike < b.QuanLike ? 1 : 0 }) } />);
+        SetTextSort(': Yêu thích nhất')
+    }
+    const handClickSortRate = () => {
+        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Rate >  b.Rate ?  -1 : a.Rate < b.Rate ? 1 : 0 }) } />);
+        SetTextSort(': Đánh giá cao nhất')
+    }
+    
 
     return (
         <div className="content-block">
@@ -148,7 +189,10 @@ const Courses = (props) => {
                             </div>
                         </div>
                         <div className="col-lg-9 col-md-8 col-sm-12">
-                            { coursesList }
+                            <Dropdown overlay={menu} trigger={['click']} >
+                                <span style={{fontWeight:'bold', fontSize: 15, lineHeight:'50px' , textAlign:'right' }} > <i className="ti-bar-chart" /> Sắp xếp  { textSort } </span>
+                            </Dropdown>
+                        { coursesList }
                         </div>
                     </div>
                 </div>

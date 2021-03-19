@@ -22,12 +22,10 @@ const CommentCourses = (props) => {
   useEffect(() => {
       CoursesServices().getRateDetailByCategoryId(props.categories.CategoryId)
       .then((res) => {
-          setHide(props.categories.IsRes);
+          setHide(props.categories.IsCmt);
           setData(res.data);
       })
   }, [props.categories, hide])
-
-
   function handleClickCmt() {
     if(valueText == '') {
       Swal.fire(
@@ -64,13 +62,15 @@ const CommentCourses = (props) => {
     setValueRate(event);
   }
 
+
+  
   return (
     <div className="">    
                 <h4>Đánh giá</h4>
                 <div className="review-bx">
                     <div className="all-review">
                         <h2 className="rating-type"> 
-                            { props.categories.Rate }/5 <i className="fa fa-star" style={{color:'#FFFF33'}} />
+                            { data.length > 0  ? data.map(item => item.RateValue).reduce((prev, next) => prev + next) / data.length : 0 }/5 <i className="fa fa-star" style={{color:'#FFFF33'}} />
                         </h2>   
                         <span>{ data.length } Đánh giá </span>          
                     </div>

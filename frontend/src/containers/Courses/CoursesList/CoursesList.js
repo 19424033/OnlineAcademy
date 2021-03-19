@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button, Pagination } from 'antd';
 import { useEffect } from "react";
 import CoursesTokenServices from "../../../services/coursesToken.service";
-import Swal from  'sweetalert2'
 var dateFormat = require("dateformat");
 
 const CoursesList = (props) => { 
@@ -34,7 +33,7 @@ const CoursesList = (props) => {
         CoursesTokenServices().delLike(values).
         then((response) => {
             setCategories(categories.filter(data => (
-                        data.CategoryId == CategoryId )))
+                        data.CategoryId != CategoryId )))
             setMinValue(0);
             setMaxValue(numEachPage);
         })  
