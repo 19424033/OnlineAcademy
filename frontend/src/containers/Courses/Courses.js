@@ -101,19 +101,16 @@ const Courses = (props) => {
 
     const changeSearch = event => {
         setValueInputSearch(event.target.value);
-        if(event.target.value.length == 0 ) {
-            setCategories(categoriesTemp);
-            setCategoriesTemp(categories.slice());
+        if(event.target.value == '' ) {
+            setCategoriesTemp([]);
         }
-        else {
-            if(categories.length > 0) {
-                
-                setCategories(categories.filter(data => 
-                            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 ));
+        if(categories.length > 0) {
+            SetTextSort('');
+            setCategoriesTemp(categories.slice().filter(data => 
+                        xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 ));
 
-                setCoursesList(<CoursesList  categories = { categories.filter(data => 
-                            xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
-            }
+            setCoursesList(<CoursesList  categories = { categories.filter(data => 
+                        xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
         }
         
     }
@@ -128,19 +125,23 @@ const Courses = (props) => {
     )
     
     const handClickSortPriceCT = () => {
-        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Price >  b.Price ?  -1 : a.Price < b.Price ? 1 : 0 }) } />);
+        const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
+        setCoursesList(<CoursesList  categories = { categoriesTempSort.sort(function(a, b) {  return a.Price >  b.Price ?  -1 : a.Price < b.Price ? 1 : 0 }) } />);
         SetTextSort(': Giá cao đến thấp')
     }
     const handClickSortPriceTC = () => {
-        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Price <  b.Price ?  -1 : a.Price > b.Price ? 1 : 0 }) } />);
+        const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
+        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.Price <  b.Price ?  -1 : a.Price > b.Price ? 1 : 0 }) } />);
         SetTextSort(': Giá thấp đến cao')
     }
     const handClickSortLike = () => {
-        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.QuanLike >  b.QuanLike ?  -1 : a.QuanLike < b.QuanLike ? 1 : 0 }) } />);
+        const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
+        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.QuanLike >  b.QuanLike ?  -1 : a.QuanLike < b.QuanLike ? 1 : 0 }) } />);
         SetTextSort(': Yêu thích nhất')
     }
     const handClickSortRate = () => {
-        setCoursesList(<CoursesList  categories = { categories.slice().sort(function(a, b) {  return a.Rate >  b.Rate ?  -1 : a.Rate < b.Rate ? 1 : 0 }) } />);
+        const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
+        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.Rate >  b.Rate ?  -1 : a.Rate < b.Rate ? 1 : 0 }) } />);
         SetTextSort(': Đánh giá cao nhất')
     }
     

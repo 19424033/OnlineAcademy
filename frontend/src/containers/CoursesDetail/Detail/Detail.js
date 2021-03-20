@@ -6,6 +6,7 @@ import Swal from  'sweetalert2'
 import CoursesServices from "../../../services/courses.service";
 import CoursesTokenServices from "../../../services/coursesToken.service";
 import CommentCourses from "../CommentCourses/CommentCourses";
+import moment from 'moment';
 
 var dateFormat = require("dateformat");
 
@@ -96,6 +97,8 @@ const Detail = (props) => {
                         </a>
                         Thêm vào danh sách yêu thích
                     </h6>
+                    <span> Cập nhật: { moment(props.categories.Update_At).format('DD/MM/YYYY') }</span>
+                    
                 </div>
                 <div className="ttr-post-info">
                     <div className="ttr-post-title ">
