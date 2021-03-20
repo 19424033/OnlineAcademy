@@ -30,7 +30,7 @@ const PageYTN = () => {
     const quanlimit = 5;
 
     useEffect(() => {
-        HomeServices().showCategoryOrderBy("QuanLike", quanlimit).then((res) => {
+        HomeServices().showCategorySortWeekLikeDetail(quanlimit).then((res) => {
         setCategories(res.data);
     })
     }, []);
@@ -40,8 +40,8 @@ const PageYTN = () => {
             <div className="container">
                  <div className="row">
                      <div className="col-md-12 heading-bx left">
-                         <h2 className="title-head">Nhiều người quan tâm</h2>
-                         <p>5 khóa học được yêu thích nhất</p>
+                         <h2 className="title-head">Nổi bật nhất</h2>
+                         <p>5 khóa học được yêu thích nhất trong tuần</p>
                      </div>
                  </div>
                  <Carousel responsive={responsive}>

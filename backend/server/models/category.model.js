@@ -1,5 +1,7 @@
 const db = require("../utils/db");
 
+moment = require('moment');
+
 module.exports = {
   all() {
     return db("category").where("isActive",true);
@@ -160,6 +162,86 @@ module.exports = {
                                            WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
                         .whereRaw('C.ISACTIVE = ?', true)
                         .orderBy(orderbyType, 'DESC')
+                        .limit(limit);
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+  async showCategorySortWeekLikeDetail(limit) {
+    var date = new Date();
+    var fromDateLastWeek = new Date();
+    fromDateLastWeek.setDate(fromDateLastWeek.getDate() - 7 - 7 + 2);
+    var toDateLastWeek = new Date();
+    toDateLastWeek.setDate(fromDateLastWeek.getDate() + 6 );   
+
+    const categoryList =  db.select(db.raw(`C.*
+                                      , CG.CategoryGroupName
+                                      , U.DislayName
+                                      , D.Value
+                                      , CASE WHEN V.TOTALVIEW IS NULL THEN 0 ELSE V.TOTALVIEW END AS TotalView
+                                      , CASE WHEN LK.CATEGORYID IS NULL THEN 0 ELSE 1 END AS IsLikeWeek`))
+                        .from('CATEGORY AS C')
+                        .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                        .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                        .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                        AND D.ISACTIVE = TRUE
+                                                        AND D.FROMDATE <= ?
+                                                        AND D.ENDDATE >= ?)`,  [date,date] ))
+                        .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
+                                           FROM PRODUCT
+                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                        .leftJoin(db.raw(`(SELECT CATEGORYID, COUNT(USERSID) AS TotalLike
+                                           FROM LIKEDETAIL
+                                           WHERE ISACTIVE = TRUE
+                                           AND LIKETIME >= ?
+                                           AND LIKETIME <= ?
+                                           GROUP BY CATEGORYID
+                                           ORDER BY TotalLike
+                                           LIMIT ${limit} ) AS LK ON LK.CATEGORYID = C.CATEGORYID`, [moment(fromDateLastWeek).format("YYYY-MM-DD"), moment(toDateLastWeek).format("YYYY-MM-DD")]  ))
+                        .whereRaw('C.ISACTIVE = ?', true)
+                        .orderBy('IsLikeWeek', 'DESC')
+                        .limit(limit);
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+  async showCategorySortWeekResDetail(limit) {
+    var date = new Date();
+    var fromDateLastWeek = new Date();
+    fromDateLastWeek.setDate(fromDateLastWeek.getDate() - 7 - 7 + 2);
+    var toDateLastWeek = new Date();
+    toDateLastWeek.setDate(fromDateLastWeek.getDate() + 6 );   
+
+    const categoryList =  db.select(db.raw(`C.*
+                                      , CG.CategoryGroupName
+                                      , U.DislayName
+                                      , D.Value
+                                      , CASE WHEN V.TOTALVIEW IS NULL THEN 0 ELSE V.TOTALVIEW END AS TotalView
+                                      , CASE WHEN LK.CATEGORYID IS NULL THEN 0 ELSE 1 END AS IsResWeek`))
+                        .from('CATEGORY AS C')
+                        .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                        .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                        .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                        AND D.ISACTIVE = TRUE
+                                                        AND D.FROMDATE <= ?
+                                                        AND D.ENDDATE >= ?)`,  [date,date] ))
+                        .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
+                                           FROM PRODUCT
+                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                        .leftJoin(db.raw(`(SELECT CATEGORYID, COUNT(USERSID) AS TotalRes
+                                           FROM RESDETAIL
+                                           WHERE ISACTIVE = TRUE
+                                           AND RESTIME >= ?
+                                           AND RESTIME <= ?
+                                           GROUP BY CATEGORYID
+                                           ORDER BY TotalRes
+                                           LIMIT ${limit} ) AS LK ON LK.CATEGORYID = C.CATEGORYID`, [moment(fromDateLastWeek).format("YYYY-MM-DD"), moment(toDateLastWeek).format("YYYY-MM-DD")]  ))
+                        .whereRaw('C.ISACTIVE = ?', true)
+                        .orderBy('IsResWeek', 'DESC')
                         .limit(limit);
     if (categoryList.length === 0) {
       return null;

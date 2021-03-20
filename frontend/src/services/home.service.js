@@ -9,7 +9,17 @@ export default function HomeServices() {
     return axios.get(`${API_URL}/showCategoryOrderBy/${orderByType}/${limit}`);
   };
 
+  const showCategorySortWeekLikeDetail = (limit) => {
+    return axios.get(`${API_URL}/showCategorySortWeekLikeDetail/${limit}`);
+  };
+
+  const showCategorySortWeekResDetail = (limit) => {
+    return axios.get(`${API_URL}/showCategorySortWeekResDetail/${limit}`);
+  };
+
   return {
     showCategoryOrderBy,
+    showCategorySortWeekResDetail,
+    showCategorySortWeekLikeDetail
   };
 }

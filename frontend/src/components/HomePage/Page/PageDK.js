@@ -31,7 +31,7 @@ const PageDK = () => {
     const quanlimit = 10;
 
     useEffect(() => {
-        HomeServices().showCategoryOrderBy("QuanRes", quanlimit).then((res) => {
+        HomeServices().showCategorySortWeekResDetail(quanlimit).then((res) => {
         setCategories(res.data);
     })
     }, []);
