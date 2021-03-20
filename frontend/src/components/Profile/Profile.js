@@ -60,7 +60,8 @@ const Profile = () => {
               <div className="col-lg-3 col-md-4 col-sm-12">
                 <div className="profile-bx text-center">
                   <div className="user-profile-thumb">
-                    <img src= { imageUser } />
+                    <img src= { imageUser ? imageUser : "https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png" }/>
+                    
                   </div>
                   <div className="profile-info">
                     <h4>{nameUser}</h4>

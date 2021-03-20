@@ -176,7 +176,7 @@ const HeaderCustomize = () => {
               to="/profile"
               onClick={profileUser}
             >
-              <Avatar size="large" src= { imageUser } />
+              <Avatar size="large" src= { imageUser ? imageUser : "https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png" } />
             </Link>
           </Dropdown>
         </li>

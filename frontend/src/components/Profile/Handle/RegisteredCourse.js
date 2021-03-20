@@ -16,6 +16,7 @@ const RegisteredCourse = () => {
           setCoursesUser([]);
         } else {
           setCoursesUser(data.data);
+          setCoursesUserTemp(data.data)
         }
       });
   }, []);
