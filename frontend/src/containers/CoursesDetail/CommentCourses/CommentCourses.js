@@ -22,8 +22,8 @@ const CommentCourses = (props) => {
   useEffect(() => {
     CoursesServices().getRateDetailByCategoryId(props.categories.CategoryId)
       .then((res) => {
-          setHide(props.categories.IsCmt);
-          setData(res.data);
+        setHide(props.categories.IsCmt);
+        setData(res.data);
       })
   }, [props.categories, hide])
   function handleClickCmt() {
