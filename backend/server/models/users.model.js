@@ -43,6 +43,8 @@ module.exports = {
     const category = await db.select(db.raw(`C.*
                                             ,CG.CategoryGroupName
                                             ,U.DislayName
+                                            ,1 AS IsRes
+                                            ,RD.IsDone
                                             ,D.Value`))
                               .from(`RESDETAIL AS RD`)
                               .leftJoin(db.raw(`CATEGORY AS C ON C.CATEGORYID = RD.CATEGORYID`))

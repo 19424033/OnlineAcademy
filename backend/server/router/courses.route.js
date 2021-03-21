@@ -26,7 +26,6 @@ router.put('/products/updateViewer/:id/:quanview', async function (req, res) {
 }); 
 
 router.get('/categorygroup', async function (req, res) {
-  const id = req.params.id || 0;
   const categorygroup = await categorygroupModel.all();
   if (categorygroup === null) {
     return res.status(204).end();
@@ -34,18 +33,19 @@ router.get('/categorygroup', async function (req, res) {
   res.json(categorygroup);
 }); 
 
-router.get('/getCategoryByGroupId/:id', async function (req, res) {
+router.get('/getCategoryByGroupId/:userid/:id', async function (req, res) {
+  const userid = req.params.userid || 0;
   const id = req.params.id || 0;
-  const categorygroup = await categoryModel.getCategoryByGroupId(id);
+  const categorygroup = await categoryModel.getCategoryByGroupId(userid, id);
   if (categorygroup === null) {
     return res.status(204).end();
   }
   res.json(categorygroup);
 }); 
 
-router.get('/getCategoryAllGroup', async function (req, res) {
-  const keyword = req.params.keyword || '';
-  const categoryList = await categoryModel.getCategoryAllGroup();
+router.get('/getCategoryAllGroup/:userid', async function (req, res) {
+  const userid = req.params.userid || 0;
+  const categoryList = await categoryModel.getCategoryAllGroup(userid);
   if (categoryList === null) {
     return res.status(204).end();
   }

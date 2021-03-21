@@ -13,12 +13,12 @@ export default function CoursesServices() {
     return axios.get(`${API_URL}/category/${CategoryId}/${userid}`);
   };
 
-  const getCategoryAllGroup = () => {
-    return axios.get(`${API_URL}/getCategoryAllGroup/`);
+  const getCategoryAllGroup = (userid) => {
+    return axios.get(`${API_URL}/getCategoryAllGroup/${userid}`);
   };
 
-  const getCategoryByGroupId = ( id ) => {
-    return axios.get(`${API_URL}/getCategoryByGroupId/${id}`);
+  const getCategoryByGroupId = ( id, userid ) => {
+    return axios.get(`${API_URL}/getCategoryByGroupItdrs4d/${userid}/${id}`);
   };
 
   const updateViewVideo = (ProductId, Viewer) => {

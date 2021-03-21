@@ -23,12 +23,17 @@ export default function CoursesTolenServices() {
     const addRes = (values) => {
         return axios.post(`${API_URL}/addRes`, values,  { headers: authHeader(accessToken) });
     };
+
+    const updateDoneRes = (values) => {
+        return axios.put(`${API_URL}/updateDoneRes`, values,  { headers: authHeader(accessToken) });
+    };
   
     return {
         addCmt,
         addLike,
         delLike,
-        addRes
+        addRes,
+        updateDoneRes
     };
 }
 

@@ -29,4 +29,10 @@ router.post("/addRes", async function (req, res) {
     res.status(200).json(resual);
 });
 
+router.put("/updateDoneRes", async function (req, res) {
+    const updateDoneRes = req.body;
+    const resual = await categoryModel.updateDoneRes(updateDoneRes);
+    res.status(200).json(resual);
+});
+
 module.exports = router;

@@ -250,11 +250,13 @@ module.exports = {
   },
 
   // Hàm truy vấn các khóa học thuộc lĩnh vực //Courses
-  async getCategoryByGroupId(CategoryGroupId) {
+  async getCategoryByGroupId(userid, CategoryGroupId) {
     var date = new Date();
     const categoryList = await db.select(db.raw(`C.*
                                           ,CG.CategoryGroupName
                                           ,U.DislayName
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE RD.IsDone END AS RD.IsDone
                                           ,D.Value`))
                               .from('CATEGORY AS C')
                               .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
@@ -263,6 +265,9 @@ module.exports = {
                                                               AND D.ISACTIVE = TRUE
                                                               AND D.FROMDATE <= ?
                                                               AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .leftJoin(db.raw(`RESDETAIL AS RD ON C.CATEGORYID = RD.CATEGORYID
+                                                              AND RD.USERSID = ?
+                                                              AND RD.ISACTIVE = TRUE`, [ userid]))
                               .whereRaw('C.ISACTIVE = ?', true)
                               .andWhereRaw('C.CATEGORYGROUPID = ?', CategoryGroupId)
     if (categoryList.length === 0) {
@@ -272,11 +277,13 @@ module.exports = {
   },
 
     // Hàm truy vấn các khóa học thuộc lĩnh vực //Courses
-  async getCategoryAllGroup() {
+  async getCategoryAllGroup(userid) {
     var date = new Date();
     const categoryList = await db.select(db.raw(`C.*
                                           ,CG.CategoryGroupName
                                           ,U.DislayName
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE RD.IsDone END AS IsDone
                                           ,D.Value`))
                               .from('CATEGORY AS C')
                               .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
@@ -285,6 +292,9 @@ module.exports = {
                                                               AND D.ISACTIVE = TRUE
                                                               AND D.FROMDATE <= ?
                                                               AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .leftJoin(db.raw(`RESDETAIL AS RD ON C.CATEGORYID = RD.CATEGORYID
+                                                              AND RD.USERSID = ?
+                                                              AND RD.ISACTIVE = TRUE`, [userid]))
                               .whereRaw('C.ISACTIVE = ?', true)
     if (categoryList.length === 0) {
       return null;
@@ -338,6 +348,13 @@ module.exports = {
 
   async addRes(ResDetail) {
     const ids = await db("ResDetail").insert(ResDetail);
+    return ids[0];
+  },
+
+  async updateDoneRes(ResDetail) {
+    const ids = await db("ResDetail").update(ResDetail)
+                                      .whereRaw(`USERSID = ?
+                                      AND CATEGORYID = ?` , [ResDetail.UsersId, ResDetail.CategoryId]);
     return ids[0];
   },
 

@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CoursesServices from "../../services/courses.service";
 import {
     useParams, Link
-  } from "react-router-dom";
+} from "react-router-dom";
 import CoursesList from './CoursesList/CoursesList'
 import { Breadcrumb, Menu, Dropdown } from 'antd';
+import { AppContext } from "../../utils/AppContext";
 
 const Courses = (props) => {
 
     let { CategoryGroup } = useParams();
-    
+
+    let { userid } = useContext(AppContext);
+
     const keyId = String(CategoryGroup === undefined ? '0' : CategoryGroup.indexOf('search') > - 1 ? '0' : CategoryGroup.split("-")[0]);
     const defaultName = CategoryGroup === undefined ? '' : CategoryGroup.indexOf('search') > - 1 ? '' : ` > ${CategoryGroup.split("-")[1]}`;
 
@@ -17,45 +20,50 @@ const Courses = (props) => {
     const [CategoryGroupName, setCategoryGroupName] = useState(defaultName);
     const [categories, setCategories] = useState([]);
     const [categoriesTemp, setCategoriesTemp] = useState([]);
-    const [coursesList, setCoursesList] = useState(<CoursesList  categories = {categories} />)
+    const [coursesList, setCoursesList] = useState(<CoursesList userid={userid} categories={categories} />)
     const [valueInputSearch, setValueInputSearch] = useState('');
-    const [textSort, SetTextSort] = useState(''); 
+    const [textSort, SetTextSort] = useState('');
 
     useEffect(() => {
         //Lọc List ALL CategoryGroup
 
         CoursesServices().CategoryGroup()
-        .then((response) => {
-            setCategoryGroup(response.data);
-        });
+            .then((response) => {
+                setCategoryGroup(response.data);
+            });
         SetTextSort('');
         //Lọc List Category
-        if(keyId > 0) {
-            CoursesServices().getCategoryByGroupId(keyId)
-            .then((response) => {
-                setCategories(response.data);
-                setCategoryGroupName(defaultName);
-                setCoursesList(<CoursesList   categories = {response.data} />);
-            });
+        if (keyId > 0) {
+            CoursesServices().getCategoryByGroupId(keyId, userid != undefined ? userid : 0)
+                .then((response) => {
+                    setCategories(response.data);
+                    setCategoryGroupName(defaultName);
+                    setCoursesList(<CoursesList userid={userid} categories={response.data} />);
+                });
         }
         else {
-            CoursesServices().getCategoryAllGroup()
-            .then((response) => {
-                const searchkey = new URLSearchParams(props.location.search).get('keyword');
-                const keyword = searchkey == null ? '' : searchkey;
-                setCategoryGroupName('');
-                setValueInputSearch(keyword);
-                setCategories(response.data);
-                setCoursesList(<CoursesList  categories = { 
-                    response.data.filter(data => (
+            CoursesServices().getCategoryAllGroup(userid != undefined ? userid : 0)
+                .then((response) => {
+                    const searchkey = new URLSearchParams(props.location.search).get('keyword');
+                    const keyword = searchkey === null ? '' : searchkey;
+                    setCategoryGroupName('');
+                    setValueInputSearch(keyword);
+                    setCategoriesTemp(response.data.filter(data => (
                         xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
                         || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1 ) ) } />);
-            });
+                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1)));
+
+                    setCategories(response.data);
+                    setCoursesList(<CoursesList userid={userid} categories={
+                        response.data.filter(data => (
+                            xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
+                            || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
+                            || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1))} />);
+                });
         }
 
-       
-    },[props.location.search]);
+
+    }, [props.location.search, userid]);
 
     function xoa_dau(str) {
         str = str.toLowerCase(str);
@@ -70,81 +78,86 @@ const Courses = (props) => {
     }
 
     const handleClickCategoryGroupName = (val) => {
-        const id = val == 0 ? 0 : val.CategoryGroupId;
+        const id = val === 0 ? 0 : val.CategoryGroupId;
         SetTextSort('');
         setValueInputSearch('');
-        if(id > 0) {
+        if (id > 0) {
             CoursesServices().getCategoryByGroupId(id)
-            .then((response) => {
-                setCategories(response.data);
-                setCategoryGroupName(`> ${val.CategoryGroupName}`);
-                setCoursesList(<CoursesList  categories = {response.data} />);
-            });
+                .then((response) => {
+                    setCategories(response.data);
+                    setCategoriesTemp(response.data);
+                    setCategoryGroupName(`> ${val.CategoryGroupName}`);
+                    setCoursesList(<CoursesList userid={userid} categories={response.data} />);
+                });
         }
-        
+
         else {
             CoursesServices().getCategoryAllGroup()
-            .then((response) => {
-                const searchkey = new URLSearchParams(props.location.search).get('keyword');
-                const keyword = searchkey == null ? '' : searchkey;
-                setValueInputSearch(keyword);
-                setCategoryGroupName('');
-                setCategories(response.data);
-                setCoursesList(<CoursesList  categories = { 
-                    response.data.filter(data => (
+                .then((response) => {
+                    const searchkey = new URLSearchParams(props.location.search).get('keyword');
+                    const keyword = searchkey === null ? '' : searchkey;
+                    setValueInputSearch(keyword);
+                    setCategoryGroupName('');
+                    setCategoriesTemp(response.data.filter(data => (
                         xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
                         || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1 ) ) } />);
-            });
+                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1)));
+                    setCategories(response.data);
+                    setCoursesList(<CoursesList userid={userid} categories={
+                        response.data.filter(data => (
+                            xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
+                            || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
+                            || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1))} />);
+                });
         }
     }
 
     const changeSearch = event => {
         setValueInputSearch(event.target.value);
-        if(event.target.value == '' ) {
+        if (event.target.value === '') {
             setCategoriesTemp([]);
         }
-        if(categories.length > 0) {
+        if (categories.length > 0) {
             SetTextSort('');
-            setCategoriesTemp(categories.slice().filter(data => 
-                        xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 ));
+            setCategoriesTemp(categories.slice().filter(data =>
+                xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value)) > -1));
 
-            setCoursesList(<CoursesList  categories = { categories.filter(data => 
-                        xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value))  > -1 )} />);
+            setCoursesList(<CoursesList userid={userid} categories={categories.filter(data =>
+                xoa_dau(data.CategoryName).indexOf(xoa_dau(event.target.value)) > -1)} />);
         }
-        
+
     }
 
     const menu = (
         <Menu >
-            <Menu.Item onClick = {() => handClickSortPriceCT() } > Giá cao đến thấp </Menu.Item>
-            <Menu.Item onClick = {() => handClickSortPriceTC() }>Giá thấp đến cao</Menu.Item>
-            <Menu.Item onClick = {() => handClickSortLike() }>Yêu thích nhất</Menu.Item>
-            <Menu.Item onClick = {() => handClickSortRate() }>Đánh giá cao nhất</Menu.Item>
+            <Menu.Item onClick={() => handClickSortPriceCT()} > Giá cao đến thấp </Menu.Item>
+            <Menu.Item onClick={() => handClickSortPriceTC()}>Giá thấp đến cao</Menu.Item>
+            <Menu.Item onClick={() => handClickSortLike()}>Yêu thích nhất</Menu.Item>
+            <Menu.Item onClick={() => handClickSortRate()}>Đánh giá cao nhất</Menu.Item>
         </Menu>
     )
-    
+
     const handClickSortPriceCT = () => {
         const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
-        setCoursesList(<CoursesList  categories = { categoriesTempSort.sort(function(a, b) {  return a.Price >  b.Price ?  -1 : a.Price < b.Price ? 1 : 0 }) } />);
+        setCoursesList(<CoursesList userid={userid} categories={categoriesTempSort.sort(function (a, b) { return a.Price > b.Price ? -1 : a.Price < b.Price ? 1 : 0 })} />);
         SetTextSort(': Giá cao đến thấp')
     }
     const handClickSortPriceTC = () => {
         const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
-        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.Price <  b.Price ?  -1 : a.Price > b.Price ? 1 : 0 }) } />);
+        setCoursesList(<CoursesList userid={userid} categories={categoriesTempSort.slice().sort(function (a, b) { return a.Price < b.Price ? -1 : a.Price > b.Price ? 1 : 0 })} />);
         SetTextSort(': Giá thấp đến cao')
     }
     const handClickSortLike = () => {
         const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
-        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.QuanLike >  b.QuanLike ?  -1 : a.QuanLike < b.QuanLike ? 1 : 0 }) } />);
+        setCoursesList(<CoursesList userid={userid} categories={categoriesTempSort.slice().sort(function (a, b) { return a.QuanLike > b.QuanLike ? -1 : a.QuanLike < b.QuanLike ? 1 : 0 })} />);
         SetTextSort(': Yêu thích nhất')
     }
     const handClickSortRate = () => {
         const categoriesTempSort = categoriesTemp.length > 0 ? categoriesTemp.slice() : categories.slice();
-        setCoursesList(<CoursesList  categories = { categoriesTempSort.slice().sort(function(a, b) {  return a.Rate >  b.Rate ?  -1 : a.Rate < b.Rate ? 1 : 0 }) } />);
+        setCoursesList(<CoursesList userid={userid} categories={categoriesTempSort.slice().sort(function (a, b) { return a.Rate > b.Rate ? -1 : a.Rate < b.Rate ? 1 : 0 })} />);
         SetTextSort(': Đánh giá cao nhất')
     }
-    
+
 
     return (
         <div className="content-block">
@@ -156,34 +169,34 @@ const Courses = (props) => {
                                 <Link to="/">Trang Chủ</Link>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                Khóa Học   { CategoryGroupName }
+                                Khóa Học   {CategoryGroupName}
                             </Breadcrumb.Item>
-                        </Breadcrumb>   
+                        </Breadcrumb>
                     </div>
                     <div className="row">
                         <div className="col-lg-3 col-md-4 col-sm-12 m-30">
                             <div className="widget courses-search-bx placeani">
                                 <div className="form-group">
-                                <div className="input-group">
-                                    <input name="dzName" placeholder="Tìm kiếm khóa học..." value= {valueInputSearch} type="text" required className="form-control" onChange={changeSearch}  />
-                                </div>
+                                    <div className="input-group">
+                                        <input name="dzName" placeholder="Tìm kiếm khóa học..." value={valueInputSearch} type="text" required className="form-control" onChange={changeSearch} />
+                                    </div>
                                 </div>
                             </div>
                             <div className="widget widget_archive">
                                 <h5 className="widget-title style-1">Lĩnh Vực</h5>
-                                <Menu  defaultSelectedKeys=  { [ keyId ] }  theme="dark">
-                                    <Menu.Item key="0" onClick={ () => handleClickCategoryGroupName(0) }>
-                                    <Link to= {`/courses`} >
-                                        Tất cả Lĩnh vực
+                                <Menu defaultSelectedKeys={[keyId]} theme="dark">
+                                    <Menu.Item key="0" onClick={() => handleClickCategoryGroupName(0)}>
+                                        <Link to={`/courses`} >
+                                            Tất cả Lĩnh vực
                                     </Link>
-                                    </Menu.Item>    
+                                    </Menu.Item>
                                     {
-                                        categoryGroup.map( (val, index) => 
-                                            <Menu.Item key= { val.CategoryGroupId } onClick={ () => handleClickCategoryGroupName(val) } >
-                                            <Link to= {`/courses/${val.CategoryGroupId}-${val.CategoryGroupName}` }>
-                                                { val.CategoryGroupName }
+                                        categoryGroup.map((val, index) =>
+                                            <Menu.Item key={val.CategoryGroupId} onClick={() => handleClickCategoryGroupName(val)} >
+                                                <Link to={`/courses/${val.CategoryGroupId}-${val.CategoryGroupName}`}>
+                                                    {val.CategoryGroupName}
                                                 </Link>
-                                            </Menu.Item>    
+                                            </Menu.Item>
                                         )
                                     }
                                 </Menu>
@@ -191,9 +204,9 @@ const Courses = (props) => {
                         </div>
                         <div className="col-lg-9 col-md-8 col-sm-12">
                             <Dropdown overlay={menu} trigger={['click']} >
-                                <span style={{fontWeight:'bold', fontSize: 15, lineHeight:'50px' , textAlign:'right' }} > <i className="ti-bar-chart" /> Sắp xếp  { textSort } </span>
+                                <span style={{ fontWeight: 'bold', fontSize: 15, lineHeight: '50px', textAlign: 'right' }} > <i className="ti-bar-chart" /> Sắp xếp  {textSort} </span>
                             </Dropdown>
-                        { coursesList }
+                            {coursesList}
                         </div>
                     </div>
                 </div>

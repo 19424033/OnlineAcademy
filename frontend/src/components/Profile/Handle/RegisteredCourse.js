@@ -5,6 +5,7 @@ import CoursesList from "../../../containers/Courses/CoursesList/CoursesList"
 
 const RegisteredCourse = () => {
   const { userid } = useContext(AppContext);
+  const [filter, setFilter] = useState(undefined);
   const [coursesUser, setCoursesUser] = useState([]);
   const [coursesUserTemp, setCoursesUserTemp] = useState([]);
 
@@ -15,24 +16,28 @@ const RegisteredCourse = () => {
         if (data.data === false) {
           setCoursesUser([]);
         } else {
+          setFilter(undefined);
           setCoursesUser(data.data);
-          setCoursesUserTemp(data.data)
+          setCoursesUserTemp(data.data);
         }
       });
   }, []);
 
   function handClickAll() {
+    setFilter(undefined);
     setCoursesUserTemp(coursesUser.slice());
   }
 
-  function handClickCompleted() {
+  function handClickDone() {
+    setFilter(1);
     setCoursesUserTemp(coursesUser.slice().filter(data => (
-      data.Completed == 1 )))
+                          data.IsDone == 1 )))
   }
 
-  function handClickUnCompleted() {
+  function handClickNoDone() {
+    setFilter(0);
     setCoursesUserTemp(coursesUser.slice().filter(data => (
-                          data.Completed == 0 )))
+                          data.IsDone == 0 )))
   }
   return (
     <div>
@@ -46,11 +51,11 @@ const RegisteredCourse = () => {
             </li>
             <li data-filter="publish" className="btn">
               <input type="radio" />
-              <a onClick={() => handClickCompleted() }><span>Hoàn thành</span></a> 
+              <a onClick={() => handClickDone() }><span>Hoàn thành</span></a> 
             </li>
             <li data-filter="pending" className="btn">
               <input type="radio" />
-              <a onClick={() => handClickUnCompleted() }><span>Chưa hoàn thành</span></a> 
+              <a onClick={() => handClickNoDone() }><span>Chưa hoàn thành</span></a> 
             </li>
           </ul>
         </div>
@@ -62,7 +67,7 @@ const RegisteredCourse = () => {
           ) : (
             <div className="row">
               <div className="col-lg-10 col-md-12 col-sm-8" style={{margin:'0px auto'}}>
-                <CoursesList  categories = {coursesUserTemp} />
+                <CoursesList filter= { filter } userid = {userid} categories = {coursesUserTemp} />
               </div>
             </div>
           )}
