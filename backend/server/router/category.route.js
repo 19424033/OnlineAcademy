@@ -1,6 +1,7 @@
 const express = require("express");
 const categoryModel = require("../models/category.model");
 const { cloudinary } = require("../../server/utils/cloudinary");
+const { sendMSGClient } = require("../../ws");
 
 const router = express.Router();
 
@@ -69,6 +70,7 @@ router.get("/byUser/:id", async function (req, res) {
 router.put("/:id", async function (req, res) {
   const id = req.params.id;
   const values = req.body;
+  // console.log(id)
   if (values.Change === false) {
     delete values.Change;
     await categoryModel.update(id, values);
@@ -87,6 +89,8 @@ router.put("/:id", async function (req, res) {
       });
     });
   }
+  const list = await categoryModel.UserByCategoryID(id);
+  sendMSGClient(list);
 });
 
 router.put("/setIsActive/:id", async function (req, res) {

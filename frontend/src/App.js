@@ -8,7 +8,7 @@ import {
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";
-import 'antd-button-color/dist/css/style.css';
+import "antd-button-color/dist/css/style.css";
 import AppRoute from "./AppRoute";
 
 //page
@@ -119,7 +119,7 @@ const App = () => {
               exact
             />
             <AppRoute
-              path={["/profile" , "/profile/:profileTitlle"]}
+              path={["/profile", "/profile/:profileTitlle"]}
               layout={Default}
               component={Profile}
               exact
@@ -133,7 +133,7 @@ const App = () => {
             />
 
             <AppRoute
-              path= {["/courses", "/courses/:CategoryGroup" ] }
+              path={["/courses", "/courses/:CategoryGroup"]}
               layout={Default}
               component={Category}
               exact
@@ -227,7 +227,7 @@ const App = () => {
             />
 
             <AppRoute
-              path={["/courses", "/courses/:CategoryGroup" ] }
+              path={["/courses", "/courses/:CategoryGroup"]}
               layout={Default}
               component={Category}
               exact

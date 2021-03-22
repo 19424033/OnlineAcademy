@@ -41,32 +41,32 @@ const ChangeProfileUser = ({ setUserEmail }) => {
     },
   };
   const onFinish = (values) => {
-    console.log(values);
+   // console.log(values);
     setimageUser(values.Image)
-    // AuthService()
-    //   .editProfile({
-    //     userId: userid,
-    //     userName: values.DislayName,
-    //     Email: values.Email,
-    //   })
-    //   .then((data) => {
-    //     setnameUser(data.data[0].DislayName);
-    //     if (data.data) {
-    //       message.success("Bạn đã cập nhật thành công");
-    //       setUserEmail(values.Email);
-    //       const tokenString = localStorage.getItem("AcademyOnline_Token");
-    //       const valuestoken = localparseJson(tokenString);
-    //       AuthService()
-    //         .refresh(valuestoken)
-    //         .then((result) => {
-    //           valuestoken.accessToken = result.data.accessToken;
-    //           setnameUser(parseAccessToken_res(result.data).DislayName);
-    //           saveToken(valuestoken);
-    //         })
-    //         .catch((err) => {});
-    //     } else {
-    //     }
-    //   });
+    AuthService()
+      .editProfile({
+        userId: userid,
+        userName: values.DislayName,
+        Email: values.Email,
+      })
+      .then((data) => {
+        setnameUser(data.data[0].DislayName);
+        if (data.data) {
+          message.success("Bạn đã cập nhật thành công");
+          setUserEmail(values.Email);
+          const tokenString = localStorage.getItem("AcademyOnline_Token");
+          const valuestoken = localparseJson(tokenString);
+          AuthService()
+            .refresh(valuestoken)
+            .then((result) => {
+              valuestoken.accessToken = result.data.accessToken;
+              setnameUser(parseAccessToken_res(result.data).DislayName);
+              saveToken(valuestoken);
+            })
+            .catch((err) => {});
+        } else {
+        }
+      });
   };
   return (
     <>

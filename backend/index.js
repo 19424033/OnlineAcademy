@@ -20,7 +20,6 @@ const HOME = require("./server/router/home.route");
 
 const decentralization = require("./server/middlewares/auth.mdw"); // phân quyền
 
-
 const PORT = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV !== "test") {
@@ -42,7 +41,7 @@ app.use("/api/users", decentralization, USERS);
 app.use("/api/categorygroup", decentralization, CATEGORYGROUP);
 app.use("/api/category", decentralization, CATEGORY);
 app.use("/api/product", decentralization, PRODUCT);
-app.use("/api/coursesToken", decentralization , COURSESTOKEN);
+app.use("/api/coursesToken", decentralization, COURSESTOKEN);
 app.use("/api/courses", COURSES);
 
 app.use("/api/auth", AUTH);
@@ -87,5 +86,6 @@ app.use(function (err, req, res, next) {
 app.listen(PORT, function () {
   console.log(`Server is running on Port: http://localhost:${PORT}`);
 });
+require("./ws");
 
 module.exports = app;

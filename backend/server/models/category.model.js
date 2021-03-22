@@ -68,7 +68,17 @@ module.exports = {
   updateProductView(id, quanview) {
     return db("product").where("ProductId", id).update('Viewer', quanview);
   },
-
+  async UserByCategoryID(id){
+    // return db("resdetail").distinct('UsersId').where("CategoryId", id);
+    return db({ a: 'category', b: 'resdetail', c: 'users' })
+    .select({
+      categoryName: 'a.categoryName',
+      NameTeacher: 'c.DislayName',
+      UsersId:'b.UsersId'
+    })
+    .whereRaw('?? = ?? and ?? = ?? ', ['a.CategoryId', 'b.CategoryId','c.UsersID','a.TeacherID'])
+    .where('b.CategoryId', id);
+  },
   // Chi tiết từng khóa học
   async getCategory(CategoryId, UsersId) {
     var date = new Date();

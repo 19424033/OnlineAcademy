@@ -4,6 +4,7 @@ import {
   Input, //Button,
   Checkbox,
   Alert,
+  notification,
 } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -56,6 +57,25 @@ const Login = () => {
             setProfile(parseAccessToken_res(res.data).Users);
             setUserJobId(parseAccessToken_res(res.data).JobId);
             saveToken(res.data);
+            const ws = new WebSocket("ws://localhost:40567");
+
+            ws.onopen = function () {
+              console.log("connected");
+              ws.send(parseAccessToken_res(res.data).UsersId);
+            };
+            ws.onmessage = function (e) {
+              if (e.data) {
+                var c = JSON.parse(e.data);
+                notification["warning"]({
+                  message: "Thông Báo",
+                  description: `Giảng Viên: ${
+                    c.DislayName && c.DislayName
+                  } Vừa Cập Nhật Khóa Học: ${c.CategoryName && c.CategoryName}`,
+                  placement: "bottomRight",
+                });
+              }
+            };
+
             if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
               setCheckOTPConfim(true);
             } else {
@@ -98,6 +118,24 @@ const Login = () => {
             setnameUser(parseAccessToken_res(res.data).DislayName);
             setimageUser(parseAccessToken_res(res.data).Image);
             setUserid(parseAccessToken_res(res.data).UsersId);
+            const ws = new WebSocket("ws://localhost:40567");
+
+            ws.onopen = function () {
+              console.log("connected");
+              ws.send(parseAccessToken_res(res.data).UsersId);
+            };
+            ws.onmessage = function (e) {
+              if (e.data) {
+                var c = JSON.parse(e.data);
+                notification["warning"]({
+                  message: "Thông Báo",
+                  description: `Giảng Viên: ${
+                    c.DislayName && c.DislayName
+                  } Vừa Cập Nhật Khóa Học: ${c.CategoryName && c.CategoryName}`,
+                  placement: "bottomRight",
+                });
+              }
+            };
             saveToken(res.data);
             if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
               setCheckOTPConfim(true);
