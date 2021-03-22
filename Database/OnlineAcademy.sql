@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 20/03/2021 17:02:19
+ Date: 22/03/2021 12:04:56
 */
 
 SET NAMES utf8mb4;
@@ -58,7 +58,7 @@ CREATE TABLE `category`  (
   PRIMARY KEY (`CategoryId`) USING BTREE,
   INDEX `CategoryGroupId`(`CategoryGroupId`) USING BTREE,
   FULLTEXT INDEX `CategoryName`(`CategoryName`)
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of category
@@ -103,8 +103,9 @@ CREATE TABLE `categorygroup`  (
   `Created_At` timestamp NULL DEFAULT NULL,
   `Image` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
-  PRIMARY KEY (`CategoryGroupId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`CategoryGroupId`) USING BTREE,
+  FULLTEXT INDEX `CategoryGroupName`(`CategoryGroupName`)
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of categorygroup
@@ -150,7 +151,7 @@ CREATE TABLE `job`  (
   `JobName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`JobId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job
@@ -172,7 +173,7 @@ CREATE TABLE `likedetail`  (
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of likedetail
@@ -203,7 +204,7 @@ CREATE TABLE `product`  (
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`ProductId`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 137 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 292 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product
@@ -499,7 +500,7 @@ CREATE TABLE `ratedetail`  (
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`CategoryId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ratedetail
@@ -518,21 +519,22 @@ CREATE TABLE `resdetail`  (
   `UsersId` int NULL DEFAULT NULL,
   `CategoryId` int NULL DEFAULT NULL,
   `CostEach` decimal(18, 2) NULL DEFAULT NULL,
+  `IsDone` tinyint NULL DEFAULT 0,
   `ResTime` timestamp NULL DEFAULT NULL,
   `IsActive` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `CategoryId`(`UsersId`) USING BTREE,
   INDEX `UsersId`(`UsersId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of resdetail
 -- ----------------------------
-INSERT INTO `resdetail` VALUES (1, 8, 1, 0.00, NULL, 1);
-INSERT INTO `resdetail` VALUES (2, 10, 12, 349000.00, NULL, 1);
-INSERT INTO `resdetail` VALUES (3, 10, 2, 599000.00, NULL, 1);
-INSERT INTO `resdetail` VALUES (4, 10, 24, 900000.00, NULL, 1);
-INSERT INTO `resdetail` VALUES (6, 10, 23, 350000.00, NULL, 1);
+INSERT INTO `resdetail` VALUES (1, 8, 1, 0.00, 0, NULL, 1);
+INSERT INTO `resdetail` VALUES (2, 10, 12, 349000.00, 0, NULL, 1);
+INSERT INTO `resdetail` VALUES (3, 10, 2, 599000.00, 0, NULL, 1);
+INSERT INTO `resdetail` VALUES (4, 10, 24, 900000.00, 0, NULL, 1);
+INSERT INTO `resdetail` VALUES (6, 10, 23, 350000.00, 0, NULL, 1);
 
 -- ----------------------------
 -- Table structure for users
@@ -562,7 +564,7 @@ CREATE TABLE `users`  (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, 'admin@gmail.com', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Admin', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', NULL, 1000000.00, 1, '2021-02-01 00:00:00', 'tLybEK6fcvbXNXIpkf5kyGdrmeivbWZd', NULL, NULL, b'1', 1);
-INSERT INTO `users` VALUES (2, 'nndkhoa@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Ngô Ngọc Đăng Khoa', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '<div>Giảng viên Khoa Công nghệ Thông tin, Trường ĐH KHTN, ĐHQG-HCM</div><br><div><strong>Học vị:</strong> Thạc sĩ </div><br><div> Lĩnh vực/ bộ môn giảng dạy: </div><li>Công nghệ phần mềm</li>\r\n', 1000000.00, 3, '2021-02-01 00:00:00', 'EkSPwRLconL7nu726eJmdltIjr1UoWIP', NULL, '190321', b'1', 1);
+INSERT INTO `users` VALUES (2, 'nndkhoa@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Ngô Ngọc Đăng Khoa', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '<div>Giảng viên Khoa Công nghệ Thông tin, Trường ĐH KHTN, ĐHQG-HCM</div><br><div><strong>Học vị:</strong> Thạc sĩ </div><br><div> Lĩnh vực/ bộ môn giảng dạy: </div><li>Công nghệ phần mềm</li>\r\n', 1000000.00, 3, '2021-02-01 00:00:00', 'olEovpqE6kdgShBqSGNXGQL5DJCZjeDu', NULL, '190321', b'1', 1);
 INSERT INTO `users` VALUES (3, 'hthvy@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Hồ Thị Hoàng Vy', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '<div>Giảng viên Khoa Công nghệ Thông tin, Trường ĐH KHTN, ĐHQG-HCM</div><br><div><strong>Học vị:</strong> Thạc sĩ </div><br><div> Lĩnh vực/ bộ môn giảng dạy: </div><li>Hệ thống thông tin</li>', 1000000.00, 3, '2021-02-01 00:00:00', 'VlK4kisWTuS8VpOvy2i2G8k0lL98ysHb', NULL, '190321', b'1', 1);
 INSERT INTO `users` VALUES (4, 'htbtran@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Huỳnh Thụy Bảo Trân', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '<div>Giảng viên Khoa Công nghệ Thông tin, Trường ĐH KHTN, ĐHQG-HCM</div><br><div><strong>Học vị:</strong> Thạc sĩ </div><br><div> Lĩnh vực/ bộ môn giảng dạy: </div><li>Công nghệ phần mềm</li>', 1000000.00, 3, '2021-02-01 00:00:00', 'VlK4kisWTuS8VpOvy2i2G8k0lL98ysHb', NULL, '190321', b'1', 1);
 INSERT INTO `users` VALUES (5, 'ttson@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Trần Thái Sơn', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '<div>Giảng viên Khoa Công nghệ Thông tin, Trường ĐH KHTN, ĐHQG-HCM</div><br><div><strong>Học vị:</strong> Thạc sĩ </div><br><div> Lĩnh vực/ bộ môn giảng dạy: </div><li>Khoa học Máy tính</li>', 1000000.00, 3, '2021-02-01 00:00:00', 'VlK4kisWTuS8VpOvy2i2G8k0lL98ysHb', NULL, '190321', b'1', 1);
@@ -570,7 +572,7 @@ INSERT INTO `users` VALUES (6, 'btlen@fit.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0m
 INSERT INTO `users` VALUES (7, '19424031@student.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Oanh Nguyễn', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '', 1000000.00, 2, '2021-02-01 00:00:00', 'VlK4kisWTuS8VpOvy2i2G8k0lL98ysHb', NULL, '190321', b'1', 1);
 INSERT INTO `users` VALUES (8, '19424033@student.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Phong Huỳnh', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '', 1000000.00, 2, '2021-02-01 00:00:00', 'Yd9WFaUTJ1tIWAGx1CNbwAgIW5V772DN', NULL, '190321', b'1', 1);
 INSERT INTO `users` VALUES (9, '19424044@student.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Nguyễn Mai Thi', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '', 1000000.00, 2, '2021-02-01 00:00:00', 'VlK4kisWTuS8VpOvy2i2G8k0lL98ysHb', NULL, '190321', b'1', 1);
-INSERT INTO `users` VALUES (10, '19424052@student.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Hà Minh Bảo Toàn', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '', 8802000.00, 2, '2021-02-01 00:00:00', 'xFCifk9g6PBVuboDiNi5Wc6iPxDlBGIg', NULL, '190321', b'1', 1);
+INSERT INTO `users` VALUES (10, '19424052@student.hcmus.edu.vn', '$2a$04$28gE9ffkoJxhJ0mHaJxmtOv29LVVAX7kCKsIR7phJErKxRpbsQjsG', 'Hà Minh Bảo Toàn', 'https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png', '', 8802000.00, 2, '2021-02-01 00:00:00', 'nt8PGlTqnn8bxNGTu6gS2VOw7x7vjlF4', NULL, '190321', b'1', 1);
 
 -- ----------------------------
 -- Triggers structure for table likedetail
