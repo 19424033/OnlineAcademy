@@ -12,7 +12,7 @@ import RegisteredCourse from "./Handle/RegisteredCourse";
 import InfoTeacher from "./Handle/InfoTeacher";
 
 const Profile = () => {
-  const { userid, nameUser, imageUser, userJobId } = useContext(AppContext);
+  const { userid, nameUser, imageUser, userJobId ,setimageUser} = useContext(AppContext);
   const [userEmail, setUserEmail] = useState("");
   const [render, setRender] = useState("");
 
