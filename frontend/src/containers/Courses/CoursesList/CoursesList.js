@@ -8,6 +8,7 @@ var dateFormat = require("dateformat");
 const CoursesList = (props) => {
 
     const numEachPage = 6;
+    const [defaultCurrent, setDefaultCurrent] = useState(1);
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(numEachPage);
     const [categories, setCategories] = useState(props.categories.slice());
@@ -16,12 +17,14 @@ const CoursesList = (props) => {
     useEffect(() => {
         setMinValue(0);
         setMaxValue(numEachPage);
+        setDefaultCurrent(1);
         setCategories(props.categories.slice());
     }, [props.categories])
 
     const handleChange = (value) => {
         setMinValue((value - 1) * numEachPage);
         setMaxValue(value * numEachPage);
+        setDefaultCurrent(value);
     };
 
     const handleClickUnlike = (CategoryId) => {
@@ -147,7 +150,8 @@ const CoursesList = (props) => {
                                 :
                                 <div className="col-lg-12 m-b20"  >
                                     <div className="pagination-bx rounded-sm gray clearfix" >
-                                        <Pagination defaultCurrent={1}
+                                        <Pagination current= { defaultCurrent }
+
                                             style={{ textAlign: 'center' }}
                                             defaultPageSize={numEachPage}
                                             onChange={handleChange} total={categories.length} />

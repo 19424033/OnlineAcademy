@@ -11,6 +11,14 @@ const Courses = (props) => {
 
     let { CategoryGroup } = useParams();
 
+    const test = 'freetuts.net la blog chia se kien thuc lap trinh mien phi';
+
+    var data = test.split(' ');
+    var searchText = "";
+    data.map(e => searchText += ".*" + e  );
+
+    console.log(searchText);
+
     let { userid } = useContext(AppContext);
 
     const keyId = String(CategoryGroup === undefined ? '0' : CategoryGroup.indexOf('search') > - 1 ? '0' : CategoryGroup.split("-")[0]);
@@ -42,27 +50,27 @@ const Courses = (props) => {
                 });
         }
         else {
-            CoursesServices().getCategoryAllGroup(userid != undefined ? userid : 0)
+            setCategoryGroupName('');
+            const searchkey = new URLSearchParams(props.location.search).get('keyword');
+            const keyword = searchkey === null ? '' : searchkey;
+            if(keyword === '') {
+                CoursesServices().getCategoryAllGroup(userid != undefined ? userid : 0)
                 .then((response) => {
-                    const searchkey = new URLSearchParams(props.location.search).get('keyword');
-                    const keyword = searchkey === null ? '' : searchkey;
-                    setCategoryGroupName('');
-                    setValueInputSearch(keyword);
-                    setCategoriesTemp(response.data.filter(data => (
-                        xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1)));
-
+                    setCategoriesTemp(response.data);
                     setCategories(response.data);
-                    setCoursesList(<CoursesList userid={userid} categories={
-                        response.data.filter(data => (
-                            xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
-                            || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                            || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1))} />);
-                });
+                    setCoursesList(<CoursesList userid={userid} categories={ response.data } />);
+                })
+            }
+            else {
+                setValueInputSearch(keyword);
+                CoursesServices().getCategorybySearch(userid != undefined ? userid : 0, keyword)
+                .then((response) => {
+                    setCategoriesTemp(response.data);
+                    setCategories(response.data);
+                    setCoursesList(<CoursesList userid={userid} categories={ response.data } />);
+                })
+            }
         }
-
-
     }, [props.location.search, userid]);
 
     function xoa_dau(str) {
@@ -82,7 +90,7 @@ const Courses = (props) => {
         SetTextSort('');
         setValueInputSearch('');
         if (id > 0) {
-            CoursesServices().getCategoryByGroupId(id)
+            CoursesServices().getCategoryByGroupId(id, userid != undefined ? userid : 0 )
                 .then((response) => {
                     setCategories(response.data);
                     setCategoriesTemp(response.data);
@@ -92,22 +100,11 @@ const Courses = (props) => {
         }
 
         else {
-            CoursesServices().getCategoryAllGroup()
+            CoursesServices().getCategoryAllGroup(userid != undefined ? userid : 0)
                 .then((response) => {
-                    const searchkey = new URLSearchParams(props.location.search).get('keyword');
-                    const keyword = searchkey === null ? '' : searchkey;
-                    setValueInputSearch(keyword);
-                    setCategoryGroupName('');
-                    setCategoriesTemp(response.data.filter(data => (
-                        xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                        || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1)));
+                    setCategoriesTemp(response.data);
                     setCategories(response.data);
-                    setCoursesList(<CoursesList userid={userid} categories={
-                        response.data.filter(data => (
-                            xoa_dau(data.CategoryGroupName).indexOf(xoa_dau(keyword)) > - 1
-                            || xoa_dau(data.CategoryName).indexOf(xoa_dau(keyword)) > - 1
-                            || xoa_dau(data.DislayName).indexOf(xoa_dau(keyword)) > - 1))} />);
+                    setCoursesList(<CoursesList userid={userid} categories={ response.data } />);
                 });
         }
     }
@@ -175,13 +172,17 @@ const Courses = (props) => {
                     </div>
                     <div className="row">
                         <div className="col-lg-3 col-md-4 col-sm-12 m-30">
-                            <div className="widget courses-search-bx placeani">
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <input name="dzName" placeholder="Tìm kiếm khóa học..." value={valueInputSearch} type="text" required className="form-control" onChange={changeSearch} />
+                            { valueInputSearch ===  '' ?
+                                <></>
+                                :
+                                <div className="widget courses-search-bx placeani">
+                                    <div className="form-group">
+                                        <div className="input-group">
+                                            Kết quả tìm kiếm:  { valueInputSearch }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                             <div className="widget widget_archive">
                                 <h5 className="widget-title style-1">Lĩnh Vực</h5>
                                 <Menu defaultSelectedKeys={[keyId]} theme="dark">

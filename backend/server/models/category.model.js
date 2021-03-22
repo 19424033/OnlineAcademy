@@ -256,7 +256,7 @@ module.exports = {
                                           ,CG.CategoryGroupName
                                           ,U.DislayName
                                           , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
-                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE RD.IsDone END AS RD.IsDone
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE RD.IsDone END AS IsDone
                                           ,D.Value`))
                               .from('CATEGORY AS C')
                               .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
@@ -296,6 +296,34 @@ module.exports = {
                                                               AND RD.USERSID = ?
                                                               AND RD.ISACTIVE = TRUE`, [userid]))
                               .whereRaw('C.ISACTIVE = ?', true)
+    if (categoryList.length === 0) {
+      return null;
+    }
+    return categoryList;
+  },
+
+  async getCategorybySearch(userid, keyword) {
+    var date = new Date();
+    const categoryList = await db.select(db.raw(`C.*
+                                          ,CG.CategoryGroupName
+                                          ,U.DislayName
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE 1 END AS IsRes
+                                          , CASE WHEN RD.USERSID IS NULL THEN 0 ELSE RD.IsDone END AS IsDone
+                                          ,D.Value`))
+                              .from('CATEGORY AS C')
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .leftJoin(db.raw(`RESDETAIL AS RD ON C.CATEGORYID = RD.CATEGORYID
+                                                              AND RD.USERSID = ?
+                                                              AND RD.ISACTIVE = TRUE`, [userid]))
+                              .whereRaw('C.ISACTIVE = ?', true)
+                              .andWhereRaw(db.raw(`MATCH(CategoryName) AGAINST( '*${keyword}*' IN BOOLEAN MODE)
+                                                OR MATCH(CategoryGroupName) AGAINST( '*${keyword}*' IN BOOLEAN MODE)
+                                                OR MATCH(DislayName) AGAINST( '*${keyword}*' IN BOOLEAN MODE)`))
     if (categoryList.length === 0) {
       return null;
     }

@@ -52,6 +52,16 @@ router.get('/getCategoryAllGroup/:userid', async function (req, res) {
   res.json(categoryList);
 }); 
 
+router.get('/getCategorybySearch/:userid/:keyword', async function (req, res) {
+  const userid = req.params.userid || 0;
+  const keyword = req.params.keyword || 0;
+  const categoryList = await categoryModel.getCategorybySearch(userid, keyword);
+  if (categoryList === null) {
+    return res.status(204).end();
+  }
+  res.json(categoryList);
+}); 
+
 router.get('/getRateDetailByCategoryId/:id', async function (req, res) {
   const id = req.params.id || 0;
   const categoryList = await categoryModel.getRateDetailByCategoryId(id);

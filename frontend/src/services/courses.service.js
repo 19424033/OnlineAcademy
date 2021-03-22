@@ -17,8 +17,12 @@ export default function CoursesServices() {
     return axios.get(`${API_URL}/getCategoryAllGroup/${userid}`);
   };
 
+  const getCategorybySearch = (userid, keyword) => {
+    return axios.get(`${API_URL}/getCategorybySearch/${userid}/${keyword}`);
+  };
+
   const getCategoryByGroupId = ( id, userid ) => {
-    return axios.get(`${API_URL}/getCategoryByGroupItdrs4d/${userid}/${id}`);
+    return axios.get(`${API_URL}/getCategoryByGroupId/${userid}/${id}`);
   };
 
   const updateViewVideo = (ProductId, Viewer) => {
@@ -35,6 +39,7 @@ export default function CoursesServices() {
     getCategoryByGroupId,
     CoursesDetail,
     updateViewVideo,
-    getRateDetailByCategoryId
+    getRateDetailByCategoryId,
+    getCategorybySearch
   };
 }
